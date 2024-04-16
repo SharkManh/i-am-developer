@@ -1,0 +1,173 @@
+import { useContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import LoginScreen from "./screens/auth-screens/LoginScreen";
+import LogoScreen from "./screens/auth-screens/LogoScreen";
+import SignUpScreen from "./screens/auth-screens/SignUpScreen";
+import WelcomeScreen from './screens/WelcomeScreen';
+import { Colors } from './constants/styles';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
+import IconButton from './components/ui/IconButton';
+import { Text } from 'react-native';
+
+const Stack = createNativeStackNavigator();
+
+function AuthStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen name="Logo" component={Logo}/>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Signup" component={SignUpScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AuthenticatedStack() {
+  const authCtx = useContext(AuthContext);
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: Colors.primary500 },
+        headerTintColor: 'white',
+        contentStyle: { backgroundColor: Colors.primary100 },
+      }}
+    >
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{
+          headerRight: ({ tintColor }) => (
+            <IconButton
+              icon="exit"
+              color={tintColor}
+              size={24}
+              onPress={authCtx.logout}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function Navigation() {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <NavigationContainer>
+      {!authCtx.isAuthenticated && <AuthStack />}
+      {authCtx.isAuthenticated && <AuthenticatedStack />}
+    </NavigationContainer>
+  );
+}
+
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
+
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    async function fetchToken() {
+      const storedToken = await AsyncStorage.getItem('token');
+
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+
+      setIsTryingLogin(false);
+    }
+
+    fetchToken();
+  }, []);
+
+  if (isTryingLogin) {
+    return (
+      <>
+        <Text>Hi</Text>
+      </>
+    )
+  }
+
+  return <Navigation />;
+}
+
+export default function App() {
+  
+  return (
+    <>
+      <StatusBar style="light" />
+      <AuthContextProvider>
+        <Root />
+      </AuthContextProvider>
+    </>
+  );
+}
+
+
+
+// Welcome Screen
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
+
+import { StyleSheet, Text, View } from 'react-native';
+import { AuthContext } from '../store/auth-context';
+
+function WelcomeScreen() {
+  const [fetchedMessage, setFetchedMesssage] = useState('');
+
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://test-6e041-default-rtdb.firebaseio.com/incomes.json?auth=' +
+          token
+      )
+      .then((response) => {
+        setFetchedMesssage(response.data);
+        for (let key of Object.keys(response.data)) {
+          console.log(key)
+        }
+      });
+  }, [token]);
+
+  return (
+    <View style={styles.rootContainer}>
+      <Text style={styles.title}>Welcome!</Text>
+      <Text>You authenticated successfully!</Text>
+      <Text>{Object.keys(fetchedMessage)}</Text>
+    </View>
+  );
+}
+
+export default WelcomeScreen;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+});
+
+ {/* <Button 
+                    style={styles.inputNameButton}
+                    onPressed={submitCharacterName}
+                    title='OK'
+                /> */}
