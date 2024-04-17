@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-
+import { StyleSheet, View, Pressable, Text } from 'react-native';
 import AuthHandlerButton from './ui/AuthHandlerButton';
 import Input from './Input';
+import { Colors } from '../../constants/styles';
 
-function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
+function AuthForm({ isSignIn, onSubmit, credentialsInvalid }) {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredConfirmEmail, setEnteredConfirmEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
@@ -43,6 +43,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
     });
   }
 
+  console.log("hiii")
   return (
     <View style={styles.form}>
       <View>
@@ -53,7 +54,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
         />
-        {!isLogin && (
+        {!isSignIn && (
           <Input
             label="Confirm Email Address"
             onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
@@ -69,7 +70,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           value={enteredPassword}
           isInvalid={passwordIsInvalid}
         />
-        {!isLogin && (
+        {!isSignIn && (
           <Input
             label="Confirm Password"
             onUpdateValue={updateInputValueHandler.bind(
@@ -81,9 +82,20 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
             isInvalid={passwordsDontMatch}
           />
         )}
+        {
+          isSignIn && 
+          <>
+             <Pressable
+                style={styles.passRecoverButton}
+              >
+                <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+              </Pressable>
+          </>    
+        
+        }
         <View style={styles.buttons}>
           <AuthHandlerButton onPress={submitHandler}>
-            {isLogin ? 'Log In' : 'Sign Up'}
+            {isSignIn ? 'Sign In' : 'Sign Up'}
           </AuthHandlerButton>
         </View>
       </View>
@@ -97,4 +109,11 @@ const styles = StyleSheet.create({
   buttons: {
     marginTop: 12,
   },
+  passRecoverButton: {
+    // borderColor: "red", borderWidth: 1,
+    alignItems: "flex-end"
+  },
+  forgotPasswordText: {
+    color: Colors.authText,
+  }
 });

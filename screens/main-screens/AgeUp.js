@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet, Image, Animated, Pressable } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useState } from 'react'
 import IconButton from '../../components/ui/IconButton';
 import { LinearGradient } from 'expo-linear-gradient';
+import { CharacterContext } from '../../store/character-context';
 
-const AgeUp = () => {
+const AgeUp = ({ navigation }) => {
     const [rotateDeg] = useState(new Animated.Value(0));
+    const characterCtx = useContext(CharacterContext);
+    const [isX2RewardButtonVisible, setIsX2RewardButtonVisible] = useState(true)
 
     useEffect(() => {
         Animated.timing(rotateDeg, {
@@ -24,52 +27,82 @@ const AgeUp = () => {
         transform: [{ rotate: interpolatedRotate }]
     }
     
-    function doubleIncome() {
-        
+    function exit() {
+        navigation.goBack()
+    }
+
+    function claimReward() {
+        characterCtx.addIncome(1600)
+        navigation.goBack()
+    }
+
+    function claimX2Reward() {
+        navigation.navigate("AdvertiseScreen")
+        characterCtx.addIncome(3200)
+        setIsX2RewardButtonVisible(false)
     }
 
     return (
         <View style={styles.container}>
-            <IconButton style={styles.closeButton} iconImageURL={require("../../assets/close.png")}/>
+            <IconButton style={styles.closeButton} onPress={exit} iconImageURL={require("../../assets/close.png")}/>
             <View style={styles.ageUpWrapper}>
                 <Text style={styles.ageText}>Age</Text>
+                <Image style={styles.miniStarImage01} source={require("../../assets/star.png")}/>
+                <Image style={styles.miniStarImage02} source={require("../../assets/star.png")}/>
+
                 <View style={styles.starWrapper}>
                     <Animated.Image style={[styles.lightEffect, rotateStyle]} source={require("../../assets/lightEffect.png")} />
-                    <Image style={styles.starImage} source={require("../../assets/starNoFace.png")}/>
-                    <Text style={styles.ageNum}>7</Text>
+                    <Image style={styles.starImage} source={require("../../assets/star.png")}/>
+                    <Text style={styles.ageNum}>6</Text>
                 </View>
             </View>
             <View style={styles.unlockWrapper}>
                 <LinearGradient
-                    colors={[ '#72063c', '#ddb52f']}
+                    colors={[ '#9A57DA', '#2A034A']}
                     style={styles.linearGradient}
                 >
-                    <Text style={styles.unlockText}>Unlock</Text>
+                    <Text style={styles.unlockText}>UNLOCKED</Text>
                 </LinearGradient>
             </View>
             <View style={styles.incomeContainer}>
-                <Text style={styles.getText}>Get</Text>
-                <View style={styles.incomeWrapper}>
-                    <Image style={styles.incomeImage} source={require("../../assets/income.png")}/>
-                    <Text style={styles.incomeText}> 1600</Text>
+                <Text style={styles.rewardText}>Reward</Text>
+                <View style={styles.moneyWrapper}>
+                    <Image style={styles.moneyImage} source={require("../../assets/money.png")}/>
+                    <Text style={styles.moneyText}> 1600</Text>
                 </View>
             </View>
 
             <View style={styles.buttonGroup}>
                 <Pressable
                     style={
-                        ({ pressed }) => [ styles.button, pressed && styles.pressed ]
+                        ({ pressed }) => [pressed && styles.pressed ]
                     }
+                    onPress={claimReward}
                 >
-                    <Text style={styles.buttonTitle}>Claim Now</Text>
+                    <LinearGradient
+                        colors={[ '#9A57DA', '#2A034A']}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonTitle}>Claim Now</Text>
+                    </LinearGradient>
                 </Pressable>
-                <Pressable
-                    style={
-                        ({ pressed }) => [ styles.button, pressed && styles.pressed ]
-                    }
-                >
-                    <Text style={styles.buttonTitle}>X2 Income</Text>
-                </Pressable>
+                {
+                    isX2RewardButtonVisible && 
+                    <Pressable
+                        style={
+                            ({ pressed }) => [pressed && styles.pressed ]
+                        }
+                        onPress={claimX2Reward}
+                    >
+                        <LinearGradient
+                            colors={[ '#9A57DA', '#2A034A']}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonTitle}>x2 Reward</Text>
+                        </LinearGradient>
+                    </Pressable>
+                }
+                
             </View>
         </View>
     )
@@ -80,7 +113,7 @@ export default AgeUp
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "yellow",
+        backgroundColor: "#F9C43B",
         display: "flex", flexDirection: "column",
         alignItems: "center",
     },
@@ -93,18 +126,28 @@ const styles = StyleSheet.create({
         borderWidth: 1, borderColor: "red"
     },
 
-    // ---------------- Age Increasing-------------
+    // ---------------- Age -------------
     ageUpWrapper: {
         flexDirection: "row",
         justifyContent: "space-between", alignItems: "center", 
-        width: "40%",
+        width: "50%",
         marginTop: 50,
         // borderWidth: 1, borderColor: "red"
     }, 
     ageText: {
-        fontSize: 30, fontWeight: "bold",
         zIndex: 1,
+        fontSize: 40, fontWeight: "bold",
+        color: "white", 
+        textShadowColor: 'black',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 1,
     },
+    ageNum: {
+        position: "absolute", 
+        fontSize: 25, fontWeight: "bold",
+        color: "white"
+    },
+    
     starWrapper: {
         position: "relative",
         // borderWidth: 1, borderColor: "blue",
@@ -115,16 +158,21 @@ const styles = StyleSheet.create({
         width: 440/5, height: 440/5,
         // borderWidth: 1, borderColor: "red"
     }, 
+    miniStarImage01: {
+        position: "absolute", top: 20, left: -10,
+        width: 15, height: 15,
+    },
+    miniStarImage02: {
+        position: "absolute", top: 5, left: 10,
+        width: 20, height: 20,
+    },
     lightEffect: {
         width: 1000,
         height: 1000,
         opacity: 0.6,
         position: "absolute",
     },
-    ageNum: {
-        position: "absolute", 
-        fontSize: 25, fontWeight: "bold"
-    },
+    
     
     // --------------- Unlock --------------
     unlockWrapper: {
@@ -149,25 +197,32 @@ const styles = StyleSheet.create({
         marginTop: 40,
         alignItems: "center",
     },
-    getText: {
-        fontWeight: "bold", fontSize: 30
+    rewardText: {
+        fontSize: 40, fontWeight: "bold",
+        color: "black"
+        // color: "white", 
+        // textShadowColor: 'black',
+        // textShadowOffset: { width: 1, height: 1 },
+        // textShadowRadius: 1,
     },
-    incomeWrapper: {
+    moneyWrapper: {
         marginTop: 10,
+        padding: 5,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         borderWidth: 1, borderColor: "black",
         borderBottomWidth: 5,
-        backgroundColor: "#ebc634",
+        backgroundColor: "#D7A97E",
         borderRadius: 20,
         paddingHorizontal: 10,
     },
-    incomeImage: {
+    moneyImage: {
         width: 40, height: 40,
     },
-    incomeText: {
-        fontSize: 25, fontWeight: "bold"
+    moneyText: {
+        fontSize: 30, fontWeight: "bold",
+        color: "white",
     }, 
     // -------------Button group ---------------
     buttonGroup: {

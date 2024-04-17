@@ -2,61 +2,60 @@ import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/styles'
 
-const IntroScreen = ({ navigateMainScreenStack }) => {
-    const [content, setContent] = useState(<FirstIntro />)
-
-    function FirstIntro() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Image
-                        style={styles.image}
-                        source={require("../../assets/characterGrowth.png")}
-                    />
-                    <Text style={styles.description}>
-                        "I am a Developer" is a career simulation experience that spans every life stage. From early childhood to the pinnacle of your career, you will make decisions that shape your path in the tech world. With each in-game year equating to 12 real-life minutes, every choice is critical.
-                    </Text>
-                </View>
-                <Pressable
-                    style={
-                        ({ pressed }) => [styles.button, pressed && styles.pressed]
-                    }
-                    onPress={switchIntro}
-                >
-                    <Text style={styles.buttonName}>Next</Text>
-                </Pressable>
-            </View>
-        )
+const IntroScreen = ({ navigation, route, navigateMainScreenStack }) => {
+    const intro1 = {
+        imageURL: require("../../assets/characterGrowth.png"),
+        description: `Welcome to "I am developer" - a game simulating the fascinating journey from childhood to old age of a child. Developed by a talented and creative team, this game is a unique adventure where you will experience every aspect of life.
+        `
+    }
+    const intro2 = {
+        imageURL: require("../../assets/characterGrowth.png"),
+        description: `Start your journey from when you were just a 1-year-old child, when the world was still something entirely new and waiting for you to explore. From the first steps in development and learning, you will face important decisions about education, work, and life.`
+    }
+    const intro3 = {
+        imageURL: require("../../assets/characterGrowth.png"),
+        description: `In "I am developer", you will have to complete diverse tasks, from learning and skill-building to working and building a career. Work diligently to achieve your goals and become a successful developer.`
+    }
+    const intro4 = {
+        imageURL: require("../../assets/characterGrowth.png"),
+        description: `Join this adventure and explore every aspect of life, from daily joys to big challenges and deep emotions. Start today and create a memorable journey from childhood to old age!`
     }
 
-    function SecondIntro() {
-        return(
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Text style={styles.description}>
-                        Enjoy this journey, have fun playing game
-                    </Text>
-                </View>
-                <Pressable
-                    style={
-                        ({ pressed }) => [styles.button, pressed && styles.pressed]
-                    }
-                    onPress={navigateMainScreenStack}
-                >
-                    <Text style={styles.buttonName}>Let's Play</Text>
-                </Pressable>
-            </View>
-        )
-    }
+    const [content, setContent] = useState(intro1)
+
 
     function switchIntro() {
-        setContent(<SecondIntro />)
+        if (content.description == intro1.description) {
+            setContent(intro2);
+        } else if (content.description == intro2.description) {
+            setContent(intro3)
+        } else if (content.description == intro3.description) {
+            setContent(intro4)
+        } else if (content.description == intro4.description) {
+            route.params.navigateMainScreenStack()
+        }
     }
 
     return (
-        <>
-            {content}
-        </>
+        <View style={styles.container}>
+            <View style={styles.content}>
+                <Image
+                    style={styles.image}
+                    source={content.imageURL}
+                />
+                <Text style={styles.description}>
+                    {content.description}
+                </Text>
+            </View>
+            <Pressable
+                style={
+                    ({ pressed }) => [styles.button, pressed && styles.pressed]
+                }
+                onPress={switchIntro}
+            >
+                <Text style={styles.buttonName}>Next</Text>
+            </Pressable>
+        </View>
     )
 }
 

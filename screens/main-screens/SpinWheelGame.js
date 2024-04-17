@@ -6,7 +6,7 @@ import DarkOverlay from '../../components/ui/DarkOverlay';
 import Reward from '../../components/main/Reward';
 import SpinReward from '../../components/main/SpinReward';
 
-const SpinTheWheel = () => {
+const SpinWheelGame = () => {
     const bonuses = ["0", "1", "2", "3"]
     const [ticketNumber, setTicketNumber] = useState(0)
     const [result, setResult] = useState("")
@@ -156,7 +156,7 @@ const SpinTheWheel = () => {
     )
 } 
 
-export default SpinTheWheel
+export default SpinWheelGame
 
 const styles = StyleSheet.create({
     container: {

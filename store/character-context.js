@@ -4,19 +4,19 @@ import { createContext, useState } from 'react';
 export const CharacterContext = createContext({
   characterName: '',
   income: 0,
-  level: 0,
+  age: 0,
   activityHistories: [],
   createCharacterName: (characterName) => {},
   addIncome: (amount) => {},
   minusIncome: (amount) => {},
-  increaseLevel: (numIncreasedLevel) => {},
+  increaseAge: (increaseAge) => {},
   addActivityHistory: (newActivityHistory) => {},
 });
 
 function CharacterContextProvider({ children }) {
   const [characterName, setCharacterName] = useState("");
   const [income, setIncome] = useState(0);
-  const [level, setLevel] = useState(0)
+  const [age, setAge] = useState(0)
   const [activityHistories, setActivitiesHistories] = useState([])
 
   function createCharacterName(characterName) {
@@ -31,8 +31,8 @@ function CharacterContextProvider({ children }) {
     setIncome((prevIncome) => prevIncome -= amount)
   }
 
-  function increaseLevel(numIncreasedLevel) {
-    setLevel((prevLevel) => prevLevel += numIncreasedLevel)
+  function increaseAge(numIncreasedAge) {
+    setAge((prevAge) => prevAge += numIncreasedAge)
   }
 
   function addActivityHistory(activityHistory) {
@@ -41,16 +41,16 @@ function CharacterContextProvider({ children }) {
     })
   }
 
-
+// Chuyện j sẽ xảy ra nếu tên biến hoặc function không giống như cái CharacterContext nhề
   const value = {
     characterName: characterName,
     income: income,
     activityHistories: activityHistories,
-    level: level,
+    age: age,
     createCharacterName: createCharacterName,
     addIncome: addIncome,
     minusIncome: minusIncome,
-    increaseLevel: increaseLevel,
+    increaseAge: increaseAge,
     addActivityHistory: addActivityHistory,
   };
 

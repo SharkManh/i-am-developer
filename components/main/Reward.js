@@ -2,60 +2,53 @@ import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import DarkOverlay from '../ui/DarkOverlay';
 
 const Reward = ({ resultTitle, playAgain }) => {
-    const [incomeReward, setIncomeReward] = useState(0)
+    const [imageURL, setImageURL] = useState()
+    const [closeButtonPositionStyle, setCloseButtonPositionStyle] = useState({})
 
     useEffect(() => {
         switch(resultTitle) {
             case "Win": {
-                setIncomeReward(2); break;
+                setImageURL(require("../../assets/winGame.png"))
+                setCloseButtonPositionStyle({
+                    right: -20, top: 50
+                })
+                ; break;
             }
             case "Tie": {
-                setIncomeReward(1); break;
+                setImageURL(require("../../assets/tieGame.png")); 
+                setCloseButtonPositionStyle({
+                    right: -20, top: 75
+                })
+                ; break;
             }
             case "Lose": {
-                setIncomeReward(0); break;
+                setImageURL(require("../../assets/loseGame.png")); 
+                setCloseButtonPositionStyle({
+                    right: -20, top: 120
+                })
+                ; break;
             }
         }
     }, [resultTitle])
 
     return (
         <View style={styles.container}>
-            <LinearGradient
-                colors={[ '#72063c', '#ddb52f']}
-                style={styles.linearGradient}
+            <Image 
+                style={styles.resultImage}
+                source={imageURL}
+            />
+            <Pressable
+                style={[styles.closeButton, closeButtonPositionStyle]}
+                onPress={playAgain}
             >
-                <Text style={styles.resultTitle}>{resultTitle}</Text>
-            </LinearGradient>
-            <View style={styles.reward}>
-                <Text style={styles.getText}>Get</Text>
-                <View style={styles.incomeRewardWrapper}>
-                    <Image 
-                        style={styles.incomeImage}
-                        source={require("../../assets/income.png")}
-                    />
-                    <Text style={styles.incomeReward}>  {incomeReward}</Text>
-                </View>
-            </View>
-            <View style={styles.buttonGroup}>
-                <Pressable 
-                    style={
-                        ({ pressed }) => [styles.button, pressed && styles.pressed]
-                    }
-                    // onPress={onCancel}
-                >
-                    <Text style={styles.buttonTitle}>Out</Text>
-                </Pressable>
-                <Pressable 
-                    style={
-                        ({ pressed }) => [styles.button, pressed && styles.pressed]
-                    }
-                    onPress={playAgain}
-                >
-                    <Text style={styles.buttonTitle}>Again</Text>
-                </Pressable>
-            </View>
+                <Image 
+                    style={styles.closeImage}
+                    source={require("../../assets/closeGameResult.png")}
+                />
+            </Pressable>
         </View>
     )
 }
@@ -64,58 +57,18 @@ export default Reward
 
 const styles = StyleSheet.create({
     container: {
-        width: "80%",
-        height: 300,
-        borderWidth: 1, borderColor: "red",
-        borderRadius: 20,
-        backgroundColor: "white",
+        position: "relative",
+        // borderWidth: 1, borderColor: "red",
         zIndex: 2
     },
-    linearGradient: {
-        borderTopLeftRadius: 20, borderTopRightRadius: 20,
+    resultImage: {
+        width: 300, height: 300,
     },
-    resultTitle: {
-        fontSize: 35, fontWeight: "bold", 
-        color: "white",
-        textAlign: "center",
+    closeButton: {
+        position: "absolute",
+        // borderWidth: 1, borderColor: "red"
     },
-    getText: {
-        fontSize: 30, fontWeight: "bold"
-    },
-    incomeImage: {
-        width: 50, height: 50
-    },
-    reward: {
-        flex: 1,
-        alignItems: "center", justifyContent: "center"
-    }, 
-    incomeRewardWrapper: {
-        flexDirection: "row",
-        justifyContent: "center", alignItems: "center"
-    }, 
-    incomeReward: {
-        fontWeight: "bold", fontSize: 40,
-    },
-
-    // --------------- Button group --------------
-    buttonGroup: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-        height: "20%"
-    },
-    button: {
-        width: 120,
-        borderWidth: 1, borderColor: "black",
-        borderBottomWidth: 5,
-        backgroundColor: "#ebc634",
-        borderRadius: 20,
-    }, 
-    buttonTitle: {
-        textAlign: "center",
-        fontWeight: "bold", fontSize: 20,
-    },
-    pressed: {
-        opacity: 0.6
+    closeImage: {
+        width: 40, height: 40,
     }
 })

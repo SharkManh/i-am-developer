@@ -1,17 +1,19 @@
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
 import React, { useEffect, useState } from 'react' 
-import { AntDesign } from '@expo/vector-icons';
 import NoMoreTicket from '../../components/main/NoMoreTicket';
 import DarkOverlay from '../../components/ui/DarkOverlay';
 import Reward from '../../components/main/Reward';
+import Money from '../../components/main/Money';
+import Ticket from '../../components/main/Ticket';
+import Exit from "../../components/main/Exit"
 
-const RockPaperScissorGame = () => {
+const RockPaperScissorGame = ({ navigation }) => {
     const [opponentOption, setOpponentOption] = useState(0)
     const [playerOption, setPlayerOption] = useState(0)
-    const [ticketNumber, setTicketNumber] = useState(0)
+    const [numberTicket, setNumberTicket] = useState(0)
     const [result, setResult] = useState("")
     const [isResultShown, setIsResultShown] = useState(false)
-    const [isButtonActive, setIsButtonActive] = useState(true)
+    const [isGameStarted, setIsGameStarted] = useState(false)
     const [isNoMoreTicketDisplayed, setIsNoMoreTicketDisplayed] = useState(false)
     const [imageOpponentChoiceStyles, setImageOpponentChoiceStyles] = useState({
         opacity: 0,
@@ -23,12 +25,17 @@ const RockPaperScissorGame = () => {
     })
 
     function watchAdsEarnTicket() {
-        setTicketNumber((prevValue) => prevValue += 1)
+        navigation.navigate("AdvertiseScreen")
+        setNumberTicket((prevValue) => prevValue += 1)
         setIsNoMoreTicketDisplayed(false)
     }
 
     function cancel() {
         setIsNoMoreTicketDisplayed(false)
+    }
+
+    function exit() {
+        navigation.goBack()
     }
 
     useEffect(() => {
@@ -46,23 +53,23 @@ const RockPaperScissorGame = () => {
             }
         }
 
-        if (!isButtonActive) {
+        if (isGameStarted) {
             setTimeout(() => {
                 handleResult();
+                setIsGameStarted(false)
                 setIsResultShown(true)
             }, 3000)
         }
-    }, [isButtonActive])
+    }, [isGameStarted])
 
 
     function playAgain() {
         setIsResultShown(false)
-        setIsButtonActive(true)
     }
 
     function handleGame(playerOption) {
         // Trừ 1 lần chơi
-        setTicketNumber((prevValue) => prevValue -= 1)
+        setNumberTicket((prevValue) => prevValue -= 1)
 
         setOpponentOption(Math.floor(Math.random() * 3));
         setPlayerOption(playerOption)
@@ -82,8 +89,8 @@ const RockPaperScissorGame = () => {
 
     
     function runGame(playerOption) {
-        if (ticketNumber > 0) {
-            setIsButtonActive(false)
+        if (numberTicket > 0) {
+            setIsGameStarted(true)
             setIsNoMoreTicketDisplayed(false)
             handleGame(playerOption);
         } else {
@@ -93,33 +100,38 @@ const RockPaperScissorGame = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.ticketContainer}>
-                <AntDesign style={styles.plusIconButton} onPress={watchAdsEarnTicket} name="pluscircle" size={20} color="black" />
-
-                <View style={styles.ticketWrapper}>
-                    <Image 
-                        style={styles.ticketImage}
-                        source={require("../../assets/ticket.png")}
-                    />
-                    <Text style={styles.ticketNum}>  {ticketNumber}</Text>
-                </View>
-            </View>
+            <Exit onPress={exit}/>
+            <Ticket numberTicket={numberTicket} onPress={watchAdsEarnTicket}/>
+            <Money 
+                containerCustomStyle={styles.moneyContainer}  
+                moneyImageCustomStyle={styles.moneyImage}
+                moneyAmountCustomStyle={styles.moneyAmount}
+            />
             <View style={styles.opponent}>
-                <Text style={styles.prompt}>Opponent Choice</Text>
-                <Image 
-                    style={imageOpponentChoiceStyles}
-                    source={
-                        (opponentOption == 0) 
-                            ? require("../../assets/scissor.png")
-                            : (opponentOption == 1)
-                                ? require("../../assets/rock.png")
-                                : require("../../assets/paper.png")
-                        }
-                />
+                {
+                    isGameStarted && 
+                    <>
+                        <Text style={styles.prompt}>Opponent Choice</Text>
+                        <Image 
+                            style={imageOpponentChoiceStyles}
+                            source={
+                                (opponentOption == 0) 
+                                    ? require("../../assets/scissor.png")
+                                    : (opponentOption == 1)
+                                        ? require("../../assets/rock.png")
+                                        : require("../../assets/paper.png")
+                                }
+                        />
+                    </>
+                }
+                {
+                    !isGameStarted && 
+                    <Text style={styles.opponentWaitingText}>Your opponent is waiting...</Text>
+                }
             </View>   
             <View style={styles.player}>
                 <Image 
-                    style={imagePlayerChoiceStyles}
+                    style={[imagePlayerChoiceStyles, !isGameStarted && {opacity: 0} ]}
                     source={
                         (playerOption == 0) 
                             ? require("../../assets/scissor.png")
@@ -132,9 +144,9 @@ const RockPaperScissorGame = () => {
                 <View style={styles.buttonGroup}>
                     <Pressable
                         style={
-                           [styles.button ,!isButtonActive && styles.inactiveButton]
+                           [styles.button ,isGameStarted && styles.inactiveButton]
                         }
-                        onPress={!isButtonActive ? null : () => runGame(0)}
+                        onPress={isGameStarted ? null : () => runGame(0)}
                     >
                         <Image 
                             style={styles.image}
@@ -143,9 +155,9 @@ const RockPaperScissorGame = () => {
                     </Pressable>
                     <Pressable
                         style={
-                            [styles.button ,!isButtonActive && styles.inactiveButton]
+                            [styles.button ,isGameStarted && styles.inactiveButton]
                         }
-                        onPress={!isButtonActive ? null : () => runGame(1)}
+                        onPress={isGameStarted ? null : () => runGame(1)}
                     >
                         <Image 
                             style={styles.image}
@@ -155,9 +167,9 @@ const RockPaperScissorGame = () => {
 
                     <Pressable
                         style={
-                            [styles.button ,!isButtonActive && styles.inactiveButton]
+                            [styles.button ,isGameStarted && styles.inactiveButton]
                         }
-                        onPress={!isButtonActive ? null : () => runGame(2)}
+                        onPress={isGameStarted ? null : () => runGame(2)}
                     >
                         <Image 
                             style={styles.image}
@@ -197,36 +209,38 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    ticketContainer: {
+
+    // ------------- Money ------------
+    moneyContainer: {
         position: "absolute", right: 10, top: 10,
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    plusIconButton: {
-        position: "absolute", top: 20, right: -5, 
-        zIndex: 1,
-        backgroundColor: "white",   // che đi cái border của ticketWrapper do cái dấu cộng xuyên thấu
-        borderRadius: 20
-    },
-    ticketWrapper: {
-        paddingHorizontal: 20, 
+        marginTop: 0,
+
+        // override default style
+        paddingHorizontal: 20,
+        paddingVertical: 0, paddingHorizontal: 5,
         borderWidth: 1, borderColor: "black",
         borderRadius: 10,
         backgroundColor: "white",
         flexDirection: "row",
         alignItems: "center"
     },
-    ticketImage: {
+    moneyImage: {
         width: 30, height: 30
     },
-    ticketNum: {
+    moneyAmount: {
         fontSize: 24,
+        color: "black"
     },
+
+    // ------------- Opponent ----------
     opponent: {
         marginTop: 50,
         position: "absolute", top: 20,
-        alignItems: "center"
-        // borderWidth: 1, borderColor: "black"
+        alignItems: "center",
+    },
+    opponentWaitingText: {
+        marginTop: 50,
+        fontSize: 24, fontWeight: "bold",
     },
     inactiveButton: {
         opacity: 0.5
@@ -236,7 +250,7 @@ const styles = StyleSheet.create({
     prompt: {
         fontSize: 35, fontWeight: "bold",
         textAlign: "center",
-        marginTop: 30,  // Đẩy bản thân xuống dưới gần 3 button groups
+        marginTop: 30,  // Đẩy bản thân xuống dưới gần với 3 button groups
     },
     player: {
         position: "absolute",
@@ -253,8 +267,15 @@ const styles = StyleSheet.create({
     },
     button: {
     },
+    pressed: {
+        opacity: 0.7
+    },
     image: {
+        
         width: 60, height: 60,
     },
+
+
+    
     
 })

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Animated, Image, Dimensions } from 'react-native';
 
 const LogoScreen = ({navigation}) => {
-    // const [colorValue] = useState(new Animated.Value(0));
     const [positionValue] = useState(new Animated.Value(0))
     const windowHeight =Dimensions.get('window').height
 
@@ -15,17 +14,11 @@ const LogoScreen = ({navigation}) => {
 
     useEffect(() => {
         setTimeout(() => {
-            navigation.replace("Login")
+            navigation.replace("SignInScreen")
         }, 5000)
     }, [])
 
     useEffect(() => {
-    //   Animated.timing(colorValue, {
-    //     toValue: 1,
-    //     duration: 3000,
-    //     useNativeDriver: false, 
-    //   }).start();
-
       Animated.timing(positionValue, {
         toValue: windowHeight/2,
         duration: 2000,
@@ -33,11 +26,6 @@ const LogoScreen = ({navigation}) => {
       }).start();
     }, [])
   
-    // const interpolateColor = colorValue.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: ['white', GlobalStyles.colors.headerBackgroundColor],
-    // });
-    
     const introElementsWrapperStyle = {
         marginTop: positionValue,
         transform: [{translateY: -elementHeight/2}],
@@ -50,7 +38,7 @@ const LogoScreen = ({navigation}) => {
         <View style={styles.container}>
             <Animated.View style={introElementsWrapperStyle} onLayout={onLayout}>
                 <Image style={styles.image} source={require("../../assets/logo.png")} />
-                <Animated.Text style={[styles.name]}>I Am Developer</Animated.Text>
+                <Animated.Text style={[styles.nameGame]}>I Am Developer</Animated.Text>
             </Animated.View>
         </View>
     )
@@ -59,14 +47,14 @@ const LogoScreen = ({navigation}) => {
 export default LogoScreen
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
+    container: { flex: 1, backgroundColor: "black" },
     image: {
         width: 200,
         height: 200,
     },
-    name: {
+    nameGame: {
         marginTop: 10,
-        fontSize: 24,
-        fontWeight: "bold",
+        fontSize: 24, fontWeight: "bold",
+        color: "white",
     }, 
 })

@@ -4,7 +4,7 @@ import { Video } from 'expo-av';
 import adsVideo from "../../assets/ads.mp4"
 import { Ionicons } from '@expo/vector-icons';
 
-const AdvertiseScreen = () => {
+const AdvertiseScreen = ({ navigation }) => {
   const [countdown, setCountdown] = useState(10)
   const [buttonContent, setButtonContent] = useState("")
   const [isButtonActive, setIsButtonActive] = useState(false)
@@ -25,15 +25,15 @@ const AdvertiseScreen = () => {
     setButtonContent("Reward in " + countdown + " seconds")
   }, [countdown])
 
-  function click() {
-    alert("hi")
+  function exit() {
+    navigation.goBack()
   }
   
   return (
     <View style={styles.container}>
       <Pressable
         style={[styles.button, !isButtonActive && styles.inactiveButton]}
-        onPress={isButtonActive ? click : null}
+        onPress={isButtonActive ? exit : null}
       >
         <Ionicons name="close-circle-sharp" size={24} color="black" />
         <Text style={styles.buttonContent}>{buttonContent}</Text>

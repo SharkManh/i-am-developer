@@ -5,7 +5,7 @@ import { Colors } from '../../constants/styles';
 import { CharacterContext } from '../../store/character-context';
 import { useNavigation } from '@react-navigation/native';
 
-const NamingScreen = ({ navigation }) => {
+const NamingScreen = ({ navigateMainScreenStack }) => {
     const characterCtx = useContext(CharacterContext);
     const screenWidth = Dimensions.get("window").width;
     const screenHeight = Dimensions.get("window").height;
@@ -45,10 +45,6 @@ const NamingScreen = ({ navigation }) => {
         zIndex: 1, 
     }
 
-    function switchScreen() {
-        navigation.navigate("Welcome")
-    }
-
     return (
         <View style={styles.container}>
             <Image style={backgroundStyle} source={require("../../assets/background.png")} />
@@ -72,7 +68,7 @@ const NamingScreen = ({ navigation }) => {
                     style={
                         ({ pressed }) => 
                             [styles.inputNameButton, pressed && styles.pressed]}
-                    onPress={switchScreen}
+                    onPress={navigateMainScreenStack}
                 >
                     <Text style={styles.inputNameButtonText}>OK</Text>
                 </Pressable>

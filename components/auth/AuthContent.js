@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, View, Text } from 'react-native';
+import { Alert, StyleSheet, View, Text, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import SwitchAuthModeButton from './ui/SwitchAuthModeButton';
 import AuthForm from './AuthForm';
 import { Colors } from '../../constants/styles';
 
-function AuthContent({ title, isLogin, onAuthenticate }) {
+function AuthContent({ title, isSignIn, onAuthenticate }) {
   const navigation = useNavigation();
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
@@ -17,10 +17,10 @@ function AuthContent({ title, isLogin, onAuthenticate }) {
   });
 
   function switchAuthModeHandler() {
-    if (isLogin) {
-      navigation.replace('Signup');
+    if (isSignIn) {
+      navigation.replace('SignupScreen');
     } else {
-      navigation.replace('Login');
+      navigation.replace('SignInScreen');
     }
   }
 
@@ -38,7 +38,7 @@ function AuthContent({ title, isLogin, onAuthenticate }) {
     if (
       !emailIsValid ||
       !passwordIsValid ||
-      (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
+      (!isSignIn && (!emailsAreEqual || !passwordsAreEqual))
     ) {
       Alert.alert('Invalid input', 'Please check your entered credentials.');
       setCredentialsInvalid({
@@ -57,13 +57,13 @@ function AuthContent({ title, isLogin, onAuthenticate }) {
       <View style={styles.authContent}>
         <Text style={styles.title}>{title}</Text>
         <AuthForm
-          isLogin={isLogin}
+          isSignIn={isSignIn}
           onSubmit={submitHandler}
           credentialsInvalid={credentialsInvalid}
         />
         <View style={styles.buttons}>
           <SwitchAuthModeButton onPress={switchAuthModeHandler}>
-            {isLogin ? 'Create a new user' : 'Log in instead'}
+            {isSignIn ? 'Create a new user' : 'Sign in instead'}
           </SwitchAuthModeButton>
         </View>
       </View>
@@ -76,13 +76,13 @@ export default AuthContent;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    height: "70%",
+    // justifyContent: 'center',
+    backgroundColor: Colors.authBackground,
     alignItems: "center",
   },
   authContent: {
-    width: '90%',
-    marginTop: 64,
+    width: '100%',
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
@@ -96,9 +96,11 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 30, fontWeight: "bold",
-    color: "white",
+    color: Colors.authText,
   },
   buttons: {
     marginTop: 8,
   },
+  
+  
 });

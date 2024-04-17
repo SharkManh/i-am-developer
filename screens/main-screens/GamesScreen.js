@@ -2,15 +2,30 @@ import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
 import React from 'react'
 import IconButton from '../../components/ui/IconButton'
 
-const GamesScreen = () => {
+const GamesScreen = ({ navigation }) => {
+  function playRockPaperScissorGame() {
+    navigation.navigate("RockPaperScissorGame")
+  }
+
+  function exit() {
+    navigation.goBack()
+  }
+
   return (
     <View style={styles.container}>
-        <IconButton style={styles.closeButton} iconImageURL={require("../../assets/close.png")}/>
+        <IconButton 
+          style={styles.closeButton} 
+          iconImageURL={require("../../assets/close.png")}
+          onPress={exit}  
+        />
         <View style={styles.header}>
           <Text style={styles.heading}>Games</Text>
         </View>
         <View style={styles.gameGroup}>
-          <Pressable style={styles.game}>
+          <Pressable 
+            style={styles.game}
+            onPress={playRockPaperScissorGame}
+            >
             <Image 
               style={styles.gameImage}
               source={require("../../assets/ScissorRockPaper.png")}
