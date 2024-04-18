@@ -6,19 +6,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SignInScreen from "./screens/auth-screens/SignInScreen";
 import LogoScreen from "./screens/auth-screens/LogoScreen";
 import SignUpScreen from "./screens/auth-screens/SignUpScreen";
-import NamingScreen from "./screens/intro-screens/NamingScreen";
+import MainScreen from "./screens/main-screens/MainScreen";
 import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
 import { Text, SafeAreaView, StyleSheet, View } from 'react-native';
 import CharacterContextProvider, { CharacterContext } from './store/character-context';
 import IntroScreen from './screens/intro-screens/IntroScreen';
-import MainScreen from './screens/main-screens/MainScreen';
 import AgeUp from './screens/main-screens/AgeUp';
 import AdvertiseScreen from "./screens/main-screens/AdvertiseScreen"
 import RockPaperScissorGame from './screens/main-screens/RockPaperScissorGame';
 import GamesScreen from './screens/main-screens/GamesScreen';
 import SpinWheelGame from './screens/main-screens/SpinWheelGame';
 import { useNavigation } from '@react-navigation/native';
+import DateScreen from './screens/main-screens/DateScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,7 +48,8 @@ function TestScreen() {
       {/* <RockPaperScissorGame /> */}
       {/* <SpinWheelGame /> */}
       {/* <GamesScreen /> */}
-      {/* <MainScreen /> */}
+      {/* <MainScreenStack /> */}
+      <DateScreen />
       {/* <WelcomeScreen /> */}
       {/* <IntroScreen /> */}
       {/* <IntroScreenStack /> */}
@@ -76,7 +77,7 @@ function AuthScreenStack() {
         options={{headerShown: false}}
         />
       <Stack.Screen 
-        name="SignUpSceen"  
+        name="SignUpScreen"  
         component={SignUpScreen} 
         options={{headerShown: false}}
         />
@@ -103,11 +104,6 @@ function IntroScreenStack({ navigateMainScreenStack} ) {
         options={{ headerShown: false }}
         initialParams={{ navigateMainScreenStack }}
       />
-      <Stack.Screen 
-        name="NamingScreen" 
-        component={NamingScreen}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   )
 }
@@ -127,6 +123,11 @@ function MainScreenStack() {
       <Stack.Screen 
         name="AgeUp" 
         component={AgeUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="DateScreen" 
+        component={DateScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen 

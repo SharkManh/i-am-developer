@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import React from 'react'
 
-const Exit = ({ onPress }) => {
+const ExitScreen = ({ onPress }) => {
   return (
     <Pressable
         style={
@@ -11,13 +11,13 @@ const Exit = ({ onPress }) => {
     >
         <Image 
             style={styles.outScreenImage}
-            source={require("../../assets/outScreen.png")}
+            source={require("../../assets/exitScreen.png")}
         />
     </Pressable>
   )
 }
 
-export default Exit
+export default ExitScreen
 
 const styles = StyleSheet.create({
     container: {

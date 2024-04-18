@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import DarkOverlay from '../ui/DarkOverlay';
 
-const Reward = ({ resultTitle, playAgain }) => {
+const RockPaperScissorsResultAlert = ({ resultTitle, playAgain }) => {
     const [imageURL, setImageURL] = useState()
     const [closeButtonPositionStyle, setCloseButtonPositionStyle] = useState({})
 
@@ -46,14 +46,14 @@ const Reward = ({ resultTitle, playAgain }) => {
             >
                 <Image 
                     style={styles.closeImage}
-                    source={require("../../assets/closeGameResult.png")}
+                    source={require("../../assets/yellowCloseButton.png")}
                 />
             </Pressable>
         </View>
     )
 }
 
-export default Reward
+export default RockPaperScissorsResultAlert
 
 const styles = StyleSheet.create({
     container: {
