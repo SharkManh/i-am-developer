@@ -7,3 +7,11 @@ export const Colors = {
     // error500: '#f37c13',
     errorText: "red",
   }
+
+export const QuizColors = {
+    primary: "#EBDD65",
+    buttonRetry: "#665DF4",
+    buttonHome: "#4BDDD4",
+    correct: "#24DA41",
+    inCorrect: "#DA2424",
+}
