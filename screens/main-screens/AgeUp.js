@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Image, Animated, Pressable } from 'react-native'
 import React, { useEffect, useContext } from 'react'
 import { useState } from 'react'
-import IconButton from '../../components/ui/IconButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import { CharacterContext } from '../../store/character-context';
+import CloseButton from '../../components/main/CloseButton';
+import Money from '../../components/main/Money';
 
 const AgeUp = ({ navigation }) => {
     const [rotateDeg] = useState(new Animated.Value(0));
@@ -31,20 +32,9 @@ const AgeUp = ({ navigation }) => {
         navigation.goBack()
     }
 
-    function claimReward() {
-        characterCtx.addIncome(1600)
-        navigation.goBack()
-    }
-
-    function claimX2Reward() {
-        navigation.navigate("AdvertiseScreen")
-        characterCtx.addIncome(3200)
-        setIsX2RewardButtonVisible(false)
-    }
-
     return (
         <View style={styles.container}>
-            <IconButton style={styles.closeButton} onPress={exit} iconImageURL={require("../../assets/close.png")}/>
+            <CloseButton positionStyle={styles.positionCloseButton} onPress={exit} iconImageURL={require("../../assets/XCloseButton.png")}/>
             <View style={styles.ageUpWrapper}>
                 <Text style={styles.ageText}>Age</Text>
                 <Image style={styles.miniStarImage01} source={require("../../assets/star.png")}/>
@@ -53,7 +43,13 @@ const AgeUp = ({ navigation }) => {
                 <View style={styles.starWrapper}>
                     <Animated.Image style={[styles.lightEffect, rotateStyle]} source={require("../../assets/lightEffect.png")} />
                     <Image style={styles.starImage} source={require("../../assets/star.png")}/>
-                    <Text style={styles.ageNum}>6</Text>
+                    <Text style={styles.ageNum}>{characterCtx.age}</Text>
+                </View>
+            </View>
+            <View style={styles.incomeContainer}>
+                <View style={styles.moneyWrapper}>
+                    <Image style={styles.moneyImage} source={require("../../assets/money.png")}/>
+                    <Text style={styles.moneyText}> 0</Text>
                 </View>
             </View>
             <View style={styles.unlockWrapper}>
@@ -63,46 +59,6 @@ const AgeUp = ({ navigation }) => {
                 >
                     <Text style={styles.unlockText}>UNLOCKED</Text>
                 </LinearGradient>
-            </View>
-            <View style={styles.incomeContainer}>
-                <Text style={styles.rewardText}>Reward</Text>
-                <View style={styles.moneyWrapper}>
-                    <Image style={styles.moneyImage} source={require("../../assets/money.png")}/>
-                    <Text style={styles.moneyText}> 1600</Text>
-                </View>
-            </View>
-
-            <View style={styles.buttonGroup}>
-                <Pressable
-                    style={
-                        ({ pressed }) => [pressed && styles.pressed ]
-                    }
-                    onPress={claimReward}
-                >
-                    <LinearGradient
-                        colors={[ '#9A57DA', '#2A034A']}
-                        style={styles.button}
-                    >
-                        <Text style={styles.buttonTitle}>Claim Now</Text>
-                    </LinearGradient>
-                </Pressable>
-                {
-                    isX2RewardButtonVisible && 
-                    <Pressable
-                        style={
-                            ({ pressed }) => [pressed && styles.pressed ]
-                        }
-                        onPress={claimX2Reward}
-                    >
-                        <LinearGradient
-                            colors={[ '#9A57DA', '#2A034A']}
-                            style={styles.button}
-                        >
-                            <Text style={styles.buttonTitle}>x2 Reward</Text>
-                        </LinearGradient>
-                    </Pressable>
-                }
-                
             </View>
         </View>
     )
@@ -117,7 +73,7 @@ const styles = StyleSheet.create({
         display: "flex", flexDirection: "column",
         alignItems: "center",
     },
-    closeButton: {
+    positionCloseButton: {
         position: "absolute", right: 10, top: 10, zIndex: 1,
         // borderWidth: 1, borderColor: "red"
     },
@@ -179,7 +135,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
         width: "80%",
         height: 300,
-        borderWidth: 1, borderColor: "red",
+        borderWidth: 1, borderColor: "black",
         borderRadius: 20,
         backgroundColor: "white"
     },
@@ -195,6 +151,7 @@ const styles = StyleSheet.create({
     // --------- Income ---------------
     incomeContainer: {
         marginTop: 40,
+        // borderWidth: 1, borderColor: "red",
         alignItems: "center",
     },
     rewardText: {
@@ -206,13 +163,12 @@ const styles = StyleSheet.create({
         // textShadowRadius: 1,
     },
     moneyWrapper: {
-        marginTop: 10,
         padding: 5,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         borderWidth: 1, borderColor: "black",
-        borderBottomWidth: 5,
+        borderBottomWidth: 3,
         backgroundColor: "#D7A97E",
         borderRadius: 20,
         paddingHorizontal: 10,

@@ -14,6 +14,7 @@ const MainButton = ({ positionStyle, onPress, imageURL }) => {
         <Image 
             source={imageURL}
             style={styles.buttonImage}
+            resizeMode='contain'
         />
     </Pressable>
   )

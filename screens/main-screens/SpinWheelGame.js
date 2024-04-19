@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import NoMoreTicket from '../../components/main/NoMoreTicket';
 import DarkOverlay from '../../components/ui/DarkOverlay';
-import Reward from '../../components/main/Reward';
+import Reward from '../../components/main/RockPaperScissorsResultAlert';
 import SpinReward from '../../components/main/SpinReward';
 
 const SpinWheelGame = () => {
@@ -46,12 +46,6 @@ const SpinWheelGame = () => {
 
     function handleResult() {
         var remainder = rotateDeg % 360;
-
-        // console.log(
-        //     `rotateDeg: ${rotateDeg} 
-        //     remainder: ${remainder}
-        //     `
-        // )
 
         // determine phần thưởng
         switch(Math.floor(remainder / 90)) {

@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react' 
 import NoMoreTicket from '../../components/main/NoMoreTicket';
 import DarkOverlay from '../../components/ui/DarkOverlay';
-import Reward from '../../components/main/Reward';
+import RockPaperScissorsResultAlert from '../../components/main/RockPaperScissorsResultAlert';
 import Money from '../../components/main/Money';
 import Ticket from '../../components/main/Ticket';
-import Exit from "../../components/main/Exit"
+import Exit from "../../components/main/ExitButton"
 
 const RockPaperScissorGame = ({ navigation }) => {
     const [opponentOption, setOpponentOption] = useState(0)
@@ -17,11 +17,12 @@ const RockPaperScissorGame = ({ navigation }) => {
     const [isNoMoreTicketDisplayed, setIsNoMoreTicketDisplayed] = useState(false)
     const [imageOpponentChoiceStyles, setImageOpponentChoiceStyles] = useState({
         opacity: 0,
-        width: 150, height: 150,
+        width: 170, height: 170,
+        transform: [{rotate: "180deg"}]
     })
     const [imagePlayerChoiceStyles, setImagePlayerChoiceStyles] = useState({
         opacity: 0,
-        width: 150, height: 150,
+        width: 170, height: 170,
     })
 
     function watchAdsEarnTicket() {
@@ -99,7 +100,10 @@ const RockPaperScissorGame = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <ImageBackground 
+            source={require("../../assets/backgroundGameQuiz.png")}    
+            style={styles.container}
+        >
             <Exit onPress={exit}/>
             <Ticket numberTicket={numberTicket} onPress={watchAdsEarnTicket}/>
             <Money 
@@ -192,10 +196,10 @@ const RockPaperScissorGame = ({ navigation }) => {
                 isResultShown && 
                 <>
                     <DarkOverlay />
-                    <Reward resultTitle={result} playAgain={playAgain}/>
+                    <RockPaperScissorsResultAlert resultTitle={result} playAgain={playAgain}/>
                 </>
             }
-        </View>
+        </ImageBackground>
     )
 } 
 
@@ -205,7 +209,7 @@ const styles = StyleSheet.create({
     container: {
         position: "relative",
         height: "100%",
-        backgroundColor: "#f2ef9b",
+        backgroundColor: "white",
         alignItems: "center",
         justifyContent: "center",
     },
@@ -256,7 +260,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignItems: "center",
         bottom: 10,
-        width: "80%", height: "40%",
+        width: "80%", 
         justifyContent: "space-between",
         // borderWidth: 1, borderColor: "green",
     },
@@ -271,8 +275,7 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     image: {
-        
-        width: 60, height: 60,
+        width: 80, height: 80,
     },
 
 

@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from 'react-native'
 import React from 'react'
-import IconButton from '../../components/ui/IconButton'
+import ExitButton from '../../components/main/ExitButton'
 
 const GamesScreen = ({ navigation }) => {
   function playRockPaperScissorGame() {
@@ -12,12 +12,13 @@ const GamesScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-        <IconButton 
-          style={styles.closeButton} 
-          iconImageURL={require("../../assets/close.png")}
-          onPress={exit}  
+    <ImageBackground
+      source={require("../../assets/backgroundGameQuiz.png")}
+      style={styles.container}>
+        <ExitButton 
+          onPress={exit}        
         />
+
         <View style={styles.header}>
           <Text style={styles.heading}>Games</Text>
         </View>
@@ -26,12 +27,17 @@ const GamesScreen = ({ navigation }) => {
             style={styles.game}
             onPress={playRockPaperScissorGame}
             >
-            <Image 
-              style={styles.gameImage}
-              source={require("../../assets/ScissorRockPaper.png")}
-            />
+            <ImageBackground
+              style={styles.backgroundGameItemImage}
+              source={require("../../assets/backgroundGameItem.png")}
+            >
+              <Image 
+                style={styles.gameImage}
+                source={require("../../assets/ScissorRockPaper.png")}
+              />
+            </ImageBackground>
             <View style={styles.gameNameWrapper}>
-              <Text style={styles.gameName}>Scissor Rock Paper</Text>
+              <Text style={styles.gameName}>Rock Paper Scissors</Text>
             </View>
           </Pressable>
           <Pressable 
@@ -43,53 +49,46 @@ const GamesScreen = ({ navigation }) => {
             <Text style={styles.gameName}></Text>
           </Pressable>
         </View>
-    </View>
+    </ImageBackground>
   )
 }
 
 export default GamesScreen
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "yellow",
-      display: "flex", flexDirection: "column",
-      alignItems: "center",
-    }, 
-    closeButton: {
-      position: "absolute", right: 10, top: 10, zIndex: 1,
-  },
+  container: {
+    flex: 1,
+    display: "flex", flexDirection: "column",
+    alignItems: "center",
+  }, 
   header: {
-    height: "10%",
     width: "100%",
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     justifyContent: "center", alignItems: "center"
   }, 
   heading: {
     fontSize: 40, fontWeight: "bold",
-    color: "white"
+    color: "black"
   },
 
   // ---------------- Game --------------
   gameGroup: {
-    marginTop: 10,
+    marginTop: 30,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly", alignItems: "center"
   },
   game: {
     height: 200, 
-    width: "40%",
-    backgroundColor: "white",
-    borderColor: "black", borderWidth: 1,
-    borderRadius: 10,
-    borderBottomWidth: 5, 
     alignItems: "center"
   }, 
+  backgroundGameItemImage: {
+    width: 160, height: 160,
+    justifyContent: "center", alignItems: "center",
+  },
   gameImage: {
-    marginTop: 10,
     width: 130, height: 130,
-    borderRadius: 10
+    borderRadius: 10,
   }, 
   gameNameWrapper: {
     flex: 1,
@@ -98,6 +97,8 @@ const styles = StyleSheet.create({
   gameName: {
     width: "100%",
     textAlign: "center",
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: "black",
+    fontSize: 18,
   }
 })

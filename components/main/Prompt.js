@@ -3,7 +3,7 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
-const Prompt = ({ message, function01, function02 }) => {
+const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, isNoButtonVisible=true }) => {
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
     const [containerPositionStyles, setContainerPositionStyles] = useState("")
@@ -26,32 +26,43 @@ const Prompt = ({ message, function01, function02 }) => {
         <View style={[styles.container, containerPositionStyles]} onLayout={getContainerSize}>
             <View style={styles.messageWrapper}>
                 <Text style={styles.message}>
-                    During this time you don't have enough awareness, do you want to skip to 6 years old?
+                    {message}
                 </Text>
+                {
+                    note != "" && 
+                    <Text style={styles.note}>
+                        {note}
+                    </Text>
+                }
+                
             </View>
             <View style={styles.buttonGroup}>
                 <Pressable 
                     style={
                         ({ pressed }) => [styles.button, pressed && styles.pressed]
                     }
-                    onPress={function01}
-                >
-                    <Image 
-                        style={styles.imageButton}
-                        source={require("../../assets/no.png")}
-                    />
-                </Pressable>
-                <Pressable 
-                    style={
-                        ({ pressed }) => [styles.button, pressed && styles.pressed]
-                    }
-                    onPress={function02}
+                    onPress={buttonYesFunction}
                 >
                     <Image 
                         style={styles.imageButton}
                         source={require("../../assets/yes.png")}
                     />
                 </Pressable>
+                {
+                    isNoButtonVisible &&
+                    <Pressable 
+                        style={
+                            ({ pressed }) => [styles.button, pressed && styles.pressed]
+                        }
+                        onPress={buttonNoFunction}
+                    >
+                        <Image 
+                            style={styles.imageButton}
+                            source={require("../../assets/no.png")}
+                        />
+                    </Pressable>
+                }
+            
             </View>
         </View>
     )
@@ -77,6 +88,10 @@ const styles = StyleSheet.create({
         width: "90%", 
         // borderWidth: 1, borderColor: "blue"
         fontSize: 15, fontWeight: "bold"
+    },
+    note: {
+        width: "90%",
+        fontSize: 13, fontWeight: "bold"
     },
     // buttonGroupWrapper: {
         // borderWidth: 1, borderColor: "green",

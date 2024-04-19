@@ -18,7 +18,7 @@ function AuthContent({ title, isSignIn, onAuthenticate }) {
 
   function switchAuthModeHandler() {
     if (isSignIn) {
-      navigation.replace('SignupScreen');
+      navigation.replace('SignUpScreen');
     } else {
       navigation.replace('SignInScreen');
     }
@@ -77,7 +77,6 @@ export default AuthContent;
 const styles = StyleSheet.create({
   container: {
     height: "70%",
-    // justifyContent: 'center',
     backgroundColor: Colors.authBackground,
     alignItems: "center",
   },
@@ -85,7 +84,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginHorizontal: 32,
     padding: 16,
-    borderRadius: 8,
     backgroundColor: Colors.authBackground,
     elevation: 2,
     shadowColor: 'black',

@@ -6,13 +6,11 @@ import { Colors } from '../../constants/styles';
 
 function AuthForm({ isSignIn, onSubmit, credentialsInvalid }) {
   const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
 
   const {
     email: emailIsInvalid,
-    confirmEmail: emailsDontMatch,
     password: passwordIsInvalid,
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
@@ -21,9 +19,6 @@ function AuthForm({ isSignIn, onSubmit, credentialsInvalid }) {
     switch (inputType) {
       case 'email':
         setEnteredEmail(enteredValue);
-        break;
-      case 'confirmEmail':
-        setEnteredConfirmEmail(enteredValue);
         break;
       case 'password':
         setEnteredPassword(enteredValue);
@@ -37,13 +32,11 @@ function AuthForm({ isSignIn, onSubmit, credentialsInvalid }) {
   function submitHandler() {
     onSubmit({
       email: enteredEmail,
-      confirmEmail: enteredConfirmEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
     });
   }
 
-  console.log("hiii")
   return (
     <View style={styles.form}>
       <View>
@@ -54,15 +47,6 @@ function AuthForm({ isSignIn, onSubmit, credentialsInvalid }) {
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
         />
-        {!isSignIn && (
-          <Input
-            label="Confirm Email Address"
-            onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
-            value={enteredConfirmEmail}
-            keyboardType="email-address"
-            isInvalid={emailsDontMatch}
-          />
-        )}
         <Input
           label="Password"
           onUpdateValue={updateInputValueHandler.bind(this, 'password')}
@@ -110,7 +94,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   passRecoverButton: {
-    // borderColor: "red", borderWidth: 1,
     alignItems: "flex-end"
   },
   forgotPasswordText: {
