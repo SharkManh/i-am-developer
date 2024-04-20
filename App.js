@@ -19,6 +19,9 @@ import GamesScreen from './screens/main-screens/GamesScreen';
 import SpinWheelGame from './screens/main-screens/SpinWheelGame';
 import { useNavigation } from '@react-navigation/native';
 import DateScreen from './screens/main-screens/DateScreen';
+import QuizMenuScreen from './screens/main-screens/quiz/QuizMenuScreen';
+import QuizScreen from './screens/main-screens/quiz/QuizScreen';
+import TaiXiuScreen from './screens/main-screens/TaiXiuScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -144,24 +147,37 @@ function MainScreenStack() {
         name="AdvertiseScreen" 
         component={AdvertiseScreen}
         options={{ headerShown: false }}
+      /><Stack.Screen 
+      name="QuizMenuScreen" 
+      component={QuizMenuScreen}
+      options={{ headerShown: true }}
+      initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="QuizScreen" 
+        component={QuizScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
       />
     </Stack.Navigator>
   )
 }
+
 export default function App() {
 
   return (
-    <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <AuthContextProvider>
-        <CharacterContextProvider>
-          <NavigationContainer>
-            <ScreenStackHandler />
-            {/* <TestScreen /> */}
-          </NavigationContainer>
-        </CharacterContextProvider>
-      </AuthContextProvider>
-    </View>
+    // <View style={styles.container}>
+    //   <StatusBar hidden={true} />
+    //   <AuthContextProvider>
+    //     <CharacterContextProvider>
+    //       <NavigationContainer>
+    //         <ScreenStackHandler />
+    //         {/* <TestScreen /> */}
+    //       </NavigationContainer>
+    //     </CharacterContextProvider>
+    //   </AuthContextProvider>
+    // </View>
+    <TaiXiuScreen initialMoney={200} />
   );
 }
 
