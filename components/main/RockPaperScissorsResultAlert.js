@@ -1,17 +1,20 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import DarkOverlay from '../ui/DarkOverlay';
+import { CharacterContext } from '../../store/character-context';
 
 const RockPaperScissorsResultAlert = ({ resultTitle, playAgain }) => {
     const [imageURL, setImageURL] = useState()
     const [closeButtonPositionStyle, setCloseButtonPositionStyle] = useState({})
+    const characterCtx = useContext(CharacterContext)
 
     useEffect(() => {
         switch(resultTitle) {
             case "Win": {
                 setImageURL(require("../../assets/winGame.png"))
+                characterCtx.addIncome(200)
                 setCloseButtonPositionStyle({
                     right: -20, top: 50
                 })
@@ -19,6 +22,7 @@ const RockPaperScissorsResultAlert = ({ resultTitle, playAgain }) => {
             }
             case "Tie": {
                 setImageURL(require("../../assets/tieGame.png")); 
+                characterCtx.addIncome(100)
                 setCloseButtonPositionStyle({
                     right: -20, top: 75
                 })
@@ -26,6 +30,7 @@ const RockPaperScissorsResultAlert = ({ resultTitle, playAgain }) => {
             }
             case "Lose": {
                 setImageURL(require("../../assets/loseGame.png")); 
+                characterCtx.addIncome(0)
                 setCloseButtonPositionStyle({
                     right: -20, top: 120
                 })

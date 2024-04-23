@@ -100,5 +100,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "black",
     fontSize: 18,
+    fontStyle: "italic",
   }
 })
