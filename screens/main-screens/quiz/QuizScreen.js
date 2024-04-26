@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Pressable, ActivityIndicator } from 'react-native';
 import ItalicText from '../../../components/ui/ItalicText';
 import { QuizColors } from '../../../constants/styles';
-import { eng } from '../../../store/QuizData';
+import { eng, math, physics, tech } from '../../../store/QuizData';
 
 const QuizScreen = () => {
-    const data = eng[0];
+    const data = math[0];
     const [quizData, setQuizData] = useState([]);
     const [randomizedQuizData, setRandomizedQuizData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -87,6 +87,16 @@ const QuizTaking = ({ question, onAnswer, index }) => {
                         C. {question.C}
                     </Text>
                 </Pressable>
+                {
+                    (question.D && question.D !== "") && 
+                    (
+                        <Pressable style={styles.option} onPress={() => onAnswer('D')}>
+                            <Text style={styles.optionText}>
+                                D. {question.D}
+                            </Text>
+                        </Pressable>
+                    )
+                }
             </View>
         </View>
     );

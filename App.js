@@ -177,7 +177,8 @@ export default function App() {
     //     </CharacterContextProvider>
     //   </AuthContextProvider>
     // </View>
-    <TaiXiuScreen initialMoney={200} />
+    // <TaiXiuScreen initialMoney={200} />
+    <QuizScreen />
   );
 }
 
