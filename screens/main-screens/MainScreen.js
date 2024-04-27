@@ -91,7 +91,7 @@ const MainScreen = ({ navigation }) => {
   // Handle appearance of character
   useEffect(() => {
     if (characterCtx.age > 0) { // Xóa hiển thị AgeUp do đặc tính của useEffect khi component render first
-      // navigation.navigate("AgeUp");
+      navigation.navigate("AgeUp");
     }
 
     if (characterCtx.age < 6) {
