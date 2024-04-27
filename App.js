@@ -16,7 +16,6 @@ import AgeUp from './screens/main-screens/AgeUp';
 import AdvertiseScreen from "./screens/main-screens/AdvertiseScreen"
 import RockPaperScissorGame from './screens/main-screens/RockPaperScissorGame';
 import GamesScreen from './screens/main-screens/GamesScreen';
-import SpinWheelGame from './screens/main-screens/SpinWheelGame';
 import { useNavigation } from '@react-navigation/native';
 import DateScreen from './screens/main-screens/DateScreen';
 import QuizMenuScreen from './screens/main-screens/quiz/QuizMenuScreen';
@@ -28,7 +27,7 @@ const Stack = createNativeStackNavigator();
 
 function ScreenStackHandler() {
   const authCtx = useContext(AuthContext);
-  const characterCtx = useContext(CharacterContext)
+  const characterCtx = useContext(CharacterContext) // Xác định sự xuất hiện lần đầu của intro 
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   
   function navigateMainScreenStack() {
@@ -52,7 +51,7 @@ function TestScreen() {
       {/* <SpinWheelGame /> */}
       {/* <GamesScreen /> */}
       {/* <MainScreenStack /> */}
-      <DateScreen />
+      {/* <DateScreen /> */}
       {/* <WelcomeScreen /> */}
       {/* <IntroScreen /> */}
       {/* <IntroScreenStack /> */}

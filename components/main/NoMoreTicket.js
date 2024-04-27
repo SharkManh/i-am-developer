@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable, Dimensions } from 'react-nati
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
+import TextButton from '../ui/TextButton';
 
 const NoMoreTicket = ({ onWatchAdsEarnTicket, onCancel }) => {
     const screenHeight = Dimensions.get("window").height;
@@ -19,7 +20,7 @@ const NoMoreTicket = ({ onWatchAdsEarnTicket, onCancel }) => {
     return (
         <View style={[styles.container, containerPositionStyles]} onLayout={getContainerSize}>
             <LinearGradient
-                colors={[ '#72063c', '#ddb52f']}
+                colors={[ '#9A57DA', '#2A034A']}
                 style={styles.linearGradient}
             >
                 <Text style={styles.title}>No More Ticket</Text>
@@ -33,7 +34,21 @@ const NoMoreTicket = ({ onWatchAdsEarnTicket, onCancel }) => {
             </View>
 
             <View style={styles.buttonGroup}>
-                <Pressable 
+                <TextButton 
+                    onPress={onCancel}
+                    title={"Cancel"}
+                    buttonColor={"#9FEB4D"}
+                    borderColor={"#71A934"}
+                    // positionStyle={{position: "absolute", bottom: 10, right: 10}}
+                />
+                <TextButton 
+                    title={"Earn"}
+                    onPress={onWatchAdsEarnTicket}
+                    buttonColor={"#9FEB4D"}
+                    borderColor={"#71A934"}
+                    // positionStyle={{position: "absolute", bottom: 10, right: 10}}
+                />
+                {/* <Pressable 
                     style={
                         ({ pressed }) => [styles.button, pressed && styles.pressed]
                     }
@@ -48,7 +63,7 @@ const NoMoreTicket = ({ onWatchAdsEarnTicket, onCancel }) => {
                     onPress={onWatchAdsEarnTicket}
                 >
                     <Text style={styles.buttonTitle}>Watch Ads</Text>
-                </Pressable>
+                </Pressable> */}
             </View>
         </View>
     )
@@ -57,10 +72,26 @@ const NoMoreTicket = ({ onWatchAdsEarnTicket, onCancel }) => {
 export default NoMoreTicket
 
 const styles = StyleSheet.create({
+    // unlockWrapper: {
+    //     marginTop: 40,
+    //     width: "80%",
+    //     height: 300,
+    //     borderWidth: 1, borderColor: "black",
+    //     borderRadius: 20,
+    //     backgroundColor: "white"
+    // },
+    // linearGradient: {
+    //     borderTopLeftRadius: 20, borderTopRightRadius: 20,
+    // },
+    // unlockText: {
+    //     fontSize: 40, fontWeight: "bold", 
+    //     color: "white",
+    //     textAlign: "center",
+    // },
     container: {
         width: "80%",
         height: 300,
-        borderWidth: 1, borderColor: "red",
+        borderWidth: 1, borderColor: "black",
         borderRadius: 20,
         backgroundColor: "white",
         zIndex: 2

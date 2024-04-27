@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '../../constants/styles'
+import TextButton from '../../components/ui/TextButton'
 
 const IntroScreen = ({ navigation, route, navigateMainScreenStack }) => {
     const intro1 = {
@@ -37,25 +38,24 @@ const IntroScreen = ({ navigation, route, navigateMainScreenStack }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <ImageBackground 
+            style={styles.container}
+            source={require("../../assets/introBackground.png")}    
+        >
             <View style={styles.content}>
-                <Image
-                    style={styles.image}
-                    source={content.imageURL}
-                />
                 <Text style={styles.description}>
                     {content.description}
                 </Text>
             </View>
-            <Pressable
-                style={
-                    ({ pressed }) => [styles.button, pressed && styles.pressed]
-                }
+           
+            <TextButton 
+                title={"Next"}
                 onPress={switchIntro}
-            >
-                <Text style={styles.buttonName}>Next</Text>
-            </Pressable>
-        </View>
+                buttonColor={"#9FEB4D"}
+                borderColor={"#71A934"}
+                positionStyle={{position: "absolute", bottom: 10, right: 10}}
+            />
+        </ImageBackground>
     )
 }
 
@@ -67,31 +67,14 @@ const styles = StyleSheet.create({
         justifyContent: "center", alignItems: "center",
     },
     content: {
-        justifyContent: "center", alignItems: "center",
+        position: "absolute", bottom: 0, 
+        height: "40%", 
+        alignItems: "center",
         width: "100%"
     }, 
-    image: {
-        width: 1792/5,
-        height: 1024/5,
-    }, 
     description: {
+        color: "white",
         width: "80%",
-        marginTop: 20,
         textAlign: "justify",
     },
-    button: {
-        position: "absolute",
-        bottom: 10, right: 10,
-        backgroundColor: Colors.authButtonBackground,
-        borderRadius: 10,
-        paddingHorizontal: 15,
-        paddingVertical: 5,
-    },
-    buttonName: {
-        fontSize: 20, fontWeight: "bold",
-        color: "white",
-    },
-    pressed: {
-        opacity: 0.7
-    }
 })

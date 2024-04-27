@@ -99,6 +99,22 @@ const RockPaperScissorGame = ({ navigation }) => {
         }
     }
 
+    const GameButton = ({ onPress, imageURL }) => {
+        return(
+            <Pressable
+                style={
+                    [styles.button ,isGameStarted && styles.inactiveButton]
+                }
+                onPress={onPress}
+            >
+                <Image 
+                    style={styles.image}
+                    source={imageURL}
+                />
+            </Pressable>
+        )
+    }
+
     return (
         <ImageBackground 
             source={require("../../assets/backgroundGameQuiz.png")}    
@@ -146,40 +162,18 @@ const RockPaperScissorGame = ({ navigation }) => {
                 />
                 <Text style={styles.prompt}>Choose</Text>
                 <View style={styles.buttonGroup}>
-                    <Pressable
-                        style={
-                           [styles.button ,isGameStarted && styles.inactiveButton]
-                        }
+                    <GameButton 
                         onPress={isGameStarted ? null : () => runGame(0)}
-                    >
-                        <Image 
-                            style={styles.image}
-                            source={require("../../assets/scissor.png")}
-                        />
-                    </Pressable>
-                    <Pressable
-                        style={
-                            [styles.button ,isGameStarted && styles.inactiveButton]
-                        }
+                        imageURL={require("../../assets/scissor.png")}
+                    />
+                    <GameButton 
                         onPress={isGameStarted ? null : () => runGame(1)}
-                    >
-                        <Image 
-                            style={styles.image}
-                            source={require("../../assets/rock.png")}
-                        />
-                    </Pressable>
-
-                    <Pressable
-                        style={
-                            [styles.button ,isGameStarted && styles.inactiveButton]
-                        }
+                        imageURL={require("../../assets/rock.png")}
+                    />
+                    <GameButton 
                         onPress={isGameStarted ? null : () => runGame(2)}
-                    >
-                        <Image 
-                            style={styles.image}
-                            source={require("../../assets/paper.png")}
-                        />
-                    </Pressable>
+                        imageURL={require("../../assets/paper.png")}
+                    />
                 </View>
             </View>         
             {
@@ -222,9 +216,8 @@ const styles = StyleSheet.create({
         // override default style
         paddingHorizontal: 20,
         paddingVertical: 0, paddingHorizontal: 5,
-        borderWidth: 1, borderColor: "black",
         borderRadius: 10,
-        backgroundColor: "white",
+        backgroundColor: "#D9D9D9",
         flexDirection: "row",
         alignItems: "center"
     },

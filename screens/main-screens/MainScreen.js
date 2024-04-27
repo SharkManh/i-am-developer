@@ -10,6 +10,8 @@ import MainButton from '../../components/main/MainButton';
 import AgeUp from './AgeUp';
 import DailyReward from '../../components/main/DailyReward';
 import DarkOverlay from '../../components/ui/DarkOverlay';
+import TextButton from '../../components/ui/TextButton';
+import InputNameForm from '../../components/main/InputNameForm';
 
 const MainScreen = ({ navigation }) => {
     const [characterName, setCharacterName] = useState("")
@@ -247,31 +249,11 @@ const MainScreen = ({ navigation }) => {
                 !isCharacterNamed && 
                 <>
                     <View style={styles.darkOverlay}></View>
-                    <View style={styles.inputNameFormStyleWrapper} onLayout={getInputNameFormSize} >
-                        <View style={styles.inputNameFormStyle}>
-                            <Image 
-                                style={styles.inputNameFormImage}
-                                source={require("../../assets/inputNameForm.png")} 
-                                resizeMode='contain'
-                            />
-                            <TextInput 
-                                style={styles.inputBox}
-                                onChangeText={(value) => setCharacterName(value)}
-                            />
-                            <Pressable 
-                                style={
-                                    ({ pressed }) => 
-                                        [styles.inputNameHandlerButton, pressed && styles.pressed]}
-                                onPress={handleInputName}
-                            >
-                                <Image 
-                                    style={styles.inputNameHandlerButtonImage}
-                                    resizeMode='contain'
-                                    source={require("../../assets/startButton.png")}
-                                />
-                            </Pressable>
-                        </View>
-                    </View>
+                    <InputNameForm 
+                        onPress={handleInputName}
+                        onLayout={getInputNameFormSize}
+                        setCharacterName={setCharacterName}
+                    />
                 </>
             }
             
@@ -288,20 +270,20 @@ const MainScreen = ({ navigation }) => {
             }
             <View style={styles.bottomButtonGroup}>
                 <MainButton
-                    positionStyle={styles.gameButton}
+                    positionStyle={styles.bottomButton}
                     // imageURL={require("../../assets/mainButton.png")}
                 />
                 <MainButton
-                    positionStyle={styles.gameButton}
+                    positionStyle={styles.bottomButton}
                     // imageURL={require("../../assets/mainButton.png")}
                 />
                 <MainButton
-                    positionStyle={styles.gameButton}
+                    positionStyle={styles.bottomButton}
                     imageURL={require("../../assets/letterIcon.png")}
                     onPress={navigateDateScreen}
                 />
                 <MainButton
-                    positionStyle={styles.gameButton}
+                    positionStyle={styles.bottomButton}
                     onPress={navigateGamesScreen}
                     imageURL={require("../../assets/game.png")}
                 />
@@ -452,38 +434,41 @@ const styles = StyleSheet.create({
         width: 60, height: 60,
     },
     // ------------------ Input Character Name ----------------
-    inputNameFormStyleWrapper: {
-        position: "absolute", top: 0,
-        width: "100%", height: "100%",
-        justifyContent: "center", alignItems: "center",
-        zIndex: 1, 
-    },
-    inputNameFormStyle: {
-        width: 335, height: 594,
-        justifyContent: "center", alignItems: "center",
-    },
-
-    inputNameFormImage: {
-        position: "absolute",
-    },
-    inputNameHandlerButton: {
-        position: "absolute", bottom: 90,
-    },
-    inputNameHandlerButtonImage: {
-        width: 327/2.5, height: 115/2.5,
-    },
-
-    // inputNamePrompt: {
-    //     fontSize: 25, fontWeight: 'bold',
-    //     color: "white",
+    // inputNameFormStyleWrapper: {
+    //     position: "absolute", top: 0,
+    //     width: "100%", height: "100%",
+    //     justifyContent: "center", alignItems: "center",
+    //     zIndex: 1, 
     // },
-    inputBox: {
-        width: 200,
-        position: "absolute", top: 224,
-        fontSize: 20, fontWeight: "bold",
-        color: "white",
-        padding: 10,
-    }, 
+    // inputNameFormStyle: {
+    //     width: 330, height: 594,
+    //     justifyContent: "center", alignItems: "center",
+    //     borderWidth: 1, borderColor: "red",
+    // },
+
+    // inputNameFormImage: {
+    //     width: 330, height: 594,
+    //     position: "absolute",
+    //     borderWidth: 1, borderColor: "blue",
+    // },
+    // inputNameHandlerButton: {
+    //     position: "absolute", bottom: 90,
+    // },
+    // inputNameHandlerButtonImage: {
+    //     width: 327/2.5, height: 115/2.5,
+    // },
+
+    // // inputNamePrompt: {
+    // //     fontSize: 25, fontWeight: 'bold',
+    // //     color: "white",
+    // // },
+    // inputBox: {
+    //     width: 200,
+    //     position: "absolute", top: 224,
+    //     fontSize: 20, fontWeight: "bold",
+    //     color: "white",
+    //     padding: 10,
+    // }, 
     // inputNameButton: {
     //     backgroundColor: Colors.authButtonBackground,
     //     width: "80%",

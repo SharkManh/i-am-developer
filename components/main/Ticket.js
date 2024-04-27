@@ -20,7 +20,6 @@ const Ticket = ({ numberTicket, onPress }) => {
 
 export default Ticket
 
-// ---------------------- Ticket ------------------
 const styles = StyleSheet.create({
     container: {
         position: "absolute", right: 170, top: 10,
@@ -30,14 +29,13 @@ const styles = StyleSheet.create({
     plusIconButton: {
         position: "absolute", top: 20, right: -5, 
         zIndex: 1,
-        backgroundColor: "white",   // che đi cái border của ticketWrapper do cái dấu cộng xuyên thấu
+        backgroundColor: "white",
         borderRadius: 20
     },
     ticketWrapper: {
         paddingHorizontal: 5, 
-        borderWidth: 1, borderColor: "black",
         borderRadius: 10,
-        backgroundColor: "white",
+        backgroundColor: "#D9D9D9",
         flexDirection: "row",
         alignItems: "center"
     },
