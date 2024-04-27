@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     inputNameFormStyle: {
         width: 330, height: 594,
         justifyContent: "center", alignItems: "center",
-        borderWidth: 1, borderColor: "red",
+        // borderWidth: 1, borderColor: "red",
     },
 
     inputNameFormImage: {
         width: 330, height: 594,
         position: "absolute",
-        borderWidth: 1, borderColor: "blue",
+        // borderWidth: 1, borderColor: "blue",
     },
     inputNameHandlerButton: {
         position: "absolute", bottom: 90,
