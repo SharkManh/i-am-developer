@@ -2,12 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignInScreen from "./screens/auth-screens/SignInScreen";
 import LogoScreen from "./screens/auth-screens/LogoScreen";
 import SignUpScreen from "./screens/auth-screens/SignUpScreen";
 import MainScreen from "./screens/main-screens/MainScreen";
-import { Colors } from "./constants/styles";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import { Text, SafeAreaView, StyleSheet, View } from "react-native";
 import CharacterContextProvider, {
@@ -16,13 +14,14 @@ import CharacterContextProvider, {
 import IntroScreen from "./screens/intro-screens/IntroScreen";
 import AgeUp from "./screens/main-screens/AgeUp";
 import AdvertiseScreen from "./screens/main-screens/AdvertiseScreen";
-import RockPaperScissorGame from "./screens/main-screens/RockPaperScissorGame";
+import RockPaperScissorScreen from "./screens/main-screens/RockPaperScissorScreen";
 import GamesScreen from "./screens/main-screens/GamesScreen";
 import { useNavigation } from "@react-navigation/native";
 import DateScreen from "./screens/main-screens/DateScreen";
 import TaiXiuScreen from "./screens/main-screens/TaiXiuScreen";
 import QuizMenuScreen from "./screens/main-screens/quiz/QuizMenuScreen";
 import QuizScreen from "./screens/main-screens/quiz/QuizScreen";
+import FinancialManagementScreen from "./screens/main-screens/financial-management/FinancialManagementScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,12 +41,18 @@ function ScreenStackHandler() {
   );
 }
 
+
+function FinancialScreensHandler() {
+ 
+}
+
+
 function TestScreen() {
   return (
     <>
       {/* <AdvertiseScreen /> */}
       {/* <AgeUp /> */}
-      {/* <RockPaperScissorGame /> */}
+      {/* <RockPaperScissorScreen /> */}
       {/* <SpinWheelGame /> */}
       {/* <GamesScreen /> */}
       {/* <MainScreenStack /> */}
@@ -59,6 +64,7 @@ function TestScreen() {
       {/* <SignUpScreen /> */}
       {/* <TaiXiuScreen /> */}
       {/* <QuizMenuScreen /> */}
+      {/* <FinancialManagementScreen /> */}
     </>
   );
 }
@@ -135,8 +141,8 @@ function MainScreenStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="RockPaperScissorGame"
-        component={RockPaperScissorGame}
+        name="RockPaperScissorScreen"
+        component={RockPaperScissorScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -157,6 +163,11 @@ function MainScreenStack() {
       <Stack.Screen
         name="QuizScreen"
         component={QuizScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FinancialManagementScreen"
+        component={FinancialManagementScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

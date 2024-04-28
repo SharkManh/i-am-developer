@@ -12,6 +12,10 @@ export const CharacterContext = createContext({
   happinessPoint: 0,
   activityHistories: [],
   dateInfo: {},
+  dailyRewardTracking: {},
+  financialManagement: [{date: new Date(), transactionType: "", description: "", transactionCoin: 0}],
+  setFinancialManagement: () => {},
+  setDailyRewardTracking: (dailyRewardTracking) => {},
   setLifeTimeCounter: (lifeTimeCounter) => {},
   setUserEmail: (userEmail) => {},
   createCharacterName: (characterName) => {},
@@ -39,6 +43,18 @@ function CharacterContextProvider({ children }) {
     isLoveAccepted: false,
     lovePoint: 0,
   })
+  const [dailyRewardTracking, setDailyRewardTracking] = useState({
+    isDay01Got: false,
+    isDay01AllowGot: true,
+    isDay02Got: false,
+    isDay02AllowGot: false,
+    isDay03Got: false,
+    isDay03AllowGot: false,
+    isDay04Got: false,
+    isDay04AllowGot: false,
+  })
+  const [financialManagement, setFinancialManagement] = useState([])
+
   const [education, setEducation] = useState({
     "primary" : {
       "mathematics" : false,
@@ -61,11 +77,21 @@ function CharacterContextProvider({ children }) {
     setCharacterName(characterName);
   }
 
-  function addIncome(amount) {
+  function addIncome(amount, description) {
+    setFinancialManagement(( prevValue ) => {
+      return(
+        [...prevValue, {date: new Date(), transactionType: "income", description: description, transactionCoin: amount}]
+      )
+    })
     setIncome((prevIncome) => (prevIncome += amount));
   }
 
-  function minusIncome(amount) {
+  function minusIncome(amount, description) {
+    setFinancialManagement((prevValue) => {
+      return(
+        [...prevValue, {date: new Date(), transactionType: "expense", description: description, transactionCoin: amount}]
+      )
+    })
     setIncome((prevIncome) => (prevIncome -= amount));
   }
 
@@ -85,10 +111,11 @@ function CharacterContextProvider({ children }) {
     healthPoint: healthPoint,
     education: education,
     dateInfo: dateInfo,
-    setDateInfo: setDateInfo,
     happinessPoint: happinessPoint,
     lifeTimeCounter: lifeTimeCounter,
-    setLifeTimeCounter: setLifeTimeCounter,
+    dailyRewardTracking: dailyRewardTracking,
+    financialManagement: financialManagement,
+    setFinancialManagement: setFinancialManagement,
     setEducation: setEducation,
     setUserEmail: setUserEmail,
     createCharacterName: createCharacterName,
@@ -96,7 +123,10 @@ function CharacterContextProvider({ children }) {
     minusIncome: minusIncome,
     setAge: setAge,
     setHealthPoint: setHealthPoint,
+    setDateInfo: setDateInfo,
     setHappinessPoint: setHappinessPoint,
+    setLifeTimeCounter: setLifeTimeCounter,
+    setDailyRewardTracking: setDailyRewardTracking,
     addActivityHistory: addActivityHistory,
   };
 

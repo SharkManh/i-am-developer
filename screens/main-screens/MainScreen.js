@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Dimensions } from "react-native";
-import { Colors } from "../../constants/styles";
 import { CharacterContext } from "../../store/character-context";
 import { LinearGradient } from "expo-linear-gradient";
 import Money from "../../components/main/Money";
@@ -77,6 +76,9 @@ const MainScreen = ({ navigation }) => {
     setIsDailyRewardVisible(true);
   }
 
+  function openFinancialManagement() {
+    navigation.navigate("FinancialManagementScreen")
+  }
   function closeDailyReward() {
     setIsDailyRewardVisible(false);
   }
@@ -91,7 +93,7 @@ const MainScreen = ({ navigation }) => {
   // Handle appearance of character
   useEffect(() => {
     if (characterCtx.age > 0) { // Xóa hiển thị AgeUp do đặc tính của useEffect khi component render first
-      navigation.navigate("AgeUp");
+      // navigation.navigate("AgeUp");
     }
 
     if (characterCtx.age < 6) {
@@ -212,7 +214,7 @@ const MainScreen = ({ navigation }) => {
   function handleInputName() {
     characterCtx.createCharacterName(characterName);
     setIsCharacterNamed(true);
-    characterCtx.addIncome(10);
+    characterCtx.addIncome(10, "Welcome Bonus");
   }
 
   function navigateGamesScreen() {
@@ -254,9 +256,11 @@ const MainScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Pressable style={ageSkipStyle} onPress={skipAge}>
-        <Text style={skipAgeTextStyle}>Skip Age &gt;&gt;</Text>
+        <Text style={skipAgeTextStyle}>+1 Age</Text>
       </Pressable>
-
+      <Pressable style={ageSkipStyle} onPress={() => characterCtx.addIncome(500, "Buff bẩn 500 Coins")}>
+        <Text style={skipAgeTextStyle}>+500 Coin</Text>
+      </Pressable>
       <Image
         style={styles.backgroundStyle}
         source={require("../../assets/background.png")}
@@ -312,12 +316,21 @@ const MainScreen = ({ navigation }) => {
       </View>
       <View style={styles.middleScreenButtonGroup}>
         <Pressable
-          style={({ pressed }) => [pressed && styles.pressed]}
+          style={({ pressed }) => [pressed && styles.pressed, styles.middleButton]}
           onPress={openDailyReward}
         >
           <Image
-            style={styles.dailyRewardButtonImage}
+            style={styles.middleButtonImage}
             source={require("../../assets/dailyRewardButton.png")}
+          />
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [pressed && styles.pressed, styles.middleButton]}
+          onPress={openFinancialManagement}
+        >
+          <Image
+            style={styles.middleButtonImage}
+            source={require("../../assets/financialManagementButton.png")}
           />
         </Pressable>
       </View>
@@ -357,11 +370,13 @@ const MainScreen = ({ navigation }) => {
           // imageURL={require("../../assets/mainButton.png")}
         />
         <MainButton
+          isUnlock={characterCtx.age >= 6 && true}
           positionStyle={styles.bottomButton}
           imageURL={require("../../assets/triangleIcon.png")}
           onPress={navigateQuizMenuScreen}
         />
         <MainButton
+          isUnlock={characterCtx.age >= 18 && true}
           positionStyle={styles.bottomButton}
           imageURL={require("../../assets/letterIcon.png")}
           onPress={navigateDateScreen}
@@ -540,11 +555,13 @@ const styles = StyleSheet.create({
 
   // ------------------ Task ----------------
   middleScreenButtonGroup: {
-    marginTop: 10,
     // borderWidth: 1, borderColor: "red",
     marginLeft: 15,
   },
-  dailyRewardButtonImage: {
+  middleButton: {
+    marginTop: 10,
+  },
+  middleButtonImage: {
     width: 60,
     height: 60,
   },

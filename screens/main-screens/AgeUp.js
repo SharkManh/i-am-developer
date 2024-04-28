@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Animated, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Image, Animated, Pressable, FlatList } from 'react-native'
 import React, { useEffect, useContext } from 'react'
 import { useState } from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,10 +6,29 @@ import { CharacterContext } from '../../store/character-context';
 import CloseButton from '../../components/main/CloseButton';
 import Money from '../../components/main/Money';
 
-const AgeUp = ({ navigation }) => {
+const AgeUp = ({ navigation}) => {
     const [rotateDeg] = useState(new Animated.Value(0));
     const characterCtx = useContext(CharacterContext);
     const [isX2RewardButtonVisible, setIsX2RewardButtonVisible] = useState(true)
+    const [rewardMoney, setRewardMoney] = useState(0)
+    const [unlockContent, setUnlockContent] = useState([""])
+
+    useState(() => {
+        if (characterCtx.age == 6) {
+            setUnlockContent(["Primary School"])
+        }
+        if (characterCtx.age == 11) {
+            setUnlockContent(["Secondary School"])
+        }
+        if (characterCtx.age == 15) {
+            setUnlockContent(["High School"])
+        }
+        if (characterCtx.age == 18) {
+            setUnlockContent(["Dating", "TaiXiu Game", "Job"])
+            setRewardMoney(10000)
+            characterCtx.addIncome(10000, "Bonus age 18")
+        }
+    }, [])
 
     useEffect(() => {
         Animated.timing(rotateDeg, {
@@ -49,7 +68,7 @@ const AgeUp = ({ navigation }) => {
             <View style={styles.incomeContainer}>
                 <View style={styles.moneyWrapper}>
                     <Image style={styles.moneyImage} source={require("../../assets/money.png")}/>
-                    <Text style={styles.moneyText}> 0</Text>
+                    <Text style={styles.moneyText}> {rewardMoney}</Text>
                 </View>
             </View>
             <View style={styles.unlockWrapper}>
@@ -59,6 +78,15 @@ const AgeUp = ({ navigation }) => {
                 >
                     <Text style={styles.unlockText}>UNLOCKED</Text>
                 </LinearGradient>
+                <FlatList 
+                    style={styles.flatList}
+                    data={unlockContent}
+                    renderItem={(itemData) => {
+                        return(
+                            <Text style={styles.listItem}>{itemData.item}</Text>
+                        )
+                    }}
+                />
             </View>
         </View>
     )
@@ -67,6 +95,15 @@ const AgeUp = ({ navigation }) => {
 export default AgeUp
 
 const styles = StyleSheet.create({
+    flatList: {
+        // borderColor: "red", borderWidth: 1,
+        width: "90%",
+    },
+    listItem: {
+        borderBottomColor: "black", borderBottomWidth: 0.5,
+        fontSize: 30, fontWeight: "bold"
+    }
+    ,
     container: {
         flex: 1,
         backgroundColor: "#F9C43B",
@@ -75,7 +112,6 @@ const styles = StyleSheet.create({
     },
     positionCloseButton: {
         position: "absolute", right: 10, top: 10, zIndex: 1,
-        // borderWidth: 1, borderColor: "red"
     },
     test: {
         alignSelf: "flex-end",
@@ -88,7 +124,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between", alignItems: "center", 
         width: "50%",
         marginTop: 50,
-        // borderWidth: 1, borderColor: "red"
     }, 
     ageText: {
         zIndex: 1,
@@ -106,13 +141,11 @@ const styles = StyleSheet.create({
     
     starWrapper: {
         position: "relative",
-        // borderWidth: 1, borderColor: "blue",
         justifyContent: "center",
         alignItems: "center"
     },
     starImage: {
         width: 440/5, height: 440/5,
-        // borderWidth: 1, borderColor: "red"
     }, 
     miniStarImage01: {
         position: "absolute", top: 20, left: -10,
@@ -134,12 +167,13 @@ const styles = StyleSheet.create({
     unlockWrapper: {
         marginTop: 40,
         width: "80%",
-        height: 300,
+        alignItems: "center",
         borderWidth: 1, borderColor: "black",
         borderRadius: 20,
         backgroundColor: "white"
     },
     linearGradient: {
+        width: "100%",
         borderTopLeftRadius: 20, borderTopRightRadius: 20,
     },
     unlockText: {
@@ -151,16 +185,11 @@ const styles = StyleSheet.create({
     // --------- Income ---------------
     incomeContainer: {
         marginTop: 40,
-        // borderWidth: 1, borderColor: "red",
         alignItems: "center",
     },
     rewardText: {
         fontSize: 40, fontWeight: "bold",
         color: "black"
-        // color: "white", 
-        // textShadowColor: 'black',
-        // textShadowOffset: { width: 1, height: 1 },
-        // textShadowRadius: 1,
     },
     moneyWrapper: {
         padding: 5,
@@ -188,7 +217,6 @@ const styles = StyleSheet.create({
         width: "70%"
     },
     button: {
-        // paddingHorizontal: 10, 
         paddingVertical: 5,
         borderColor: "black", borderWidth: 1,
         borderBottomWidth: 5,

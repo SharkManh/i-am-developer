@@ -22,13 +22,12 @@ import moneyBox from "../../assets/games/taixiu/components/moneyBox.png";
 import coinIcon from "../../assets/games/taixiu/icon/Coin.png";
 import { CharacterContext } from "../../store/character-context";
 import ExitButton from "../../components/main/ExitButton";
-import TaiXiuResultAlert from "../../components/main/TaiXiuResultAlert";
+import GameResultAlert from "../../components/main/GameResultAlert";
 
 const diceIcons = [di1, di2, di3, di4, di5, di6];
 
 const TaiXiuScreen = ({ navigation }) => {
   const characterCtx = useContext(CharacterContext);
-  // const [money, setMoney] = useState(initialMoney);
   const [betTai, setBetTai] = useState(0);
   const [betXiu, setBetXiu] = useState(0);
   const [countdown, setCountdown] = useState(15);
@@ -36,6 +35,9 @@ const TaiXiuScreen = ({ navigation }) => {
   const [gameOver, setGameOver] = useState(false);
   const [dices, setDices] = useState({ d1: 0, d2: 0, d3: 0 });
   const [isWon, setIsWon] = useState()
+  const [isResultAlertShow, setIsResultAlertShow] = useState(false)
+  const [resultMessage, setResultMessage] = useState("")
+  const [resultAmount, setResultAmount] = useState(0)
 
   useEffect(() => {
     let timer;
@@ -55,14 +57,20 @@ const TaiXiuScreen = ({ navigation }) => {
         if (gameOver) {
           const winAmount = gameResult === "Tai" ? betTai * 1 : betXiu * 1;
           const lossAmount = gameResult === "Tai" ? betXiu : betTai;
-          characterCtx.addIncome(winAmount - lossAmount);
-          // if (winAmount > lossAmount) {
-          //   setIsWon(true)
-          // } else {
-          //   setIsWon(false)
-          // }
+          if (winAmount >= lossAmount) {
+            setResultMessage("Win")
+            setResultAmount((winAmount - lossAmount) * 2)
+            characterCtx.addIncome(winAmount - lossAmount, "Win Tai Xiu")
+          } else {
+            setResultMessage("Lose")
+            setResultAmount((winAmount - lossAmount))
+            characterCtx.minusIncomeIncome(lossAmount - winAmount, "Lose Tai Xiu")
+          }
+          setIsResultAlertShow(true)
         }
         setTimeout(() => {
+          setIsResultAlertShow(false)
+          setResultAmount(0)
           setCountdown(15);
           setBetTai(0);
           setBetXiu(0);
@@ -156,7 +164,10 @@ const TaiXiuScreen = ({ navigation }) => {
         </View>
       </View>
       
-      {/* <TaiXiuResultAlert resultTitle={"Lose"}/> */}
+      {
+        isResultAlertShow && 
+        <GameResultAlert gameName={"Tai Xiu"} resultTitle={resultMessage} rewardMoney={resultAmount}/>
+      }
         
     </View>
   );
@@ -172,13 +183,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
-    // alignItems: "center",
     alignItems: "center",
     justifyContent: "center", 
-    // justifyContent: "space-between",
     paddingTop: 50,
-    // paddingLeft: 20,
-    // paddingRight: 20,
     paddingBottom: 50,
     backgroundColor: "#fcf4bc",
     position: "relative",

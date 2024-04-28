@@ -24,11 +24,15 @@ const DateScreen = ({ navigation }) => {
 
   function increaseChanceLevel() {
     if (characterCtx.dateInfo.lovePoint < 300) {
-      characterCtx.setDateInfo((prevValue) => {
-        return (
-              {...prevValue, lovePoint: prevValue.lovePoint += 6}
-        )
-      })
+      if (characterCtx.income < 500) {
+        alert("Not enough 500 coins")
+      } else {
+        characterCtx.setDateInfo((prevValue) => {
+          return (
+                {...prevValue, lovePoint: prevValue.lovePoint += 6}
+          )
+        })
+      }
     }
     setIsIncreaseChanceLevelPromptVisible(false);
   }
@@ -37,7 +41,7 @@ const DateScreen = ({ navigation }) => {
     setChanceBarStyle({
       height: characterCtx.dateInfo.lovePoint,
     });
-    alert(characterCtx.dateInfo.lovePoint)
+    // alert(characterCtx.dateInfo.lovePoint)
   }, [characterCtx.dateInfo.lovePoint]);
 
   function handleCoinButtonClicked() {

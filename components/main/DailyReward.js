@@ -10,10 +10,7 @@ const DailyReward = ({ onPress }) => {
     const characterCtx = useContext(CharacterContext);
     const [isAlertVisible, setIsAlertVisible] = useState(false);
     const [rewardMoney, setRewardMoney] = useState(0)
-    const [isRewardDay1Got, setIsRewardDay1Got] = useState(false)
-    const [isRewardDay2Got, setIsRewardDay2Got] = useState(false)
-    const [isRewardDay3Got, setIsRewardDay3Got] = useState(false)
-    const [isRewardDay4Got, setIsRewardDay4Got] = useState(false)
+    const [isRewardGot, setIsRewardGot] = useState(false)
 
     function closeAlert() {
         setIsAlertVisible(false)
@@ -24,42 +21,57 @@ const DailyReward = ({ onPress }) => {
             case 1: {
                 setRewardMoney(10);
                 setIsAlertVisible(true);
-                characterCtx.addIncome(10);
-                setIsRewardDay1Got(true);
+                characterCtx.addIncome(10, "Get Daily Reward");
+                characterCtx.setDailyRewardTracking((prevValue) => {
+                    return (
+                        {...prevValue, isDay01Got: true}
+                    )
+                })
                 break;
             }
             case 2: {
                 setRewardMoney(20);
                 setIsAlertVisible(true);
-                characterCtx.addIncome(20);
-                setIsRewardDay2Got(true);
+                characterCtx.addIncome(20, "Get Daily Reward");
+                characterCtx.setDailyRewardTracking((prevValue) => {
+                    return (
+                        {...prevValue, isDay02Got: true}
+                    )
+                })
                 break;
             }
             case 3: {
                 setRewardMoney(30);
                 setIsAlertVisible(true);
-                characterCtx.addIncome(30);
-                setIsRewardDay3Got(true);
+                characterCtx.addIncome(30, "Get Daily Reward");
+                characterCtx.setDailyRewardTracking((prevValue) => {
+                    return (
+                        {...prevValue, isDay03Got: true}
+                    )
+                })
                 break;
             }
             case 4: {
                 setRewardMoney(40);
                 setIsAlertVisible(true);
-                characterCtx.addIncome(40);
-                setIsRewardDay4Got(true);
+                characterCtx.addIncome(40, "Get Daily Reward");
+                characterCtx.setDailyRewardTracking((prevValue) => {
+                    return (
+                        {...prevValue, isDay04Got: true}
+                    )
+                })
                 break;
             }
         }
         setIsAlertVisible(true)
+        setIsRewardGot(true)
     }
 
-    const closeButtonPositionStyle = {
-        position: "absolute", top: 5, right: 0, zIndex: 1,
-    }
+    
     return (
         <View style={styles.dailyRewardContainer}>
             <View style={styles.dailyRewardBackgroundWrapper}>
-                <CloseButton positionStyle={closeButtonPositionStyle} onPress={onPress} iconImageURL={require("../../assets/redCloseButton.png")}/>
+                <CloseButton positionStyle={styles.closeButtonPositionStyle} onPress={onPress} iconImageURL={require("../../assets/redCloseButton.png")}/>
                 <Image 
                     style={styles.dailyRewardBackgroundImage} 
                     resizeMode='contain'
@@ -84,7 +96,7 @@ const DailyReward = ({ onPress }) => {
 
                         </Pressable>
                         {
-                            isRewardDay1Got && 
+                            characterCtx.dailyRewardTracking.isDay01Got && 
                             <View style={styles.rewardGot}>
                                 <Image 
                                     style={styles.greenTickImage}
@@ -92,7 +104,11 @@ const DailyReward = ({ onPress }) => {
                                 />
                             </View>     
                         }
-                        
+                        {
+                            !characterCtx.dailyRewardTracking.isDay01AllowGot &&
+                            <View style={styles.rewardGot}>
+                            </View> 
+                        }
                     </View>
                     <View style={styles.dailyRewardItemWrapper}>
                         <Pressable
@@ -112,13 +128,18 @@ const DailyReward = ({ onPress }) => {
                             </LinearGradient>
                         </Pressable>
                         {
-                            isRewardDay2Got && 
+                            characterCtx.dailyRewardTracking.isDay02Got && 
                             <View style={styles.rewardGot}>
                                 <Image 
                                     style={styles.greenTickImage}
                                     source={require("../../assets/greenTick.png")}
                                 />
                             </View>     
+                        }
+                        {
+                            !characterCtx.dailyRewardTracking.isDay02AllowGot &&
+                            <View style={styles.rewardGot}>
+                            </View> 
                         }
                     </View>
                     
@@ -139,13 +160,18 @@ const DailyReward = ({ onPress }) => {
                             </LinearGradient>
                         </Pressable>
                         {
-                            isRewardDay3Got && 
+                            characterCtx.dailyRewardTracking.isDay03Got && 
                             <View style={styles.rewardGot}>
                                 <Image 
                                     style={styles.greenTickImage}
                                     source={require("../../assets/greenTick.png")}
                                 />
                             </View>     
+                        }
+                        {
+                            !characterCtx.dailyRewardTracking.isDay03AllowGot &&
+                            <View style={styles.rewardGot}>
+                            </View> 
                         }
                     </View>
                 </View>
@@ -166,15 +192,25 @@ const DailyReward = ({ onPress }) => {
                         </LinearGradient>
                     </Pressable>
                     {
-                            isRewardDay4Got && 
-                            <View style={styles.rewardGot}>
-                                <Image 
-                                    style={styles.greenTickImage}
-                                    source={require("../../assets/greenTick.png")}
-                                />
-                            </View>     
-                        }
+                        characterCtx.dailyRewardTracking.isDay04Got && 
+                        <View style={styles.rewardGot}>
+                            <Image 
+                                style={styles.greenTickImage}
+                                source={require("../../assets/greenTick.png")}
+                            />
+                        </View>     
+                    }
+                    {
+                        !characterCtx.dailyRewardTracking.isDay04AllowGot &&
+                        <View style={styles.rewardGot}>
+                        </View> 
+                    }
                 </View>
+                {
+                    isRewardGot &&
+                    <Text style={{position: "absolute", bottom: 35, fontWeight: "bold"}}>Next reward on next day</Text>
+                }
+                
             </View>
             {
                 isAlertVisible && 
@@ -201,6 +237,9 @@ const styles = StyleSheet.create({
         width: 395/1.2, height: 616/1.2,
         alignItems: "center",
         // borderWidth: 1, borderColor: "blue",
+    },
+    closeButtonPositionStyle: {
+        position: "absolute", top: 5, right: 0, zIndex: 1,
     },
     dailyRewardBackgroundImage: {
         width: 395/1.2, height: 616/1.2,

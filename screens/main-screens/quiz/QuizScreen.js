@@ -13,21 +13,10 @@ const QuizScreen = ({ navigation, route}) => {
     const [randomizedQuizData, setRandomizedQuizData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
-    const [isFinished, setIsFinished] = useState(false);
-
     
     function finishQuiz() {
         setIsFinished(true)
     }
-
-    // useEffect(() => {
-    //     if (isFinished) {
-    //         // alert("finish Quiz? " + isFinished)
-            
-
-    //         // alert("characterCtx.education.primary.mathematics: " + characterCtx.education.primary.mathematics)
-    //     }
-    // }, [isFinished])
 
     useEffect(() => {
         setQuizData(subjectData);
@@ -134,68 +123,67 @@ const QuizFinish = ({ score, retry, gotoMenu, educationLevel, subjectName }) => 
     const education = characterCtx.education;
 
     const isPassed = score >= 5 ? true : false
-    switch(educationLevel) {
-        case "primary" : {
-            alert("primary")
-            switch(subjectName) {
-                case "MATHEMATICS" : {
-                    education.primary.mathematics = isPassed
-                    break;
+    useEffect(() => {
+        switch(educationLevel) {
+            case "primary" : {
+                switch(subjectName) {
+                    case "MATHEMATICS" : {
+                        education.primary.mathematics = isPassed
+                        break;
+                    }
+                    case "ENGLISH" : {
+                        education.primary.english = isPassed
+                        break;
+                    }
                 }
-                case "ENGLISH" : {
-                    education.primary.english = isPassed
-                    break;
-                }
+                break;
             }
-            break;
-        }
-        case "secondary" : {
-            alert("secondary")
-            switch(subjectName) {
-                case "MATHEMATICS" : {
-                    education.secondary.mathematics = isPassed
-                    break;
+            case "secondary" : {
+                switch(subjectName) {
+                    case "MATHEMATICS" : {
+                        education.secondary.mathematics = isPassed
+                        break;
+                    }
+                    case "ENGLISH" : {
+                        education.secondary.english = isPassed
+                        break;
+                    }
+                    case "PHYSICS" : {
+                        education.secondary.physics = isPassed
+                        break;
+                    }
                 }
-                case "ENGLISH" : {
-                    education.secondary.english = isPassed
-                    break;
-                }
-                case "PHYSICS" : {
-                    education.secondary.physics = isPassed
-                    break;
-                }
+                break;
             }
-            break;
-        }
-        case "highSchool" : {
-            alert(educationLevel)
-            switch(subjectName) {
-                case "MATHEMATICS" : {
-                    education.highSchool.mathematics = isPassed
-                    break;
+            case "highSchool" : {
+                switch(subjectName) {
+                    case "MATHEMATICS" : {
+                        education.highSchool.mathematics = isPassed
+                        break;
+                    }
+                    case "ENGLISH" : {
+                        education.highSchool.english = isPassed
+                        break;
+                    }
+                    case "PHYSICS" : {
+                        education.highSchool.physics = isPassed
+                        break;
+                    }
+                    case "INFORMATICS" : {
+                        education.highSchool.informatics = isPassed
+                        break;
+                    }
                 }
-                case "ENGLISH" : {
-                    education.highSchool.english = isPassed
-                    break;
-                }
-                case "PHYSICS" : {
-                    education.highSchool.physics = isPassed
-                    break;
-                }
-                case "INFORMATICS" : {
-                    education.highSchool.informatics = isPassed
-                    break;
-                }
+                break;
             }
-            break;
-        }
-    } // end swich
-    characterCtx.setEducation(education)
+        } // end swich
+        characterCtx.setEducation(education)
+    }, [])
 
     return (
         <View style={styles.container}>
             <ItalicText text="RESULT" size={36} />
-            <View style={styles.resultCircle}>
+            <View style={styles.resultCircle}>  
                 <ItalicText text={((score / 10) * 100).toFixed(0) + "%"} size={30}/>
             </View>
             {

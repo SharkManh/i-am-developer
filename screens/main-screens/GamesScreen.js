@@ -6,13 +6,16 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import ExitButton from "../../components/main/ExitButton";
 import ItalicText from "../../components/ui/ItalicText";
+import { CharacterContext } from "../../store/character-context";
 
 const GamesScreen = ({ navigation }) => {
+  const characterCtx = useContext(CharacterContext)
+
   function playRockPaperScissorGame() {
-    navigation.navigate("RockPaperScissorGame");
+    navigation.navigate("RockPaperScissorScreen");
   }
 
   function playTaiXiuGame() {
@@ -48,7 +51,9 @@ const GamesScreen = ({ navigation }) => {
             <Text style={styles.gameName}>Rock Paper Scissors</Text>
           </View>
         </Pressable>
-        <Pressable style={styles.game} onPress={playTaiXiuGame}>
+        <Pressable style={styles.game} onPress={playTaiXiuGame} 
+          disabled={characterCtx.age >= 18 ? false : true}
+        >
           <ImageBackground
             style={styles.backgroundGameItemImage}
             source={require("../../assets/backgroundGameItem.png")}
@@ -61,6 +66,10 @@ const GamesScreen = ({ navigation }) => {
           <View style={styles.gameNameWrapper}>
             <Text style={styles.gameName}>Tai Xiu</Text>
           </View>
+          {
+            characterCtx.age < 18 && 
+            <View style={styles.lockedDarkOverlay}></View>
+          }
         </Pressable>
       </View>
     </ImageBackground>
@@ -123,4 +132,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontStyle: "italic",
   },
+  lockedDarkOverlay: {
+    position: "absolute", 
+    top: 0, 
+    width: "100%", height: 160, 
+    borderRadius: 30, 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });

@@ -2,12 +2,12 @@ import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from 'react
 import React, { useEffect, useState } from 'react' 
 import NoMoreTicket from '../../components/main/NoMoreTicket';
 import DarkOverlay from '../../components/ui/DarkOverlay';
-import RockPaperScissorsResultAlert from '../../components/main/RockPaperScissorsResultAlert';
 import Money from '../../components/main/Money';
 import Ticket from '../../components/main/Ticket';
 import Exit from "../../components/main/ExitButton"
+import GameResultAlert from '../../components/main/GameResultAlert';
 
-const RockPaperScissorGame = ({ navigation }) => {
+const RockPaperScissorScreen = ({ navigation }) => {
     const [opponentOption, setOpponentOption] = useState(0)
     const [playerOption, setPlayerOption] = useState(0)
     const [numberTicket, setNumberTicket] = useState(0)
@@ -190,14 +190,18 @@ const RockPaperScissorGame = ({ navigation }) => {
                 isResultShown && 
                 <>
                     <DarkOverlay />
-                    <RockPaperScissorsResultAlert resultTitle={result} playAgain={playAgain}/>
+                    {/* <RockPaperScissorsResultAlert resultTitle={result} playAgain={playAgain} /> */}
+                    <GameResultAlert 
+                        gameName={"Rock Paper Scissors"}
+                        resultTitle={result} onPress={playAgain} 
+                        rewardMoney={result === "Win" ? 5 : result === "Tie" ? 2 : 0}/>
                 </>
             }
         </ImageBackground>
     )
 } 
 
-export default RockPaperScissorGame
+export default RockPaperScissorScreen
 
 const styles = StyleSheet.create({
     container: {
