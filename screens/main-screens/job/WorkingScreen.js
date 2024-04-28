@@ -7,6 +7,7 @@ import { Bungee_400Regular } from '@expo-google-fonts/bungee'
 import { HoltwoodOneSC_400Regular } from '@expo-google-fonts/holtwood-one-sc'
 import { Gluten_400Regular } from '@expo-google-fonts/gluten'
 import {LinearGradient} from 'expo-linear-gradient';
+import MoneyIcon from '../../../assets/money.png';
 
 const WorkingScreen = ({ onFinish }) => {
           const [showModal, setShowModal] = useState(false);
@@ -143,15 +144,31 @@ const MyModal = ({visibility, onSetVisibility, money, onOkPressed}) => {
                               }}>
                                         Congrat!
                               </Text>
-                              <Text
-                              style={{
-                                        fontSize: 20,
-                                        paddingVertical: 10,
-                                        fontFamily: 'Gluten_400Regular',
-                              }}
-                              >
-                              You got {money}$ from work      
-                              </Text>
+                              <View style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                              }}>
+                                        <Text
+                                        style={{
+                                                  fontSize: 20,
+                                                  paddingVertical: 10,
+                                                  fontFamily: 'Gluten_400Regular',
+                                        }}
+                                        >
+                                        You got &#8203;  
+                                        </Text>
+                                        <Image style={{height: 30, width: 30}} source={MoneyIcon} />
+                                        <Text
+                                        style={{
+                                                  fontSize: 20,
+                                                  paddingVertical: 10,
+                                                  fontFamily: 'Gluten_400Regular',
+                                        }}
+                                        >
+                                        &#8203; {money} from work      
+                                        </Text>
+                              </View>
                               <Pressable
                                         onPress={
                                                   () => handleOkPressed()
