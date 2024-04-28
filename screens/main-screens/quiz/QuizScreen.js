@@ -1,24 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, Pressable, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Button, Pressable, ActivityIndicator, ImageBackground, Image } from 'react-native';
 import ItalicText from '../../../components/ui/ItalicText';
 import { QuizColors } from '../../../constants/styles';
-import { eng, math, physics, tech } from '../../../store/QuizData';
+import ExitButton from '../../../components/main/ExitButton';
+import { CharacterContext } from '../../../store/character-context';
 
-const QuizScreen = () => {
-    const data = math[0];
+const QuizScreen = ({ navigation, route}) => {
+    const educationLevel = route.params.educationLevel;
+    const subjectName = route.params.subjectName;
+    const subjectData = route.params.subjectData;
     const [quizData, setQuizData] = useState([]);
     const [randomizedQuizData, setRandomizedQuizData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
+    const [isFinished, setIsFinished] = useState(false);
 
+    
+    function finishQuiz() {
+        setIsFinished(true)
+    }
+
+    // useEffect(() => {
+    //     if (isFinished) {
+    //         // alert("finish Quiz? " + isFinished)
+            
+
+    //         // alert("characterCtx.education.primary.mathematics: " + characterCtx.education.primary.mathematics)
+    //     }
+    // }, [isFinished])
 
     useEffect(() => {
-        setQuizData(data);
-        randomizeQuizData(data);
+        setQuizData(subjectData);
+        randomizeQuizData(subjectData);
     }, []);
 
-    const randomizeQuizData = (data) => {
-        let shuffled = [...data].sort(() => 0.5 - Math.random());
+    const randomizeQuizData = (subjectData) => {
+        let shuffled = [...subjectData].sort(() => 0.5 - Math.random());
         setRandomizedQuizData(shuffled.slice(0, 10)); // Get the first 10 questions
     };
 
@@ -43,8 +60,12 @@ const QuizScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View>
+        <ImageBackground source={require("../../../assets/backgroundGameQuiz.png")} style={styles.container}>
+            <ExitButton onPress={() => navigation.goBack()}/>
+            <View style={styles.header}>
+                <ItalicText text={subjectName} size={40} />
+            </View>
+            <View style={styles.content}>
                 {currentQuestionIndex < randomizedQuizData.length ? (
                     <QuizTaking
                         question={randomizedQuizData[currentQuestionIndex]}
@@ -52,14 +73,19 @@ const QuizScreen = () => {
                         index={currentQuestionIndex + 1}
                     />
                 ) : (
-                    <QuizFinish score={score} retry={() => {
-                        randomizeQuizData(data);
-                        setScore(0);
-                        setCurrentQuestionIndex(0);
+                    <QuizFinish 
+                        educationLevel={educationLevel}
+                        subjectName={subjectName}
+                        score={score} 
+                        gotoMenu={() => navigation.goBack()}
+                        retry={() => {
+                            randomizeQuizData(subjectData);
+                            setScore(0);
+                            setCurrentQuestionIndex(0);
                     }} />
                 )}
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -102,19 +128,98 @@ const QuizTaking = ({ question, onAnswer, index }) => {
     );
 };
 
-const QuizFinish = ({ score, retry, gotoMenu }) => {
+const QuizFinish = ({ score, retry, gotoMenu, educationLevel, subjectName }) => {
+    const characterCtx = useContext(CharacterContext)
+
+    const education = characterCtx.education;
+
+    const isPassed = score >= 5 ? true : false
+    switch(educationLevel) {
+        case "primary" : {
+            alert("primary")
+            switch(subjectName) {
+                case "MATHEMATICS" : {
+                    education.primary.mathematics = isPassed
+                    break;
+                }
+                case "ENGLISH" : {
+                    education.primary.english = isPassed
+                    break;
+                }
+            }
+            break;
+        }
+        case "secondary" : {
+            alert("secondary")
+            switch(subjectName) {
+                case "MATHEMATICS" : {
+                    education.secondary.mathematics = isPassed
+                    break;
+                }
+                case "ENGLISH" : {
+                    education.secondary.english = isPassed
+                    break;
+                }
+                case "PHYSICS" : {
+                    education.secondary.physics = isPassed
+                    break;
+                }
+            }
+            break;
+        }
+        case "highSchool" : {
+            alert(educationLevel)
+            switch(subjectName) {
+                case "MATHEMATICS" : {
+                    education.highSchool.mathematics = isPassed
+                    break;
+                }
+                case "ENGLISH" : {
+                    education.highSchool.english = isPassed
+                    break;
+                }
+                case "PHYSICS" : {
+                    education.highSchool.physics = isPassed
+                    break;
+                }
+                case "INFORMATICS" : {
+                    education.highSchool.informatics = isPassed
+                    break;
+                }
+            }
+            break;
+        }
+    } // end swich
+    characterCtx.setEducation(education)
+
     return (
         <View style={styles.container}>
             <ItalicText text="RESULT" size={36} />
             <View style={styles.resultCircle}>
                 <ItalicText text={((score / 10) * 100).toFixed(0) + "%"} size={30}/>
             </View>
+            {
+                isPassed ?  
+                    <Image
+                        style={styles.resultImage}
+                        source={require("../../../assets/passed.png")}
+                    /> 
+                    :
+                    <Image
+                        style={styles.resultImage}
+                        source={require("../../../assets/failed.png")}
+                    /> 
+            }
+            
             <View style={styles.buttons}>
-                <Pressable style={styles.retryButton} onPress={retry}>
-                    <Text style={styles.buttonText}>
-                        Retry   
-                    </Text>
-                </Pressable>
+                {
+                    !isPassed && 
+                    <Pressable style={styles.retryButton} onPress={retry}>
+                        <Text style={styles.buttonText}>
+                            Retry   
+                        </Text>
+                    </Pressable>    
+                }
                 <Pressable style={styles.menuButton} onPress={gotoMenu}>
                     <Text style={styles.buttonText}>
                         Menu
@@ -132,34 +237,47 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        width: "100%",
+        // borderWidth: 1, borderColor: "red",
+    },
+    header: {
+        position: "absolute", top: 0,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    content: {
+        width: "90%",
+        height: "100%",
     },
     spacer: {
         minHeight: "10%",   
     },
     question: {
         height: "100px",
-        minWidth: '60%',
-        // borderWidth: 2,
+        width: "100%",
         borderRadius: 16,
         padding: 20,
         backgroundColor: QuizColors.primary,
         fontFamily: "Inter_800ExtraBold",
     },
     quizContainer: {
+        // borderColor: "red", borderWidth: 1,
         flex: 1,
         justifyContent: 'space-around',
         alignItems: 'center',
-        padding: 10,
         maxHeight: '26%',
-        minWidth: '50%'
+        width: "100%",
+        marginTop: 20, 
     },
     option: {
-        height: "100px",
-        minWidth: '60%',
+        // height: "100px",
+        // minWidth: '60%',
+        width: "95%",
         // borderWidth: 2,
         borderRadius: 16,
         padding: 12,
+        // marginTop: 10, 
         backgroundColor: QuizColors.primary,
     },
     optionText: {
@@ -175,8 +293,12 @@ const styles = StyleSheet.create({
         borderColor: QuizColors.primary,
         borderRadius: 200,
     },
+    resultImage: {
+        width: 150, height: 150,
+        // borderWidth: 1, borderColor: "red"
+    },
     buttons: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         maxHeight: "20%",
         minWidth: "90%",
