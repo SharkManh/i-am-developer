@@ -22,6 +22,26 @@ import TaiXiuScreen from "./screens/main-screens/TaiXiuScreen";
 import QuizMenuScreen from "./screens/main-screens/quiz/QuizMenuScreen";
 import QuizScreen from "./screens/main-screens/quiz/QuizScreen";
 import FinancialManagementScreen from "./screens/main-screens/financial-management/FinancialManagementScreen";
+import { Colors } from './constants/styles';
+import AuthContextProvider, { AuthContext } from './store/auth-context';
+import { Text, SafeAreaView, StyleSheet, View } from 'react-native';
+import CharacterContextProvider, { CharacterContext } from './store/character-context';
+import IntroScreen from './screens/intro-screens/IntroScreen';
+import AgeUp from './screens/main-screens/AgeUp';
+import AdvertiseScreen from "./screens/main-screens/AdvertiseScreen"
+import RockPaperScissorGame from './screens/main-screens/RockPaperScissorGame';
+import GamesScreen from './screens/main-screens/GamesScreen';
+import { useNavigation } from '@react-navigation/native';
+import DateScreen from './screens/main-screens/DateScreen';
+import QuizMenuScreen from './screens/main-screens/quiz/QuizMenuScreen';
+import QuizScreen from './screens/main-screens/quiz/QuizScreen';
+import TaiXiuScreen from './screens/main-screens/TaiXiuScreen';
+import JobMainScreen from './screens/main-screens/job/JobMainScreen';
+import JobOffersScreen from './screens/main-screens/job/JobOffersScreen';
+import JobOfferDetailsScreen from './screens/main-screens/job/JobOfferDetailsScreen';
+
+import { jobOffersData } from './store/jobOffersData';
+import WorkingScreen from './screens/main-screens/job/WorkingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -150,20 +170,35 @@ function MainScreenStack() {
         component={AdvertiseScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="TaiXiuScreen"
-        component={TaiXiuScreen}
-        options={{ headerShown: false }}
+      <Stack.Screen 
+      name="QuizMenuScreen" 
+      component={QuizMenuScreen}
+      options={{ headerShown: true }}
+      initialParams={{ route }}
       />
-      <Stack.Screen
-        name="QuizMenuScreen"
-        component={QuizMenuScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="QuizScreen"
+      <Stack.Screen 
+        name="QuizScreen" 
         component={QuizScreen}
         options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobMainScreen"
+        component={JobMainScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobOffersScreen"
+        component={JobOffersScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobOfferDetailsScreen"
+        component={JobOfferDetailsScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
       />
       <Stack.Screen
         name="FinancialManagementScreen"
@@ -173,19 +208,27 @@ function MainScreenStack() {
     </Stack.Navigator>
   );
 }
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <AuthContextProvider>
-        <CharacterContextProvider>
-          <NavigationContainer>
-            <ScreenStackHandler />
-            {/* <TestScreen /> */}
-          </NavigationContainer>
-        </CharacterContextProvider>
-      </AuthContextProvider>
-    </View>
+    // <View style={styles.container}>
+    //   <StatusBar hidden={true} />
+    //   <AuthContextProvider>
+    //     <CharacterContextProvider>
+    //       <NavigationContainer>
+    //         <ScreenStackHandler />
+    //         {/* <TestScreen /> */}
+    //         {/* <Stack.Screen name="JobMainScreen" component={JobMainScreen} /> */}
+    //       </NavigationContainer>
+    //     </CharacterContextProvider>
+    //   </AuthContextProvider>
+    // </View>
+    // <TaiXiuScreen initialMoney={200} />
+    // <QuizScreen />
+    // <JobMainScreen />
+    //<JobOffersScreen />
+    //<JobOfferDetailsScreen offerData={jobOffersData[3]} />
+    <WorkingScreen />
   );
 }
 
