@@ -26,6 +26,7 @@ import JobOffersScreen from './screens/main-screens/job/JobOffersScreen';
 import JobOfferDetailsScreen from './screens/main-screens/job/JobOfferDetailsScreen';
 
 import { jobOffersData } from './store/jobOffersData';
+import WorkingScreen from './screens/main-screens/job/WorkingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -205,7 +206,8 @@ export default function App() {
     // <QuizScreen />
     // <JobMainScreen />
     //<JobOffersScreen />
-    <JobOfferDetailsScreen offerData={jobOffersData[3]} />
+    //<JobOfferDetailsScreen offerData={jobOffersData[3]} />
+    <WorkingScreen />
   );
 }
 
