@@ -21,6 +21,11 @@ import DateScreen from './screens/main-screens/DateScreen';
 import QuizMenuScreen from './screens/main-screens/quiz/QuizMenuScreen';
 import QuizScreen from './screens/main-screens/quiz/QuizScreen';
 import TaiXiuScreen from './screens/main-screens/TaiXiuScreen';
+import JobMainScreen from './screens/main-screens/job/JobMainScreen';
+import JobOffersScreen from './screens/main-screens/job/JobOffersScreen';
+import JobOfferDetailsScreen from './screens/main-screens/job/JobOfferDetailsScreen';
+
+import { jobOffersData } from './store/jobOffersData';
 
 const Stack = createNativeStackNavigator();
 
@@ -146,7 +151,8 @@ function MainScreenStack() {
         name="AdvertiseScreen" 
         component={AdvertiseScreen}
         options={{ headerShown: false }}
-      /><Stack.Screen 
+      />
+      <Stack.Screen 
       name="QuizMenuScreen" 
       component={QuizMenuScreen}
       options={{ headerShown: true }}
@@ -155,6 +161,24 @@ function MainScreenStack() {
       <Stack.Screen 
         name="QuizScreen" 
         component={QuizScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobMainScreen"
+        component={JobMainScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobOffersScreen"
+        component={JobOffersScreen}
+        options={{ headerShown: false }}
+        initialParams={{ route }}
+      />
+      <Stack.Screen 
+        name="JobOfferDetailsScreen"
+        component={JobOfferDetailsScreen}
         options={{ headerShown: false }}
         initialParams={{ route }}
       />
@@ -172,12 +196,16 @@ export default function App() {
     //       <NavigationContainer>
     //         <ScreenStackHandler />
     //         {/* <TestScreen /> */}
+    //         {/* <Stack.Screen name="JobMainScreen" component={JobMainScreen} /> */}
     //       </NavigationContainer>
     //     </CharacterContextProvider>
     //   </AuthContextProvider>
     // </View>
     // <TaiXiuScreen initialMoney={200} />
-    <QuizScreen />
+    // <QuizScreen />
+    // <JobMainScreen />
+    //<JobOffersScreen />
+    <JobOfferDetailsScreen offerData={jobOffersData[3]} />
   );
 }
 
