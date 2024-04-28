@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
           container: {
           backgroundColor: '#fff',
           alignItems: 'center',
+          height: Dimensions.get('window').height,
           },
           imageContainer: {
           justifyContent: 'center',
