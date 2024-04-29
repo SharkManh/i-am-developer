@@ -1677,10 +1677,347 @@ const techC3 =
               answer: "A"
           }
 ];
+
+export const quizHtml = 
+[
+  {
+      question: "What does HTML stand for?",
+      A: "Hyper Text Markup Language",
+      B: "Hyperlink Text Markup Language",
+      C: "High Technical Markup Language",
+      D: "Hyper Technical Markup Language",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to create a hyperlink?",
+      A: "<a>",
+      B: "<link>",
+      C: "<ul>",
+      D: "<meta>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to create an ordered list?",
+      A: "<ul>",
+      B: "<li>",
+      C: "<ol>",
+      D: "<dl>",
+      answer: "C"
+  },
+  {
+      question: "Which HTML element is used to display an image?",
+      A: "<img>",
+      B: "<picture>",
+      C: "<image>",
+      D: "<figure>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to make a text bold?",
+      A: "<bold>",
+      B: "<b>",
+      C: "<strong>",
+      D: "<em>",
+      answer: "C"
+  },
+  {
+      question: "Which HTML element is used to create a form?",
+      A: "<form>",
+      B: "<input>",
+      C: "<button>",
+      D: "<label>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to define the largest heading?",
+      A: "<heading>",
+      B: "<h1>",
+      C: "<h6>",
+      D: "<header>",
+      answer: "B"
+  },
+  {
+      question: "Which HTML element is used to create a horizontal rule?",
+      A: "<line>",
+      B: "<hr>",
+      C: "<break>",
+      D: "<hrizontal>",
+      answer: "B"
+  },
+  {
+      question: "Which HTML element is used to input data in a form?",
+      A: "<input>",
+      B: "<text>",
+      C: "<form>",
+      D: "<textbox>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to create an unordered list?",
+      A: "<ol>",
+      B: "<ul>",
+      C: "<li>",
+      D: "<list>",
+      answer: "B"
+  }
+];
+
+export const quizCss = 
+[
+  {
+      question: "What does CSS stand for?",
+      A: "Cascading Style Sheets",
+      B: "Creative Style Sheets",
+      C: "Computer Style Sheets",
+      D: "Cascading Sheet Styles",
+      answer: "A"
+  },
+  {
+      question: "What is the 'font-family' property used for in CSS?",
+      A: "Set text color",
+      B: "Set font style",
+      C: "Set text size",
+      D: "Set font for text",
+      answer: "D"
+  },
+  {
+      question: "What is the 'margin' property used for in CSS?",
+      A: "Set background color for the element",
+      B: "Set spacing between elements",
+      C: "Set element size",
+      D: "Set font for the element",
+      answer: "B"
+  },
+  {
+      question: "Which property can be used to center an element horizontally in CSS?",
+      A: "align: center;",
+      B: "vertical-align: middle;",
+      C: "text-align: center;",
+      D: "position: center;",
+      answer: "C"
+  },
+  {
+      question: "What is the 'background-color' property used for in CSS?",
+      A: "Set background color for the element",
+      B: "Set text color for the element",
+      C: "Set element size",
+      D: "Set font for the element",
+      answer: "A"
+  },
+  {
+      question: "Which property is used to format an element to be positioned to the left in CSS?",
+      A: "align: left;",
+      B: "float: left;",
+      C: "position: left;",
+      D: "text-align: left;",
+      answer: "B"
+  },
+  {
+      question: "Which property is used to add an outline around an element in CSS?",
+      A: "border-style",
+      B: "margin",
+      C: "padding",
+      D: "outline",
+      answer: "D"
+  },
+  {
+      question: "Which property is used to make text bold in CSS?",
+      A: "font-weight: bold;",
+      B: "font-style: bold;",
+      C: "text-style: bold;",
+      D: "text-weight: bold;",
+      answer: "A"
+  },
+  {
+      question: "What is the 'display: inline-block;' property used for in CSS?",
+      A: "Format element to display as a block",
+      B: "Format element to display as an inline",
+      C: "Format element to display as a block and allows horizontal alignment",
+      D: "Format element to display as an inline and allows horizontal alignment",
+      answer: "C"
+  },
+  {
+      question: "Which property can be used to prevent a line break after an element in CSS?",
+      A: "clear: both;",
+      B: "float: none;",
+      C: "position: absolute;",
+      D: "display: inline;",
+      answer: "B"
+  }
+];
+
+export const quizJs = 
+[
+  {
+      question: "JavaScript is a ____ programming language.",
+      A: "Client-side",
+      B: "Server-side",
+      C: "Both client-side and server-side",
+      D: "None of the above",
+      answer: "C"
+  },
+  {
+      question: "What is JavaScript primarily used for in web development?",
+      A: "Creating user interfaces",
+      B: "Handling logic and interactions on web pages",
+      C: "Designing databases",
+      D: "Styling and formatting web pages",
+      answer: "B"
+  },
+  {
+      question: "JavaScript was originally developed by which company?",
+      A: "Google",
+      B: "Microsoft",
+      C: "Netscape",
+      D: "Oracle",
+      answer: "C"
+  },
+  {
+      question: "Which statement about variables in JavaScript is correct?",
+      A: "Variables in JavaScript must be declared before use",
+      B: "JavaScript does not support variables",
+      C: "Variables in JavaScript can be declared without the var, let, or const keyword",
+      D: "Variables in JavaScript cannot change value after assignment",
+      answer: "C"
+  },
+  {
+      question: "What is the purpose of the alert() function in JavaScript?",
+      A: "Displaying a warning message on the browser",
+      B: "Creating a confirmation dialog",
+      C: "Redirecting the user to another webpage",
+      D: "Performing an AJAX call",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, which keyword is used to declare a constant?",
+      A: "const",
+      B: "let",
+      C: "var",
+      D: "final",
+      answer: "A"
+  },
+  {
+      question: "Which of the following is the correct syntax for a for loop in JavaScript?",
+      A: "for (i = 0; i < 5; i++)",
+      B: "for (i = 0; i <= 5; i++)",
+      C: "for (i = 1; i <= 5; i++)",
+      D: "for (i = 1; i < 5; i++)",
+      answer: "A"
+  },
+  {
+      question: "What is the purpose of the parseInt() function in JavaScript?",
+      A: "Converting a string to an integer",
+      B: "Converting a number to a string",
+      C: "Rounding a number to the nearest integer",
+      D: "Checking if a value is NaN",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, which statement below is correct about declaring a function?",
+      A: "function myFunction() {}",
+      B: "var myFunction = function() {}",
+      C: "def myFunction() {}",
+      D: "myFunction: function() {}",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, what is the purpose of the '===' operator?",
+      A: "Comparing the values of two variables",
+      B: "Comparing the values and data types of two variables",
+      C: "Assigning the value of variable A to variable B",
+      D: "Checking if variable A is divisible by variable B",
+      answer: "B"
+  }
+];
+
+export const quizJava = 
+[
+  {
+      question: "What is Java?",
+      A: "A programming language",
+      B: "A type of coffee",
+      C: "An operating system",
+      D: "A web browser",
+      answer: "A"
+  },
+  {
+      question: "Who developed Java?",
+      A: "Microsoft",
+      B: "Oracle",
+      C: "Sun Microsystems",
+      D: "Google",
+      answer: "C"
+  },
+  {
+      question: "Which of the following is not a feature of Java?",
+      A: "Platform Independence",
+      B: "Automatic Memory Management",
+      C: "Pointers",
+      D: "Object-oriented",
+      answer: "C"
+  },
+  {
+      question: "What is the keyword used to define a class in Java?",
+      A: "class",
+      B: "Class",
+      C: "cls",
+      D: "ClassDef",
+      answer: "A"
+  },
+  {
+      question: "Which method is called when an object is created in Java?",
+      A: "initialize()",
+      B: "start()",
+      C: "main()",
+      D: "constructor()",
+      answer: "D"
+  },
+  {
+      question: "Which of the following is not a primitive data type in Java?",
+      A: "int",
+      B: "float",
+      C: "String",
+      D: "boolean",
+      answer: "C"
+  },
+  {
+      question: "What is the output of the following code?\n\npublic class Main {\n   public static void main(String[] args) {\n       int x = 5;\n       System.out.println(x++);\n   }\n}",
+      A: "5",
+      B: "6",
+      C: "4",
+      D: "Compiler Error",
+      answer: "A"
+  },
+  {
+      question: "Which keyword is used to inherit a class in Java?",
+      A: "extends",
+      B: "inherit",
+      C: "implements",
+      D: "inherits",
+      answer: "A"
+  },
+  {
+      question: "What is the purpose of the 'final' keyword in Java?",
+      A: "To declare a constant",
+      B: "To indicate that a method cannot be overridden",
+      C: "To specify the entry point of a program",
+      D: "To prevent a class from being inherited",
+      answer: "A"
+  },
+  {
+      question: "Which of the following statements is true about Java?",
+      A: "Java programs are compiled into bytecode",
+      B: "Java programs are compiled into machine code",
+      C: "Java programs are interpreted directly",
+      D: "Java programs are executed line by line",
+      answer: "A"
+  }
+];
         
 export const eng = [engC1, engC2, engC3];
 export const math = [mathC1, mathC2, mathC3];
 export const physics = [physC2, physC3];
 export const tech = [techC2, techC3]; 
+
         
         

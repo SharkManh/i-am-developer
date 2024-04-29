@@ -63,10 +63,10 @@ const WorkingScreen = ({ onFinish }) => {
                     >{text}</Text>
           </View>
           <MyModal 
-          visibility={showModal} 
-          onSetVisibility={() => handleCloseModal()} 
-          money={200}
-          onOkPressed={(money) => handleDoneWorking(money)}
+            visibility={showModal} 
+            onSetVisibility={() => handleCloseModal()} 
+            money={200}
+            onOkPressed={(money) => handleDoneWorking(money)}
           />
     </View>
   )
