@@ -27,6 +27,7 @@ const DateScreen = ({ navigation }) => {
       if (characterCtx.income < 500) {
         alert("Not enough 500 coins")
       } else {
+        characterCtx.minusIncome(500, "Pay for crush's love")
         characterCtx.setDateInfo((prevValue) => {
           return (
                 {...prevValue, lovePoint: prevValue.lovePoint += 6}

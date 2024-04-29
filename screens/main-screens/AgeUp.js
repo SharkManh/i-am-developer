@@ -5,11 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { CharacterContext } from '../../store/character-context';
 import CloseButton from '../../components/main/CloseButton';
 import Money from '../../components/main/Money';
+import { jobOffersData } from '../../constants/jobOffersData';
 
 const AgeUp = ({ navigation}) => {
     const [rotateDeg] = useState(new Animated.Value(0));
     const characterCtx = useContext(CharacterContext);
-    const [isX2RewardButtonVisible, setIsX2RewardButtonVisible] = useState(true)
     const [rewardMoney, setRewardMoney] = useState(0)
     const [unlockContent, setUnlockContent] = useState([""])
 
@@ -33,7 +33,7 @@ const AgeUp = ({ navigation}) => {
     useEffect(() => {
         Animated.timing(rotateDeg, {
             toValue: 100,
-            duration: 60000,    // 60s
+            duration: 60000,   
             useNativeDriver: false, 
         }).start();
     }, [])

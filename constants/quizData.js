@@ -1663,6 +1663,342 @@ const techC3 = [
   },
 ];
 
+export const quizHtmlCSS = 
+[
+  {
+      question: "Which HTML element is used to create a form?",
+      A: "<form>",
+      B: "<input>",
+      C: "<button>",
+      D: "<label>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to define the largest heading?",
+      A: "<heading>",
+      B: "<h1>",
+      C: "<h6>",
+      D: "<header>",
+      answer: "B"
+  },
+  {
+      question: "Which HTML element is used to create a horizontal rule?",
+      A: "<line>",
+      B: "<hr>",
+      C: "<break>",
+      D: "<hrizontal>",
+      answer: "B"
+  },
+  {
+      question: "Which HTML element is used to input data in a form?",
+      A: "<input>",
+      B: "<text>",
+      C: "<form>",
+      D: "<textbox>",
+      answer: "A"
+  },
+  {
+      question: "Which HTML element is used to create an unordered list?",
+      A: "<ol>",
+      B: "<ul>",
+      C: "<li>",
+      D: "<list>",
+      answer: "B"
+  },
+  {
+    question: "What does CSS stand for?",
+    A: "Cascading Style Sheets",
+    B: "Creative Style Sheets",
+    C: "Computer Style Sheets",
+    D: "Cascading Sheet Styles",
+    answer: "A"
+  },
+  {
+      question: "What is the 'font-family' property used for in CSS?",
+      A: "Set text color",
+      B: "Set font style",
+      C: "Set text size",
+      D: "Set font for text",
+      answer: "D"
+  },
+  {
+      question: "What is the 'margin' property used for in CSS?",
+      A: "Set background color for the element",
+      B: "Set spacing between elements",
+      C: "Set element size",
+      D: "Set font for the element",
+      answer: "B"
+  },
+  {
+      question: "Which property can be used to center an element horizontally in CSS?",
+      A: "align: center;",
+      B: "vertical-align: middle;",
+      C: "text-align: center;",
+      D: "position: center;",
+      answer: "C"
+  },
+  {
+      question: "What is the 'background-color' property used for in CSS?",
+      A: "Set background color for the element",
+      B: "Set text color for the element",
+      C: "Set element size",
+      D: "Set font for the element",
+      answer: "A"
+  },
+];
+
+export const quizJs = 
+[
+  {
+      question: "JavaScript is a ____ programming language.",
+      A: "Client-side",
+      B: "Server-side",
+      C: "Both client-side and server-side",
+      D: "None of the above",
+      answer: "C"
+  },
+  {
+      question: "What is JavaScript primarily used for in web development?",
+      A: "Creating user interfaces",
+      B: "Handling logic and interactions on web pages",
+      C: "Designing databases",
+      D: "Styling and formatting web pages",
+      answer: "B"
+  },
+  {
+      question: "JavaScript was originally developed by which company?",
+      A: "Google",
+      B: "Microsoft",
+      C: "Netscape",
+      D: "Oracle",
+      answer: "C"
+  },
+  {
+      question: "Which statement about variables in JavaScript is correct?",
+      A: "Variables in JavaScript must be declared before use",
+      B: "JavaScript does not support variables",
+      C: "Variables in JavaScript can be declared without the var, let, or const keyword",
+      D: "Variables in JavaScript cannot change value after assignment",
+      answer: "C"
+  },
+  {
+      question: "What is the purpose of the alert() function in JavaScript?",
+      A: "Displaying a warning message on the browser",
+      B: "Creating a confirmation dialog",
+      C: "Redirecting the user to another webpage",
+      D: "Performing an AJAX call",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, which keyword is used to declare a constant?",
+      A: "const",
+      B: "let",
+      C: "var",
+      D: "final",
+      answer: "A"
+  },
+  {
+      question: "Which of the following is the correct syntax for a for loop in JavaScript?",
+      A: "for (i = 0; i < 5; i++)",
+      B: "for (i = 0; i <= 5; i++)",
+      C: "for (i = 1; i <= 5; i++)",
+      D: "for (i = 1; i < 5; i++)",
+      answer: "A"
+  },
+  {
+      question: "What is the purpose of the parseInt() function in JavaScript?",
+      A: "Converting a string to an integer",
+      B: "Converting a number to a string",
+      C: "Rounding a number to the nearest integer",
+      D: "Checking if a value is NaN",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, which statement below is correct about declaring a function?",
+      A: "function myFunction() {}",
+      B: "var myFunction = function() {}",
+      C: "def myFunction() {}",
+      D: "myFunction: function() {}",
+      answer: "A"
+  },
+  {
+      question: "In JavaScript, what is the purpose of the '===' operator?",
+      A: "Comparing the values of two variables",
+      B: "Comparing the values and data types of two variables",
+      C: "Assigning the value of variable A to variable B",
+      D: "Checking if variable A is divisible by variable B",
+      answer: "B"
+  }
+];
+
+export const quizJava = 
+[
+  {
+      question: "What is Java?",
+      A: "A programming language",
+      B: "A type of coffee",
+      C: "An operating system",
+      D: "A web browser",
+      answer: "A"
+  },
+  {
+      question: "Who developed Java?",
+      A: "Microsoft",
+      B: "Oracle",
+      C: "Sun Microsystems",
+      D: "Google",
+      answer: "C"
+  },
+  {
+      question: "Which of the following is not a feature of Java?",
+      A: "Platform Independence",
+      B: "Automatic Memory Management",
+      C: "Pointers",
+      D: "Object-oriented",
+      answer: "C"
+  },
+  {
+      question: "What is the keyword used to define a class in Java?",
+      A: "class",
+      B: "Class",
+      C: "cls",
+      D: "ClassDef",
+      answer: "A"
+  },
+  {
+      question: "Which method is called when an object is created in Java?",
+      A: "initialize()",
+      B: "start()",
+      C: "main()",
+      D: "constructor()",
+      answer: "D"
+  },
+  {
+      question: "Which of the following is not a primitive data type in Java?",
+      A: "int",
+      B: "float",
+      C: "String",
+      D: "boolean",
+      answer: "C"
+  },
+  {
+      question: "What is the output of the following code?\n\npublic class Main {\n   public static void main(String[] args) {\n       int x = 5;\n       System.out.println(x++);\n   }\n}",
+      A: "5",
+      B: "6",
+      C: "4",
+      D: "Compiler Error",
+      answer: "A"
+  },
+  {
+      question: "Which keyword is used to inherit a class in Java?",
+      A: "extends",
+      B: "inherit",
+      C: "implements",
+      D: "inherits",
+      answer: "A"
+  },
+  {
+      question: "What is the purpose of the 'final' keyword in Java?",
+      A: "To declare a constant",
+      B: "To indicate that a method cannot be overridden",
+      C: "To specify the entry point of a program",
+      D: "To prevent a class from being inherited",
+      answer: "A"
+  },
+  {
+      question: "Which of the following statements is true about Java?",
+      A: "Java programs are compiled into bytecode",
+      B: "Java programs are compiled into machine code",
+      C: "Java programs are interpreted directly",
+      D: "Java programs are executed line by line",
+      answer: "A"
+  }
+];
+
+export const quizDatabase = [
+  {
+    question: "What is a database?",
+    A: "A collection of related data",
+    B: "A programming language",
+    C: "A type of computer",
+    D: "A web browser",
+    answer: "A"
+  },
+  {
+    question: "Which of the following is a relational database management system (RDBMS)?",
+    A: "MongoDB",
+    B: "MySQL",
+    C: "Redis",
+    D: "Elasticsearch",
+    answer: "B"
+  },
+  {
+    question: "What is SQL?",
+    A: "Structured Language",
+    B: "Structured Query Language",
+    C: "Standard Query Language",
+    D: "System Query Language",
+    answer: "B"
+  },
+  {
+    question: "What is the primary key in a database?",
+    A: "A key used for primary operations",
+    B: "A unique identifier for each record in a table",
+    C: "A key used for backups",
+    D: "A key used for encryption",
+    answer: "B"
+  },
+  {
+    question: "Which SQL command is used to retrieve data from a database?",
+    A: "SELECT",
+    B: "UPDATE",
+    C: "DELETE",
+    D: "INSERT",
+    answer: "A"
+  },
+  {
+    question: "What is normalization in database design?",
+    A: "Organizing data into tables",
+    B: "Removing redundant data",
+    C: "Ensuring data consistency",
+    D: "All of the above",
+    answer: "D"
+  },
+  {
+    question: "Which SQL command is used to add new data to a database?",
+    A: "SELECT",
+    B: "UPDATE",
+    C: "DELETE",
+    D: "INSERT",
+    answer: "D"
+  },
+  {
+    question: "What is ACID in database transactions?",
+    A: "Atomicity, Consistency, Isolation, Durability",
+    B: "All Columns In Database",
+    C: "Association, Columns, Indexes, Data",
+    D: "Atomic, Consistent, Incremental, Durable",
+    answer: "A"
+  },
+  {
+    question: "What does CRUD stand for in database operations?",
+    A: "Create, Retrieve, Update, Delete",
+    B: "Compute, Read, Update, Delete",
+    C: "Copy, Read, Update, Drop",
+    D: "Create, Read, Undo, Drop",
+    answer: "A"
+  },
+  {
+    question: "Which of the following is not a type of database?",
+    A: "Relational database",
+    B: "NoSQL database",
+    C: "Graph database",
+    D: "Web browser",
+    answer: "D"
+  }
+];
+
+
 export const eng = [engC1, engC2, engC3];
 export const math = [mathC1, mathC2, mathC3];
 export const physics = [physC2, physC3];

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Button, Pressable, ActivityIndicator, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable, ActivityIndicator, ImageBackground, Image, Alert } from 'react-native';
 import ItalicText from '../../../components/ui/ItalicText';
 import { QuizColors } from '../../../constants/styles';
 import ExitButton from '../../../components/main/ExitButton';
@@ -39,6 +39,29 @@ const QuizScreen = ({ navigation, route}) => {
     const handleAnswer = (selectedOption) => {
         if (selectedOption === randomizedQuizData[currentQuestionIndex].answer) {
             setScore(score + 1);
+        } else {
+            switch(randomizedQuizData[currentQuestionIndex].answer) {
+                case "A": {
+                    Alert.alert("Wrong!", "Correct Answer: " + 
+                        randomizedQuizData[currentQuestionIndex].A )
+                    break;
+                }
+                case "B": {
+                    Alert.alert("Wrong!", "Correct Answer: " + 
+                        randomizedQuizData[currentQuestionIndex].B )
+                    break;
+                }
+                case "C": {
+                    Alert.alert("Wrong!", "Correct Answer: " + 
+                        randomizedQuizData[currentQuestionIndex].C )
+                    break;
+                }
+                case "D": {
+                    Alert.alert("Wrong!", "Correct Answer: " + 
+                        randomizedQuizData[currentQuestionIndex].D )
+                    break;
+                }
+            }
         }
         if  (currentQuestionIndex === 9){
             setCurrentQuestionIndex(10);
@@ -171,6 +194,27 @@ const QuizFinish = ({ score, retry, gotoMenu, educationLevel, subjectName }) => 
                     }
                     case "INFORMATICS" : {
                         education.highSchool.informatics = isPassed
+                        break;
+                    }
+                }
+                break;
+            }
+            case "university" : {
+                switch(subjectName) {
+                    case "HTML & CSS" : {
+                        education.university.htmlCss = isPassed
+                        break;
+                    }
+                    case "JAVASCRIPT" : {
+                        education.university.javaScript = isPassed
+                        break;
+                    }
+                    case "JAVA" : {
+                        education.university.java = isPassed
+                        break;
+                    }
+                    case "DATABASE" : {
+                        education.university.database = isPassed
                         break;
                     }
                 }

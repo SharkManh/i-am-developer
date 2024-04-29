@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React from "react";
 
-const ExitButton = ({ onPress }) => {
+const ExitButton = ({zIndexSetting = 0, onPress }) => {
   return (
     <Pressable
-      style={({ pressed }) => [pressed && styles.pressed, styles.container]}
+      style={({ pressed }) => [pressed && styles.pressed, styles.container, {zIndex: zIndexSetting}]}
       onPress={onPress}
     >
       <Image

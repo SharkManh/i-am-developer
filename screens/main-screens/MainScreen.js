@@ -11,56 +11,41 @@ import { Dimensions } from "react-native";
 import { CharacterContext } from "../../store/character-context";
 import { LinearGradient } from "expo-linear-gradient";
 import Money from "../../components/main/Money";
+// import Prompt from "../../components/main/Prompt";
 import Prompt from "../../components/main/Prompt";
 import MainButton from "../../components/main/MainButton";
-import AgeUp from "./AgeUp";
 import DailyReward from "../../components/main/DailyReward";
 import DarkOverlay from "../../components/ui/DarkOverlay";
-import TextButton from "../../components/ui/TextButton";
 import InputNameForm from "../../components/main/InputNameForm";
+import { jobOffersData } from "../../constants/jobOffersData";
 
 const MainScreen = ({ navigation }) => {
   const [characterName, setCharacterName] = useState("");
   const characterCtx = useContext(CharacterContext);
   const screenWidth = Dimensions.get("window").width;
-  const screenHeight = Dimensions.get("window").height;
-  const [inputNameFormHeight, setInputNameFormHeight] = useState(0);
-  const [inputNameFormWidth, setInputNameFormWidth] = useState(0);
   const [isCharacterNamed, setIsCharacterNamed] = useState(
     characterCtx.characterName == " " ? false : true
   );
   const [isSkipBabyStagePromptVisible, setIsSkipBabyStagePromptVisible] =
     useState(true);
-  const [characterImage, setCharacterImage] = useState(
-    require("../../assets/character-image/characterAge00.png")
-  );
+  // const [characterImage, setCharacterImage] = useState(
+  //   require("../../assets/character-image/characterAge00.png")
+  // );
   const [characterStyle, setCharacterStyle] = useState({});
   const [characterSizeStyle, setCharacterSizeStyle] = useState({});
   const [isDailyRewardVisible, setIsDailyRewardVisible] = useState(false);
   const [timeCounterStyle, setTimeCounterStyle] = useState({
     paddingLeft: characterCtx.lifeTimeCounter % 120,
   });
-  const [happinessPointCounterStyle, setHappinessPointCounterStyle] = useState({
-    paddingLeft: characterCtx.happinessPoint * 1.2
-  })
-  const [healthPointCounterStyle, setHealthPointCounterStyle] = useState({
-    paddingLeft: characterCtx.healthPoint * 1.2
-  })
 
   // Start counting lifetime
   useEffect(() => {
     if (isCharacterNamed) {
       setInterval(() => {
         characterCtx.setLifeTimeCounter((prevValue) => (prevValue += 12))
-      }, 6000);
+      }, 60000);
     }
   }, [isCharacterNamed]);
-
-  useEffect(() => {
-    setHappinessPointCounterStyle({
-      paddingLeft: characterCtx.happinessPoint * 1.2
-    })
-  }, [characterCtx.happinessPoint])
   
   // Calculate Age
   useEffect(() => {
@@ -79,127 +64,127 @@ const MainScreen = ({ navigation }) => {
   function openFinancialManagement() {
     navigation.navigate("FinancialManagementScreen")
   }
+  function openHospital() {
+    navigation.navigate("HospitalScreen")
+  }
   function closeDailyReward() {
     setIsDailyRewardVisible(false);
   }
 
   function skipBabyStage() {
-    characterCtx.setLifeTimeCounter((prevValue) => prevValue += 720);
+    characterCtx.setLifeTimeCounter(0);
+    characterCtx.setLifeTimeCounter(720);
     characterCtx.setAge(6);
     setIsSkipBabyStagePromptVisible(false);
   }
+  
+  
+  function skipPrimaryStudentStage() {
+    characterCtx.setAge(11)
+    characterCtx.setLifeTimeCounter(0)
+    characterCtx.setLifeTimeCounter(1320)
+  }
+
+  function skipSecondaryStudentStage() {
+    characterCtx.setAge(15)
+    characterCtx.setLifeTimeCounter(0)
+    characterCtx.setLifeTimeCounter(1800)
+  }
+
+  function skipHighSchoolStudentStage() {
+    characterCtx.setAge(18)
+    characterCtx.setLifeTimeCounter(0)
+    characterCtx.setLifeTimeCounter(2160)
+  }
+
 
 
   // Handle appearance of character
   useEffect(() => {
     if (characterCtx.age > 0) { // Xóa hiển thị AgeUp do đặc tính của useEffect khi component render first
-      // navigation.navigate("AgeUp");
+      navigation.navigate("AgeUp");
+     
+      for (let currentJob of characterCtx.currentJobs) {
+          const job = jobOffersData.find(( jobData ) => jobData.title == currentJob)
+          characterCtx.addIncome(job.salary, "Salary from " + currentJob)
+          characterCtx.setHealthPoint((prevValue) => prevValue -= 5)
+      }
     }
 
     if (characterCtx.age < 6) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge00.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge00.png"))
       setCharacterSizeStyle({
         width: 200,
         height: 200,
       });
     } else if (6 <= characterCtx.age && characterCtx.age < 10) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge06.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge06.png"))
       setCharacterSizeStyle({
         width: 240,
         height: 240,
       });
     } else if (11 <= characterCtx.age && characterCtx.age < 14) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge11.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge11.png"))
       setCharacterSizeStyle({
         width: 280,
         height: 280,
       });
     } else if (15 <= characterCtx.age && characterCtx.age < 18) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge15.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge15.png"))
       setCharacterSizeStyle({
         width: 320,
         height: 320,
       });
     } else if (18 <= characterCtx.age && characterCtx.age < 24) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge18.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge18.png"))
       setCharacterSizeStyle({
         width: 360,
         height: 360,
       });
     } else if (24 <= characterCtx.age && characterCtx.age < 30) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge24.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge24.png"))
       setCharacterSizeStyle({
         width: 400,
         height: 400,
       });
     } else if (30 <= characterCtx.age && characterCtx.age < 35) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge30.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge30.png"))
       setCharacterSizeStyle({
         width: 400,
         height: 400,
       });
     } else if (35 <= characterCtx.age && characterCtx.age < 40) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge35.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge35.png"))
       setCharacterSizeStyle({
         width: 400,
         height: 400,
       });
     } else if (40 <= characterCtx.age && characterCtx.age < 50) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge40.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge40.png"))
       setCharacterSizeStyle({
         width: 400,
         height: 400,
       });
     } else if (50 <= characterCtx.age && characterCtx.age < 60) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge50.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge50.png"))
       setCharacterSizeStyle({
         width: 380,
         height: 380,
       });
     } else if (60 <= characterCtx.age && characterCtx.age < 100) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge60.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge60.png"))
       setCharacterSizeStyle({
         width: 370,
         height: 370,
       });
     } else if (100 <= characterCtx.age) {
-      setCharacterImage(
-        require("../../assets/character-image/characterAge100.png")
-      );
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge100.png"))
       setCharacterSizeStyle({
         width: 370,
         height: 370,
       });
     }
   }, [characterCtx.age]);
-
-  function getInputNameFormSize(event) {
-    const { width, height } = event.nativeEvent.layout;
-    setInputNameFormWidth(width);
-    setInputNameFormHeight(height);
-  }
 
   function getCharacterSize(event) {
     const { width, height } = event.nativeEvent.layout;
@@ -229,8 +214,24 @@ const MainScreen = ({ navigation }) => {
     navigation.navigate("QuizMenuScreen");
   }
 
+  function navigateJobMainScreen() {
+    navigation.navigate("JobMainScreen");
+  }
+
   // --------- Skip Age (Test) -----------
   const ageSkipStyle = {
+    position: "absolute",
+    top: 200,
+    right: 10,
+    borderColor: "red",
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: "black",
+    zIndex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  };
+  const increaseIncomeButtonStyle = {
     position: "absolute",
     top: 150,
     right: 10,
@@ -241,13 +242,32 @@ const MainScreen = ({ navigation }) => {
     zIndex: 1,
     paddingHorizontal: 10,
     paddingVertical: 5,
-  };
+  }
   const skipAgeTextStyle = {
     fontSize: 25,
     fontWeight: "bold",
     color: "white",
     textAlign: "center",
   };
+  const skipStageStyle = {
+    position: "absolute",
+    top: 120,
+    right: 10,
+    borderColor: "red",
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: "black",
+    zIndex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  }
+
+  const skipStageTextStyle = {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+  }
   function skipAge() {
     characterCtx.setLifeTimeCounter((prevValue) => prevValue += 120);
     characterCtx.setAge((prevValue) => prevValue += 1);
@@ -255,7 +275,43 @@ const MainScreen = ({ navigation }) => {
   // -------------------------------------
   return (
     <View style={styles.container}>
-      <Pressable style={ageSkipStyle} onPress={skipAge}>
+      <>
+        {
+          characterCtx.age < 6 && !isSkipBabyStagePromptVisible && 
+          <Pressable style={skipStageStyle} onPress={skipBabyStage}>
+            <Text style={skipStageTextStyle}>Skip Baby Stage</Text>
+          </Pressable>
+        }
+        {
+          characterCtx.age < 11 &&
+          characterCtx.education.primary.mathematics == true &&
+          characterCtx.education.primary.english == true &&
+          <Pressable style={skipStageStyle} onPress={skipPrimaryStudentStage}>
+            <Text style={skipStageTextStyle}>Skip Primary Student Stage</Text>
+          </Pressable>
+        }
+        {
+          characterCtx.age < 15 &&
+          characterCtx.education.secondary.mathematics == true &&
+          characterCtx.education.secondary.english == true &&
+          characterCtx.education.secondary.physics == true &&
+          <Pressable style={skipStageStyle} onPress={skipSecondaryStudentStage}>
+            <Text style={skipStageTextStyle}>Skip Secondary Student Stage</Text>
+          </Pressable>
+        }
+        {
+          characterCtx.age < 18 &&
+          characterCtx.education.highSchool.mathematics == true &&
+          characterCtx.education.highSchool.english == true &&
+          characterCtx.education.highSchool.physics == true &&
+          characterCtx.education.highSchool.informatics == true &&
+          <Pressable style={skipStageStyle} onPress={skipHighSchoolStudentStage}>
+            <Text style={skipStageTextStyle}>Skip High School Student Stage</Text>
+          </Pressable>
+        }
+      </>
+      
+      <Pressable style={increaseIncomeButtonStyle} onPress={skipAge}>
         <Text style={skipAgeTextStyle}>+1 Age</Text>
       </Pressable>
       <Pressable style={ageSkipStyle} onPress={() => characterCtx.addIncome(500, "Buff bẩn 500 Coins")}>
@@ -267,7 +323,7 @@ const MainScreen = ({ navigation }) => {
       />
       <Image
         style={[characterStyle, characterSizeStyle]}
-        source={characterImage}
+        source={characterCtx.characterImage}
         onLayout={getCharacterSize}
       />
       <View style={styles.characterInfo}>
@@ -293,7 +349,7 @@ const MainScreen = ({ navigation }) => {
             <View style={styles.healthPointWrapper}>
               <LinearGradient
                 colors={["#FF3232", "#C60000"]}
-                style={[styles.healthPoint, healthPointCounterStyle]}
+                style={[styles.healthPoint, { paddingLeft: characterCtx.healthPoint * 1.2}]}
               />
             </View>
           </View>
@@ -307,7 +363,7 @@ const MainScreen = ({ navigation }) => {
             <View style={styles.happinessPointWrapper}>
               <LinearGradient
                 colors={["orange", "#DFCF3C"]}
-                style={[styles.happinessPoint, happinessPointCounterStyle]}
+                style={[styles.happinessPoint, {paddingLeft: characterCtx.happinessPoint * 1.2}]}
               />
             </View>
           </View>
@@ -333,6 +389,15 @@ const MainScreen = ({ navigation }) => {
             source={require("../../assets/financialManagementButton.png")}
           />
         </Pressable>
+        <Pressable
+          style={({ pressed }) => [pressed && styles.pressed, styles.middleButton]}
+          onPress={openHospital}
+        >
+          <Image
+            style={styles.middleButtonImage}
+            source={require("../../assets/hospital/hospital.png")}
+          />
+        </Pressable>
       </View>
       {isDailyRewardVisible && (
         <>
@@ -346,28 +411,32 @@ const MainScreen = ({ navigation }) => {
           <View style={styles.darkOverlay}></View>
           <InputNameForm
             onPress={handleInputName}
-            onLayout={getInputNameFormSize}
+            // onLayout={getInputNameFormSize}
             setCharacterName={setCharacterName}
           />
         </>
       )}
 
-      {isCharacterNamed && isSkipBabyStagePromptVisible && (
+      {isCharacterNamed && isSkipBabyStagePromptVisible && characterCtx.age < 6 && (
         <>
           <View style={styles.darkOverlay}></View>
           <Prompt
             message={
               "During this time you don't have enough awareness, do you want to skip to 6 years old?"
             }
-            buttonNoFunction={() => setIsSkipBabyStagePromptVisible(false)}
+            isNoButtonVisible={false}
+            isLaterButtonVisible={true}
+            buttonLaterFunction={() => setIsSkipBabyStagePromptVisible(false)}
             buttonYesFunction={skipBabyStage}
           />
         </>
       )}
       <View style={styles.bottomButtonGroup}>
         <MainButton
+          isUnlock={characterCtx.age >= 18 && true}
           positionStyle={styles.bottomButton}
-          // imageURL={require("../../assets/mainButton.png")}
+          imageURL={require("../../assets/bagIcon.png")}
+          onPress={navigateJobMainScreen}
         />
         <MainButton
           isUnlock={characterCtx.age >= 6 && true}

@@ -64,7 +64,7 @@ const TaiXiuScreen = ({ navigation }) => {
           } else {
             setResultMessage("Lose")
             setResultAmount((winAmount - lossAmount))
-            characterCtx.minusIncomeIncome(lossAmount - winAmount, "Lose Tai Xiu")
+            characterCtx.minusIncome(lossAmount - winAmount, "Lose Tai Xiu")
           }
           setIsResultAlertShow(true)
         }

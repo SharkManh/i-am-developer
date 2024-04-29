@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 
 export const CharacterContext = createContext({
   userEmail: "",
+  characterImage: "",
   characterName: "",
   income: 0,
   lifeTimeCounter: 0,
@@ -14,6 +15,11 @@ export const CharacterContext = createContext({
   dateInfo: {},
   dailyRewardTracking: {},
   financialManagement: [{date: new Date(), transactionType: "", description: "", transactionCoin: 0}],
+  currentJobs: [],
+  symptoms: [],
+  setSymptoms: () => {},
+  setCharacterImage: () => {},
+  setCurrentJobs: (newJob) => {},
   setFinancialManagement: () => {},
   setDailyRewardTracking: (dailyRewardTracking) => {},
   setLifeTimeCounter: (lifeTimeCounter) => {},
@@ -39,6 +45,9 @@ function CharacterContextProvider({ children }) {
   const [lifeTimeCounter, setLifeTimeCounter] = useState(0)
   const [healthPoint, setHealthPoint] = useState(100)
   const [happinessPoint, setHappinessPoint] = useState(0)
+  const [currentJobs, setCurrentJobs] = useState([])
+  const [characterImage, setCharacterImage] = useState(require("../assets/character-image/characterAge00.png"))
+  const [symptoms, setSymptoms] = useState([])
   const [dateInfo, setDateInfo] = useState({
     isLoveAccepted: false,
     lovePoint: 0,
@@ -70,6 +79,12 @@ function CharacterContextProvider({ children }) {
       "english": false,
       "physics": false,
       "informatics": false,
+    },
+    "university": {
+      "htmlCss": false,
+      "javaScript": false,
+      "java": false,
+      "database": false,
     }
   })
 
@@ -104,6 +119,7 @@ function CharacterContextProvider({ children }) {
   // Chuyện j sẽ xảy ra nếu tên biến hoặc function không giống như cái CharacterContext nhề
   const value = {
     userEmail: userEmail,
+    characterImage: characterImage,
     characterName: characterName,
     income: income,
     activityHistories: activityHistories,
@@ -115,6 +131,11 @@ function CharacterContextProvider({ children }) {
     lifeTimeCounter: lifeTimeCounter,
     dailyRewardTracking: dailyRewardTracking,
     financialManagement: financialManagement,
+    currentJobs: currentJobs,
+    symptoms: symptoms,
+    setSymptoms: setSymptoms,
+    setCharacterImage: setCharacterImage,
+    setCurrentJobs: setCurrentJobs,
     setFinancialManagement: setFinancialManagement,
     setEducation: setEducation,
     setUserEmail: setUserEmail,

@@ -3,7 +3,7 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
-const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, isNoButtonVisible=true }) => {
+const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, buttonLaterFunction, isNoButtonVisible=true, isLaterButtonVisible=false }) => {
     const screenHeight = Dimensions.get("window").height;
     const screenWidth = Dimensions.get("window").width;
     const [containerPositionStyles, setContainerPositionStyles] = useState("")
@@ -13,7 +13,6 @@ const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, isNoB
         setContainerPositionStyles({
             position: "absolute",
             top: screenHeight/2,
-            // borderWidth: 1, borderColor: "red",
             left: screenWidth/2,
             transform: [
                 {translateX: -width/2},
@@ -34,7 +33,6 @@ const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, isNoB
                         {note}
                     </Text>
                 }
-                
             </View>
             <View style={styles.buttonGroup}>
                 <Pressable 
@@ -62,7 +60,21 @@ const Prompt = ({ message, note = "", buttonNoFunction, buttonYesFunction, isNoB
                         />
                     </Pressable>
                 }
-            
+                {
+                    isLaterButtonVisible &&
+                    <Pressable 
+                        style={
+                            ({ pressed }) => [styles.button, pressed && styles.pressed]
+                        }
+                        onPress={buttonLaterFunction}
+                    >
+                        <Image 
+                            style={[styles.imageButton, {width: 100}]}
+                            resizeMode='contain'
+                            source={require("../../assets/laterButton.png")}
+                        />
+                    </Pressable>
+                }
             </View>
         </View>
     )
