@@ -5,8 +5,11 @@ import doctorData from "../../../constants/doctorData";
 import Prompt from "../../../components/main/Prompt";
 import symptomsData from "../../../constants/symptomsData";
 import ExitButton from "../../../components/main/ExitButton";
+import DarkOverlay from "../../../components/ui/DarkOverlay";
+import { CharacterContext } from "../../../store/character-context";
 
 const DoctorDetailScreen = ({ route, navigation }) => {
+    const characterCtx = useContext(CharacterContext)
     const [isRepOkVisible, setRepOkVisible] = useState(false);
     const [selectedSymptom, setSelectedSymptom] = useState(null);
     const isSymptomInSymptomsData = (symptom) => {
@@ -20,11 +23,17 @@ const DoctorDetailScreen = ({ route, navigation }) => {
         setRepOkVisible(false)
     }
     function repOk(symptom) {
-        if (isSymptomInSymptomsData(symptom)) {
-            setSelectedSymptom(symptom); 
-            setRepOkVisible(true);
+        if (characterCtx.income < 1000) {
+            alert("You don't have enough coin")
         } else {
-           alert("You don't have this symptom!")
+            if (characterCtx.symptoms.includes(symptom.toLowerCase())) {
+                setSelectedSymptom(symptom); 
+                setRepOkVisible(true);
+                characterCtx.setSymptoms(characterCtx.symptoms.filter((characterSymptom) => characterSymptom.toLowerCase() != symptom.toLowerCase()))
+                characterCtx.minusIncome(1000, "Treat " + symptom)
+            } else {
+               alert("You don't have this symptom!")
+            }
         }
     }
     const { doctorId } = route.params;
@@ -52,6 +61,7 @@ const DoctorDetailScreen = ({ route, navigation }) => {
                 <Text style={styles.desc}>{doctor.desc}</Text>
 
                 <View style={styles.coin}>
+                    
                     <View style={styles.coinNumber}>
                         <Image style={styles.coinIcon}
                             source={require("../../../assets/money.png")}>  
@@ -85,14 +95,14 @@ const DoctorDetailScreen = ({ route, navigation }) => {
                 </View>
                 {isRepOkVisible && (
                     <>
-                    <View style={styles.darkOverlay}></View>
-                    <Prompt
-                    message={
-                    "Are you sure to treat this symptom!"
-                    }
-                    buttonNoFunction={() => setRepOkVisible(false)}
-                    buttonYesFunction={() => treatingScreen(selectedSymptom)}
-            />
+                        <Prompt
+                            message={
+                            "Are you sure to treat this symptom!"
+                            }
+                            buttonNoFunction={() => setRepOkVisible(false)}
+                            buttonYesFunction={() => treatingScreen(selectedSymptom)}
+                        />      
+                        <DarkOverlay />
                     </>
                 )}
             </View>
@@ -103,8 +113,13 @@ const DoctorDetailScreen = ({ route, navigation }) => {
 export default DoctorDetailScreen;
 
 const styles = StyleSheet.create({
+    scrollView: {
+        borderColor: "red",
+        padding: 0,
+        margin: 0,
+        backgroundColor: "#EDF9FC",
+    },
     container: {
-        display:"flex",
         alignItems: "center",
         height: "100%",
         backgroundColor: "#EDF9FC",
@@ -192,13 +207,4 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#fff",
     },
-    darkOverlay: {
-        position: "absolute",
-        backgroundColor: "black",
-        opacity: 0.5,
-        width: "100%",
-        height: "100%",
-        zIndex: 1,
-      },
-
 });

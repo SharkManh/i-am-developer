@@ -42,7 +42,8 @@ const IntroScreen = ({ navigation }) => {
     } else if (content.description == intro3.description) {
       setContent(intro4);
     } else if (content.description == intro4.description) {
-      characterCtx.createCharacterName(" ");
+      // characterCtx.createCharacterName(" ");
+      navigation.navigate("MainScreen")
     }
   }
 

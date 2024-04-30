@@ -28,28 +28,20 @@ import HospitalScreen from "./screens/main-screens/hospital/HospitalScreen";
 import DoctorScreen from "./screens/main-screens/hospital/DoctorScreen";
 import DoctorDetailScreen from "./screens/main-screens/hospital/DoctorDetailScreen";
 import TreatingScreen from "./screens/main-screens/hospital/TreatingScreen";
-
+import { storeCharacterInfo } from "./utils/http";
+import { fetchCharacterInfo } from "./utils/http";
 const Stack = createNativeStackNavigator();
 
 function ScreenStackHandler() {
   const authCtx = useContext(AuthContext);
   const characterCtx = useContext(CharacterContext);
+
   return (
     <>
       {!authCtx.isAuthenticated && <AuthScreenStack />}
-      {authCtx.isAuthenticated && characterCtx.characterName == "" && (
-        <IntroScreenStack />
-      )}
-      {authCtx.isAuthenticated && characterCtx.characterName != "" && (
-        <MainScreenStack />
-      )}
+      {authCtx.isAuthenticated && <MainScreenStack />}
     </>
   );
-}
-
-
-function FinancialScreensHandler() {
- 
 }
 
 function TestScreenStack() {
@@ -94,6 +86,7 @@ function TestScreen() {
       {/* <GamesScreen /> */}
       {/* <MainScreenStack /> */}
       {/* <MainScreenStack /> */}
+      {/* <MainScreen /> */}
       {/* <DateScreen /> */}
       {/* <WelcomeScreen /> */}
       {/* <IntroScreen /> */}
@@ -119,11 +112,11 @@ function AuthScreenStack() {
         headerTintColor: "white",
       }}
     >
-      <Stack.Screen
+      {/* <Stack.Screen
         name="LogoScreen"
         component={LogoScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="SignInScreen"
         component={SignInScreen}
@@ -163,6 +156,11 @@ function MainScreenStack() {
         headerTintColor: "white",
       }}
     >
+      <Stack.Screen
+        name="IntroScreen"
+        component={IntroScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="MainScreen"
         component={MainScreen}

@@ -42,7 +42,6 @@ const DateScreen = ({ navigation }) => {
     setChanceBarStyle({
       height: characterCtx.dateInfo.lovePoint,
     });
-    // alert(characterCtx.dateInfo.lovePoint)
   }, [characterCtx.dateInfo.lovePoint]);
 
   function handleCoinButtonClicked() {

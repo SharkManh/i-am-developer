@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { CharacterContext } from '../store/character-context';
 
-const API_KEY = 'AIzaSyBuFytn-n4BOd8AmayX2ef0qmPfHjt9j8g';
+const API_KEY = 'AIzaSyCbTH0_CpsS6NIWbjmxt_KU6HOOYPUf9Sk';
 
 async function authenticate(mode, email, password) {
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:${mode}?key=${API_KEY}`;
@@ -11,20 +12,22 @@ async function authenticate(mode, email, password) {
     returnSecureToken: true,
   });
 
-  idToken = response.data.idToken;
-  // console.log(
-  //   `
-  //     {
-  //       "localId": ${response.data.localId},
-  //       "email": ${response.data.email},
-  //       "displayName": ${response.data.displayName},
-  //       "idToken": ${response.data.idToken},
-  //       "registered": ${response.data.registered},
-  //       "refreshToken": ${response.data.refreshToken},
-  //       "expiresIn": ${response.data.expiresIn}
-  //     }
-  //   `
-  // )
+  idToken = response.data.idToken;  
+  
+  console.log(
+  
+    `
+      {
+        "localId": ${response.data.localId},
+        "email": ${response.data.email},
+        "displayName": ${response.data.displayName},
+        "idToken": ${response.data.idToken},
+        "registered": ${response.data.registered},
+        "refreshToken": ${response.data.refreshToken},
+        "expiresIn": ${response.data.expiresIn}
+      }
+    `
+  )
   return idToken;
 }
 

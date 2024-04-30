@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useContext } from "react";
+import { CharacterContext } from "../store/character-context";
 
-const BACKEND_URL = "https://test-6e041-default-rtdb.firebaseio.com/";
+const BACKEND_URL = "https://i-am-developer-45afc-default-rtdb.firebaseio.com/";
 
 // --------------- Expense ----------------------
 export async function storeCharacterInfo(characterInfo) {
@@ -13,59 +15,57 @@ export async function storeCharacterInfo(characterInfo) {
   return id;
 }
 
-export async function fetchExpenses() {
-  const response = await axios.get(BACKEND_URL + "/expenses.json");
-
-  const expenses = [];
-
+export async function fetchCharacterInfo(characterCtx) {
+  const response = await axios.get(BACKEND_URL + "/characters.json");
   for (const key in response.data) {
-    const expenseObj = {
-      id: key,
-      amount: response.data[key].amount,
-      date: new Date(response.data[key].date),
-      description: response.data[key].description,
-    };
-    expenses.push(expenseObj);
+    if (response.data[key].userEmail == characterCtx.userEmail) {
+      characterCtx.setId(response.data[key].id)
+      characterCtx.createCharacterName(response.data[key].characterName)
+      if (typeof response.data[key].symptoms === "undefined") {
+        characterCtx.setSymptoms([])
+      } else {
+        characterCtx.setCurrentJobs(response.data[key].currentJobs)
+        characterCtx.setSymptoms(response.data[key].symptoms)
+      }
+      characterCtx.setCharacterImage(response.data[key].characterImage)
+      if (typeof response.data[key].currentJobs === "undefined") {
+        characterCtx.setCurrentJobs([])
+      } else {
+        characterCtx.setCurrentJobs(response.data[key].currentJobs)
+      }
+      characterCtx.setFinancialManagement(response.data[key].financialManagement)
+      characterCtx.setEducation(response.data[key].education)
+      characterCtx.setIncome(response.data[key].income)
+      characterCtx.setAge(response.data[key].age)
+      characterCtx.setHealthPoint(response.data[key].healthPoint)
+      characterCtx.setDateInfo(response.data[key].dateInfo)
+      characterCtx.setHappinessPoint(response.data[key].happinessPoint)
+      characterCtx.setLifeTimeCounter(response.data[key].lifeTimeCounter)
+      characterCtx.setDailyRewardTracking(response.data[key].dailyRewardTracking)
+      characterCtx.setSymptomsProbability(response.data[key].symptomsProbability)
+      break;
+    }
   }
-  return expenses;
 }
 
-export function updateExpense(id, expenseData) {
-  return axios.put(BACKEND_URL + `/expenses/${id}.json`, expenseData);
-}
-
-export function deleteExpense(id) {
-  return axios.delete(BACKEND_URL + `/expenses/${id}.json`);
-}
-
-// --------------- Income ----------------------
-export async function storeIncome(incomeData) {
-  const response = await axios.post(BACKEND_URL + "/incomes.json", incomeData);
-  const id = response.data.name;
-  return id;
-}
-
-export async function fetchIncomes() {
-  const response = await axios.get(BACKEND_URL + "/incomes.json");
-
-  const incomes = [];
-
-  for (const key in response.data) {
-    const incomeObj = {
-      id: key,
-      amount: response.data[key].amount,
-      date: new Date(response.data[key].date),
-      description: response.data[key].description,
-    };
-    incomes.push(incomeObj);
+export function updateCharacterInfo(characterCtx) {
+  const characterInfo = {
+    id: characterCtx.id,
+    userEmail: characterCtx.userEmail,
+    characterImage: characterCtx.characterImage,
+    characterName: characterCtx.characterName,
+    income: characterCtx.income,
+    lifeTimeCounter: characterCtx.lifeTimeCounter,
+    healthPoint: characterCtx.healthPoint,
+    age: characterCtx.age,
+    education: characterCtx.education,
+    happinessPoint: characterCtx.happinessPoint,
+    dateInfo: characterCtx.dateInfo,
+    dailyRewardTracking: characterCtx.dailyRewardTracking,
+    financialManagement: characterCtx.financialManagement,
+    currentJobs: characterCtx.currentJobs,
+    symptoms: characterCtx.symptoms,
+    symptomsProbability: characterCtx.symptomsProbability,
   }
-  return incomes;
-}
-
-export function updateIncome(id, incomeData) {
-  return axios.put(BACKEND_URL + `/incomes/${id}.json`, incomeData);
-}
-
-export function deleteIncome(id) {
-  return axios.delete(BACKEND_URL + `/incomes/${id}.json`);
+  return axios.put(BACKEND_URL + `/characters/${characterCtx.id}.json`, characterInfo);
 }

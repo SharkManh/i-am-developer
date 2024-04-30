@@ -26,7 +26,6 @@ const AgeUp = ({ navigation}) => {
         if (characterCtx.age == 18) {
             setUnlockContent(["Dating", "TaiXiu Game", "Job"])
             setRewardMoney(10000)
-            characterCtx.addIncome(10000, "Bonus age 18")
         }
     }, [])
 

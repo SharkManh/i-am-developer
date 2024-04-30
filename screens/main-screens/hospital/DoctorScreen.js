@@ -9,46 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import React from "react";
 import ExitButton from "../../../components/main/ExitButton";
-// import doctorData from "../../data/doctorData";
 import doctorData from "../../../constants/doctorData";
-// const doctorData = [
-//     { id: 'd1',
-//      name: 'Dr. Marcus Grayson',
-//      position: "Assitant Professor", 
-//      expert: [{
-//         symptom: "Fever",
-//         icon: require('../../assets/fever.png')}, 
-//         {
-//         symptom: "Flu",
-//         icon: require('../../assets/flu.png')},
-//     ],
-//      image: require('../../assets/doctor_1.png') },
-
-//     { id: 'd2',
-//      name: 'Dr. Emily Hayes',
-//      position: "Assitant Professor", 
-//      expert: [{
-//         symptom: "Headache",
-//         icon: require('../../assets/headache.png')}, 
-//         {
-//         symptom: "Toothache",
-//         icon: require('../../assets/toothache.png')},
-//     ], 
-//      image: require('../../assets/doctor_2.png')},
-     
-//     { id: 'd3',
-//      name: 'Dr. Sophia Chen',
-//      position: "Assitant Professor", 
-//      expert: [{
-//         symptom: "Nause",
-//         icon: require('../../assets/nause.png')}, 
-//         {
-//         symptom: "Covid",
-//         icon: require('../../assets/covid.png')},
-//     ], 
-//      image: require('../../assets/doctor_3.png') },
-// ];
-
 const DoctorScreen = () => {
     function exit() {
         navigation.goBack();

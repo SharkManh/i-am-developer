@@ -16,7 +16,7 @@ const TreatingScreen = ({ route, navigation }) => {
         if (isTreatingFinished) {
             navigation.goBack();
         } else {
-            alert("You are treated, Wait for treating successfully")
+            alert("Wait for treating successfully")
         }
     }
     const { symptom } = route.params;  

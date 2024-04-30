@@ -26,7 +26,7 @@ const doctorData = [
      position: "Assistant Professor", 
      desc: "Covid and nausea specialists are dedicated healthcare professionals who play a vital role in safeguarding public health and helping patients recover from infectious illnesses with compassion, expertise, and evidence-based care.",
      expert: [
-        {symptom: "Nause", icon: require('../assets/hospital/nause.png')}, 
+        {symptom: "Nausea", icon: require('../assets/hospital/nausea.png')}, 
         {symptom: "Covid", icon: require('../assets/hospital/covid.png')},
     ], 
      image: require('../assets/hospital/doctor_3.png') },

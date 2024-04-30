@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useState } from "react";
 
 export const CharacterContext = createContext({
+  id: "",
   userEmail: "",
   characterImage: "",
   characterName: "",
@@ -11,12 +12,14 @@ export const CharacterContext = createContext({
   age: 0,
   education: {},
   happinessPoint: 0,
-  activityHistories: [],
   dateInfo: {},
   dailyRewardTracking: {},
   financialManagement: [{date: new Date(), transactionType: "", description: "", transactionCoin: 0}],
   currentJobs: [],
   symptoms: [],
+  symptomsProbability: {},
+  setId: () => {},
+  setSymptomsProbability: () => {},
   setSymptoms: () => {},
   setCharacterImage: () => {},
   setCurrentJobs: (newJob) => {},
@@ -26,28 +29,36 @@ export const CharacterContext = createContext({
   setUserEmail: (userEmail) => {},
   createCharacterName: (characterName) => {},
   addIncome: (amount) => {},
+  setIncome: (amount) => {},
   minusIncome: (amount) => {},
   setAge: (age) => {},
   setHealthPoint: (healthPoint) => {},
   setEducation: (education) => {},
   setHappinessPoint: (happinessPoint) => {},
-  addActivityHistory: (newActivityHistory) => {},
   setDateInfo: (dateInfo) => {},
   setDateInfo: (dateInfo) => {},
 });
 
 function CharacterContextProvider({ children }) {
+  const [id, setId] = useState("")
   const [userEmail, setUserEmail] = useState("");
   const [characterName, setCharacterName] = useState("");
   const [income, setIncome] = useState(0);
   const [age, setAge] = useState(0);
-  const [activityHistories, setActivitiesHistories] = useState([]);
   const [lifeTimeCounter, setLifeTimeCounter] = useState(0)
   const [healthPoint, setHealthPoint] = useState(100)
   const [happinessPoint, setHappinessPoint] = useState(0)
   const [currentJobs, setCurrentJobs] = useState([])
   const [characterImage, setCharacterImage] = useState(require("../assets/character-image/characterAge00.png"))
   const [symptoms, setSymptoms] = useState([])
+  const [symptomsProbability, setSymptomsProbability] = useState({
+    headache: 0,
+    fever: 0,
+    nausea: 0,
+    toothache: 0,
+    flu: 0,
+    covid: 0,
+  })
   const [dateInfo, setDateInfo] = useState({
     isLoveAccepted: false,
     lovePoint: 0,
@@ -110,19 +121,12 @@ function CharacterContextProvider({ children }) {
     setIncome((prevIncome) => (prevIncome -= amount));
   }
 
-  function addActivityHistory(activityHistory) {
-    setActivitiesHistories((prevHistories) => {
-      [...prevHistories, activityHistory];
-    });
-  }
-
-  // Chuyện j sẽ xảy ra nếu tên biến hoặc function không giống như cái CharacterContext nhề
   const value = {
+    id: id,
     userEmail: userEmail,
     characterImage: characterImage,
     characterName: characterName,
     income: income,
-    activityHistories: activityHistories,
     age: age,
     healthPoint: healthPoint,
     education: education,
@@ -133,6 +137,8 @@ function CharacterContextProvider({ children }) {
     financialManagement: financialManagement,
     currentJobs: currentJobs,
     symptoms: symptoms,
+    symptomsProbability: symptomsProbability,
+    setId: setId,
     setSymptoms: setSymptoms,
     setCharacterImage: setCharacterImage,
     setCurrentJobs: setCurrentJobs,
@@ -141,6 +147,7 @@ function CharacterContextProvider({ children }) {
     setUserEmail: setUserEmail,
     createCharacterName: createCharacterName,
     addIncome: addIncome,
+    setIncome: setIncome,
     minusIncome: minusIncome,
     setAge: setAge,
     setHealthPoint: setHealthPoint,
@@ -148,7 +155,7 @@ function CharacterContextProvider({ children }) {
     setHappinessPoint: setHappinessPoint,
     setLifeTimeCounter: setLifeTimeCounter,
     setDailyRewardTracking: setDailyRewardTracking,
-    addActivityHistory: addActivityHistory,
+    setSymptomsProbability: setSymptomsProbability,
   };
 
   return (

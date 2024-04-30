@@ -8,26 +8,25 @@ import {
   } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import ExitButton from "../../../components/main/ExitButton";
-// import { CharacterContext } from "../../store/character-context";
 import { CharacterContext } from "../../../store/character-context";
-// import symptomsData from "../../data/symptomsData";
 import symptomsData from "../../../constants/symptomsData";
 
 
 const HospitalScreen = ({ navigation }) => {
     const characterCtx = useContext(CharacterContext)
 
-    const renderItem = ({ item }) => (
-        <View style={styles.item}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.itemText}>{item.name}</Text>
-        </View>
-    )
+    const renderItem = ({ item }) => {
+        let symptomData = symptomsData.find((symptomData) => symptomData.name.toLowerCase() == item)
+        return (
+            <View style={styles.item}>
+                <Image source={symptomData.image} style={styles.image} />
+                <Text style={styles.itemText}>{symptomData.name}</Text>
+            </View>
+        )
+    }
+      
     function Doctor() {
         navigation.navigate("DoctorScreen")
-    }
-    function Pharmacy() {
-        navigation.navigate("PharmacyScreen")
     }
     function exit() {
         navigation.goBack();
@@ -61,9 +60,9 @@ const HospitalScreen = ({ navigation }) => {
                 <Text style={styles.header}>Your Symptoms</Text>
                 <FlatList   
                     style={styles.symptomList}
-                    data={symptomsData}
+                    data={characterCtx.symptoms}
                     renderItem={renderItem}
-                    keyExtractor={item => item.id}
+                    // keyExtractor={item => item.index}
                     numColumns={2}
                 />
             </View>

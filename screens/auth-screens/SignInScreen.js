@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Alert, Image, View, Text, Pressable, StyleSheet } from 'react-native';
 import AuthContent from "../../components/auth/AuthContent"
 import LoadingOverlay from '../../components/ui/LoadingOverlay';
@@ -6,16 +6,32 @@ import { AuthContext } from '../../store/auth-context';
 import { login } from '../../utils/auth'
 import DarkOverlay from "../../components/ui/DarkOverlay"
 import {LinearGradient} from 'expo-linear-gradient';
+import { CharacterContext } from '../../store/character-context';
+import { fetchCharacterInfo } from '../../utils/http';
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
+  const characterCtx = useContext(CharacterContext)
   const authCtx = useContext(AuthContext);
+  const [isFetching, setIsFetching] = useState(false);
+
+  async function receiveCharacterInfo() {
+    try {
+      await fetchCharacterInfo(characterCtx)
+    } catch(error) {
+      alert("Fetch Error")
+    }
+  }
+
+  useEffect(() => {
+    receiveCharacterInfo()
+  }, [characterCtx.userEmail])
 
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {
-      const token = await login(email, password);
+      const token = await login(email, password)
+      characterCtx.setUserEmail(email)
       authCtx.authenticate(token);
     } catch (error) {
       Alert.alert(
@@ -32,6 +48,10 @@ function LoginScreen() {
 
   return (
     <View style={styles.container}>
+      {
+        isFetching && 
+        <Text>Fetching</Text>
+      }
       <View style={styles.topContent}>
         <Image 
           style={styles.topContentImageBackground}
