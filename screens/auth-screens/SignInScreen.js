@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
   topContent: {
     flex: 1,
     justifyContent: "center", alignItems: "center",
-    // borderWidth: 1, borderColor: "red",
   },
   topContentImageBackground: {
     position: "absolute",
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     width: "100%",
     height: "100%",
-    // borderWidth: 2, borderColor: "blue",
   },
   authLogo: {
     width: 180, height: 180,

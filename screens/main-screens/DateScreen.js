@@ -25,9 +25,9 @@ const DateScreen = ({ navigation }) => {
   function increaseChanceLevel() {
     if (characterCtx.dateInfo.lovePoint < 300) {
       if (characterCtx.income < 500) {
-        alert("Not enough 500 coins")
+        alert("Not enough 50 coins")
       } else {
-        characterCtx.minusIncome(500, "Pay for crush's love")
+        characterCtx.minusIncome(50, "Pay for crush's love")
         characterCtx.setDateInfo((prevValue) => {
           return (
                 {...prevValue, lovePoint: prevValue.lovePoint += 6}
@@ -153,7 +153,7 @@ const DateScreen = ({ navigation }) => {
           <DarkOverlay />
           <Prompt
             message={
-              "Would you like to pay 500 coin to receive 2% chance of your crush's love?"
+              "Would you like to pay 50 coin to receive 2% chance of your crush's love?"
             }
             buttonNoFunction={closePrompt}
             buttonYesFunction={increaseChanceLevel}

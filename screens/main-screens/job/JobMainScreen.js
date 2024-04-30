@@ -18,13 +18,11 @@ import {
 } from "@expo-google-fonts/inter";
 import { useFonts } from "expo-font";
 import profilePicture from "../../../assets/job/profile_pic.png";
-import jobPicture from "../../../assets/job/com_meta.png";
 import hasNotificationIcon from "../../../assets/job/hasNotiIcon.png";
 import careerImage from "../../../assets/job/career_img.png";
 import { CharacterContext } from "../../../store/character-context";
 import ExitButton from "../../../components/main/ExitButton";
 import { jobOffersData } from "../../../constants/jobOffersData";
-import { useFocusEffect } from "@react-navigation/native";
 
 //Main Screen Component
 const JobMainScreen = ({ navigation }) => {
@@ -182,6 +180,7 @@ const headerStyle = StyleSheet.create({
 
 //Profile Component
 const JobScreenProfile = ({ profilePicture, profileName, hasNotification }) => {
+  const characterCtx = useContext(CharacterContext)
   let [fontsLoaded] = useFonts({
     Inter_800ExtraBold,
     Inter_500Medium,
@@ -193,7 +192,7 @@ const JobScreenProfile = ({ profilePicture, profileName, hasNotification }) => {
   return (
     <View style={profileStyle.container}>
       <View style={profileStyle.profileDiv}>
-        <Image source={profilePicture} style={profileStyle.profilePicture} />
+        <Image source={characterCtx.characterImage} style={profileStyle.profilePicture} />
       </View>
       <View style={profileStyle.textDiv}>
         <Text
@@ -222,8 +221,6 @@ const JobScreenProfile = ({ profilePicture, profileName, hasNotification }) => {
   );
 };
 
-const twoByTenDimWidth = Dimensions.get("window").width / 5;
-
 const profileStyle = StyleSheet.create({
   container: {
     width: "100%",
@@ -240,17 +237,19 @@ const profileStyle = StyleSheet.create({
     width: "55%",
   },
   profileDiv: {
-    width: twoByTenDimWidth,
-    height: twoByTenDimWidth,
+    width: 80,
+    height: 80,
     borderRadius: 200,
     backgroundColor: "black",
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   profilePicture: {
-    width: twoByTenDimWidth,
-    height: twoByTenDimWidth,
+    marginTop: 80,
+    width: 150,
+    height: 150,
     borderRadius: 200,
   },
 });

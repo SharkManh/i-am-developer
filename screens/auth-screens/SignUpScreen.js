@@ -6,7 +6,7 @@ import { AuthContext } from '../../store/auth-context';
 import { createUser } from '../../utils/auth';
 import {LinearGradient} from 'expo-linear-gradient';
 import { CharacterContext } from '../../store/character-context';
-import { fetchCharacterInfo, storeCharacterInfo } from '../../utils/http';
+import { storeCharacterInfo } from '../../utils/http';
 
 function SignUpScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -65,7 +65,6 @@ function SignUpScreen() {
       financialManagement: {},
       currentJobs: ["FE Developer"],
       symptoms: ["flu"],
-      // symptoms: [],
       symptomsProbability: {
         headache: 20,
         fever: 20,

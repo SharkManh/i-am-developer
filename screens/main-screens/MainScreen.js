@@ -18,6 +18,7 @@ import DarkOverlay from "../../components/ui/DarkOverlay";
 import InputNameForm from "../../components/main/InputNameForm";
 import { jobOffersData } from "../../constants/jobOffersData";
 import { updateCharacterInfo } from "../../utils/http";
+import symptomsData from "../../constants/symptomsData";
 
 const MainScreen = ({ navigation }) => {
   const [characterName, setCharacterName] = useState("");
@@ -82,8 +83,6 @@ const MainScreen = ({ navigation }) => {
 
   // Calculate Age
   useEffect(() => {
-    randomSymptomAppearance()
-    
     if (characterCtx.lifeTimeCounter % 120 == 0) {
       characterCtx.setAge(Math.floor(characterCtx.lifeTimeCounter / 120))
     } 
@@ -109,20 +108,65 @@ const MainScreen = ({ navigation }) => {
     for (let currentJob of characterCtx.currentJobs) {
       const job = jobOffersData.find(( jobData ) => jobData.title == currentJob)
       characterCtx.addIncome(job.salary, "Salary from " + currentJob)
-      characterCtx.setHealthPoint((prevValue) => prevValue -= 5)
     }
   }
+
+  function handleMinusHealthPoint() {
+    for (let symptom of characterCtx.symptoms) {
+      switch(symptom.toLowerCase()) {
+        case "headache" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[0].healthDecrease)
+          break;
+        }
+        case "fever" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[1].healthDecrease)
+          break;
+        }
+        case "nausea" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[2].healthDecrease)
+          break;
+        }
+        case "toothache" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[3].healthDecrease)
+          break;
+        }
+        case "flu" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[4].healthDecrease)
+          break;
+        }
+        case "covid" : {
+          characterCtx.setHealthPoint((prevValue) => prevValue -= symptomsData[5].healthDecrease)
+          break;
+        }
+      }
+    }
+
+    characterCtx.setHealthPoint((prevValue) => prevValue -= characterCtx.currentJobs.length)
+  }
+
+  useEffect(() => {
+    if (characterCtx.healthPoint <= 0) {
+      navigation.replace("EndGameScreen")
+    }
+  }, [characterCtx.healthPoint])
   // Update data every time character increase 1 age
   useEffect(() => {
     if (characterCtx.age == 18) {
-      setRewardMoney(10000)
       characterCtx.addIncome(10000, "Bonus age 18")
     }
 
     if (characterCtx.age > 0) {
       navigation.navigate("AgeUp");
-      
       handleGetSalary()
+      handleMinusHealthPoint() 
+    }
+
+    if (characterCtx.age > 18) {
+      randomSymptomAppearance()
+    }
+    
+    if (characterCtx.healthPoint < 100) {
+      characterCtx.setHealthPoint((prevValue) => prevValue += 5)
     }
 
     if (characterCtx.age < 6) {
@@ -185,17 +229,23 @@ const MainScreen = ({ navigation }) => {
         width: 380,
         height: 380,
       });
-    } else if (60 <= characterCtx.age && characterCtx.age < 100) {
+    } else if (60 <= characterCtx.age && characterCtx.age < 70) {
       characterCtx.setCharacterImage(require("../../assets/character-image/characterAge60.png"))
       setCharacterSizeStyle({
         width: 370,
         height: 370,
       });
-    } else if (100 <= characterCtx.age) {
-      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge100.png"))
+    } else if (70 <= characterCtx.age && characterCtx.age < 80) {
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge70.png"))
       setCharacterSizeStyle({
         width: 370,
         height: 370,
+    });
+    } else if (80 <= characterCtx.age) {
+      characterCtx.setCharacterImage(require("../../assets/character-image/characterAge80.png"))
+      setCharacterSizeStyle({
+        width: 350,
+        height: 350,
       });
     }
   }, [characterCtx.age]);
@@ -207,16 +257,29 @@ const MainScreen = ({ navigation }) => {
       bottom: 90,
       left: screenWidth / 2,
       transform: [{ translateX: -width / 2 }],
+      resizeMode: "contain"
     });
   }
 
   function handleInputName() {
-    if (characterCtx.characterName != "") {
-      characterCtx.createCharacterName(characterName);
+    if (characterCtx.characterName == "") {
+      if(characterName == ""){
+        alert("Character name cannot be empty!");
+        return;
+      }
+      if(characterName.length <= 5){
+        alert("At least 5 characters long for character name!");
+        return;
+      }
+      if(characterName.length > 20){
+        alert("Character name is too long, please choose a shorter name!");
+        return;
+      }
+      characterCtx.createCharacterName(characterName.trim());
       setIsCharacterNamed(true);
       characterCtx.addIncome(10, "Welcome Bonus");
     } else {
-      alert("Enter character name")
+      alert("Character name has already been set!");
     }
   }
 
@@ -312,7 +375,6 @@ const MainScreen = ({ navigation }) => {
           </Pressable>
         }
       </>
-      
       <Pressable style={increaseIncomeButtonStyle} onPress={skipAge}>
         <Text style={skipAgeTextStyle}>+1 Age</Text>
       </Pressable>
@@ -580,7 +642,6 @@ const styles = StyleSheet.create({
     height: 20,
   },
   healthPointContainer: {
-    // borderWidth: 1, borderColor: "blue"
   },
   healthPointWrapper: {
     position: "absolute",
@@ -683,7 +744,6 @@ const styles = StyleSheet.create({
 
   // ------------------ Task ----------------
   middleScreenButtonGroup: {
-    // borderWidth: 1, borderColor: "red",
     marginLeft: 15,
   },
   middleButton: {
@@ -693,52 +753,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
   },
-  // ------------------ Input Character Name ----------------
-  // inputNameFormStyleWrapper: {
-  //     position: "absolute", top: 0,
-  //     width: "100%", height: "100%",
-  //     justifyContent: "center", alignItems: "center",
-  //     zIndex: 1,
-  // },
-  // inputNameFormStyle: {
-  //     width: 330, height: 594,
-  //     justifyContent: "center", alignItems: "center",
-  //     borderWidth: 1, borderColor: "red",
-  // },
-
-  // inputNameFormImage: {
-  //     width: 330, height: 594,
-  //     position: "absolute",
-  //     borderWidth: 1, borderColor: "blue",
-  // },
-  // inputNameHandlerButton: {
-  //     position: "absolute", bottom: 90,
-  // },
-  // inputNameHandlerButtonImage: {
-  //     width: 327/2.5, height: 115/2.5,
-  // },
-
-  // // inputNamePrompt: {
-  // //     fontSize: 25, fontWeight: 'bold',
-  // //     color: "white",
-  // // },
-  // inputBox: {
-  //     width: 200,
-  //     position: "absolute", top: 224,
-  //     fontSize: 20, fontWeight: "bold",
-  //     color: "white",
-  //     padding: 10,
-  // },
-  // inputNameButton: {
-  //     backgroundColor: Colors.authButtonBackground,
-  //     width: "80%",
-  //     paddingVertical: 6,
-  //     paddingHorizontal: 12,
-  // },
-  // inputNameButtonText: {
-  //     textAlign: "center",
-  //     color: "white",
-  // },
   pressed: {
     opacity: 0.7,
   },

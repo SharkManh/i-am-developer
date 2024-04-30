@@ -1,10 +1,7 @@
 import axios from "axios";
-import { useContext } from "react";
-import { CharacterContext } from "../store/character-context";
 
 const BACKEND_URL = "https://i-am-developer-45afc-default-rtdb.firebaseio.com/";
 
-// --------------- Expense ----------------------
 export async function storeCharacterInfo(characterInfo) {
   // const
   const response = await axios.post(

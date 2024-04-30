@@ -190,7 +190,6 @@ const RockPaperScissorScreen = ({ navigation }) => {
                 isResultShown && 
                 <>
                     <DarkOverlay />
-                    {/* <RockPaperScissorsResultAlert resultTitle={result} playAgain={playAgain} /> */}
                     <GameResultAlert 
                         gameName={"Rock Paper Scissors"}
                         resultTitle={result} onPress={playAgain} 
@@ -251,7 +250,7 @@ const styles = StyleSheet.create({
     prompt: {
         fontSize: 35, fontWeight: "bold",
         textAlign: "center",
-        marginTop: 30,  // Đẩy bản thân xuống dưới gần với 3 button groups
+        marginTop: 30, 
     },
     player: {
         position: "absolute",
@@ -259,7 +258,6 @@ const styles = StyleSheet.create({
         bottom: 10,
         width: "80%", 
         justifyContent: "space-between",
-        // borderWidth: 1, borderColor: "green",
     },
     buttonGroup: {
         flexDirection: "row",

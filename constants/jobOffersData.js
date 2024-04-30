@@ -53,7 +53,7 @@ const offer1 = {
   location: "Seattle, US",
   description:
     "In this role, you'll be responsible for creating and maintaining visually appealing, user-friendly websites and web applications. Your primary focus will be on front-end development, ensuring seamless integration of design and functionality. You'll collaborate closely with designers and back-end developers to implement responsive designs and optimize user experiences.",
-  salary: 100000,
+  salary: 400,
   required: [htmlCSS, javascript],
   bg: "#eef7fe",
   dateAgo: 2,
@@ -68,7 +68,7 @@ const offer2 = {
   location: "San Francisco, US",
   description:
     "The ideal candidate will be responsible for designing, implementing, and maintaining Java -based applications. You will collaborate with cross-functional teams to analyze user requirements and translate them into software solutions. Strong problem-solving skills and the ability to work in a fast-paced environment are essential.",
-  salary: 70000,
+  salary: 600,
   required: [java, health],
   bg: "#feeeee",
   dateAgo: 1,
@@ -83,7 +83,7 @@ const offer3 = {
   location: "Seattle, US",
   description:
     "In this role, you'll be responsible for creating and maintaining visually appealing, user-friendly websites and web applications. Your primary focus will be on front-end development, ensuring seamless integration of design and functionality. You'll collaborate closely with designers and back-end developers to implement responsive designs and optimize user experiences.",
-  salary: 65000,
+  salary: 650,
   required: [htmlCSS, javascript],
   bg: "#fffbec",
   dateAgo: 1,
@@ -98,7 +98,7 @@ const offer4 = {
   location: "Los Angeles, US",
   description:
     "In this role, you will be responsible for ensuring the security, availability, and performance of our database systems. You will handle database design, implementation, and maintenance tasks, including data backup and recovery, user access management, and performance tuning.",
-  salary: 200000,
+  salary: 2000,
   required: [java, after30, health],
   bg: "#f1f1f1",
   dateAgo: 3,

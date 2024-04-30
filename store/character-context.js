@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useState } from "react";
 
 export const CharacterContext = createContext({
@@ -52,12 +51,12 @@ function CharacterContextProvider({ children }) {
   const [characterImage, setCharacterImage] = useState(require("../assets/character-image/characterAge00.png"))
   const [symptoms, setSymptoms] = useState([])
   const [symptomsProbability, setSymptomsProbability] = useState({
-    headache: 0,
-    fever: 0,
-    nausea: 0,
-    toothache: 0,
-    flu: 0,
-    covid: 0,
+    headache: 20,
+    fever: 20,
+    nausea: 20,
+    toothache: 20,
+    flu: 20,
+    covid: 20,
   })
   const [dateInfo, setDateInfo] = useState({
     isLoveAccepted: false,

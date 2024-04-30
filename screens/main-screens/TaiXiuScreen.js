@@ -34,7 +34,6 @@ const TaiXiuScreen = ({ navigation }) => {
   const [result, setResult] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [dices, setDices] = useState({ d1: 0, d2: 0, d3: 0 });
-  const [isWon, setIsWon] = useState()
   const [isResultAlertShow, setIsResultAlertShow] = useState(false)
   const [resultMessage, setResultMessage] = useState("")
   const [resultAmount, setResultAmount] = useState(0)

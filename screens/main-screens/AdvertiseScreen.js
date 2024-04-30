@@ -39,12 +39,11 @@ const AdvertiseScreen = ({ navigation }) => {
         <Text style={styles.buttonContent}>{buttonContent}</Text>
       </Pressable>
       <Video 
-        source={adsVideo} // Replace with your video source
+        source={adsVideo} 
         style={styles.video}
-        useNativeControls={false} // Disable playback controls VD: play and pause
-        // Adjust the video's aspect ratio
+        useNativeControls={false} 
         resizeMode="contain" 
-        shouldPlay // Tự chạy video khi màn hình render
+        shouldPlay 
      />
     </View>
   )
