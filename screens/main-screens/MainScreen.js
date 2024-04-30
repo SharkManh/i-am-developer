@@ -211,12 +211,25 @@ const MainScreen = ({ navigation }) => {
   }
 
   function handleInputName() {
-    if (characterCtx.characterName != "") {
+    console.log(characterName);
+    if (characterCtx.characterName == "") {
+      if(characterName == ""){
+        alert("Character name cannot be empty!");
+        return;
+      }
+      if(characterName.length <= 5){
+        alert("At least 5 characters long for character name!");
+        return;
+      }
+      if(characterName.length > 20){
+        alert("Character name is too long, please choose a shorter name!");
+        return;
+      }
       characterCtx.createCharacterName(characterName);
       setIsCharacterNamed(true);
       characterCtx.addIncome(10, "Welcome Bonus");
     } else {
-      alert("Enter character name")
+      alert("Character name has already been set!");
     }
   }
 
@@ -464,7 +477,7 @@ const MainScreen = ({ navigation }) => {
           <View style={styles.darkOverlay}></View>
           <InputNameForm
             onPress={handleInputName}
-            setCharacterName={setCharacterName}
+            setCharacterName={(value) => setCharacterName(value)}
           />
         </>
       )}
