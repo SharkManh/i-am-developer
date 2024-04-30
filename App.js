@@ -181,7 +181,6 @@ export default function App() {
         <CharacterContextProvider>
           <NavigationContainer>
             <ScreenStackHandler />
-            {/* <EndGameScreen /> */}
           </NavigationContainer>
         </CharacterContextProvider>
       </AuthContextProvider>
